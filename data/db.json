@@ -1,0 +1,178 @@
+{
+  "evnts": [
+    {
+      "id": 1,
+      "title": "First Meeting",
+      "allDay": "true",
+      "start": "new Date(2022, 10, 1)",
+      "end": "new Date(2022, 10, 3)"
+    },
+    {
+      "id": 2,
+      "title": "Second Meeting",
+      "allDay": "false",
+      "start": "new Date(2022, 10, 14)",
+      "end": "new Date(2022, 10, 16)"
+    },
+    {
+      "id": 3,
+      "title": "Third Meeting",
+      "allDay": false,
+      "start": "new Date(2022, 11, 1)",
+      "end": "new Date(2022, 11, 3)"
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "code": "5018374066428",
+      "description": "Milk",
+      "price": "2.00",
+      "thumbnail": "http://192.168.0.23:3000/images/Milk.png"
+    },
+    {
+      "id": 2,
+      "code": "5010482558406",
+      "description": "Eggs",
+      "price": "3.00",
+      "thumbnail": "http://192.168.0.23:3000/images/Eggs.png"
+    },
+    {
+      "id": 3,
+      "code": "35592397",
+      "description": "Baked Beans",
+      "price": "5.00",
+      "thumbnail": "http://192.168.0.23:3000/images/BakedBeans.png"
+    },
+    {
+      "id": 4,
+      "code": "5029054234976",
+      "description": "Toilet roll",
+      "price": "10.00",
+      "thumbnail": "http://192.168.0.23:3000/images/ToiletRoll.png"
+    },
+    {
+      "id": 5,
+      "code": "5017689065072",
+      "description": "Oranges",
+      "price": "4.45",
+      "thumbnail": "http://192.168.0.23:3000/images/Oranges.png"
+    },
+    {
+      "id": 6,
+      "code": "5054781377474",
+      "description": "Juice",
+      "price": "2.55",
+      "thumbnail": "http://192.168.0.23:3000/images/Juice.png"
+    },
+    {
+      "id": 7,
+      "code": "27191149",
+      "description": "Honey",
+      "price": "1.45",
+      "thumbnail": "http://192.168.0.23:3000/images/Honey.png"
+    },
+    {
+      "id": 8,
+      "code": "5017689005375",
+      "description": "Spices",
+      "price": "3.50",
+      "thumbnail": "http://192.168.0.23:3000/images/Spices.png"
+    },
+    {
+      "id": 9,
+      "code": "5057545619483",
+      "description": "Bread Loaf",
+      "price": "1.70",
+      "thumbnail": "http://192.168.0.23:3000/images/BreadLoaf.png"
+    }
+  ],
+  "addresses": [
+    {
+      "id": 1,
+      "postcode": "TW10 1BG",
+      "street": "20 South Bridge Road",
+      "area": "Primrose Hill",
+      "town": "Birmingham",
+      "country": "England",
+      "phone": "1111 222333"
+    },
+    {
+      "id": 2,
+      "postcode": "HU10 3RQ",
+      "street": "13 Rose Street",
+      "area": "Croyden",
+      "town": "London",
+      "country": "England",
+      "phone": "4545 768934"
+    }
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "cardnum": "4242424242424242",
+      "expiry": "06/25",
+      "cvc": 123,
+      "brand": "Visa",
+      "signature": "Mr J J Smith"
+    },
+    {
+      "id": 2,
+      "cardnum": "4000056655665566",
+      "expiry": "09/30",
+      "cvc": 456,
+      "brand": "Visa(debit)",
+      "signature": "J Smith"
+    },
+    {
+      "id": 3,
+      "cardnum": "5555555555554444",
+      "expiry": "06/30",
+      "cvc": 789,
+      "brand": "Mastercard",
+      "signature": "John Smith"
+    }
+  ],
+  "blogs": [
+    {
+      "title": "Hello Harish",
+      "body": "ehhhjhj",
+      "author": "harish",
+      "id": 2
+    },
+    {
+      "title": "Hello Omattie",
+      "body": "3rd",
+      "author": "omattie",
+      "id": 3
+    },
+    {
+      "title": "Hello Sunita",
+      "body": "5th",
+      "author": "sunita",
+      "id": 5
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "wesley",
+      "password": "wesley"
+    },
+    {
+      "id": 2,
+      "username": "omattie",
+      "password": "omattie"
+    },
+    {
+      "id": 3,
+      "username": "harish",
+      "password": "harish"
+    },
+    {
+      "id": 4,
+      "username": "sunita",
+      "password": "sunita"
+    }
+  ]
+}
