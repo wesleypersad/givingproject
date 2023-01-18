@@ -1,8 +1,8 @@
 import "../App.css";
-import { useState } from "react";
-import useFetch from "../components/useFetch";
-import { useContext } from "react";
-import DataContext from "../context/DataContext";
+//import { useState } from "react";
+//import useFetch from "../components/useFetch";
+//import { useContext } from "react";
+//import DataContext from "../context/DataContext";
 
 function Donate() {
     // from  the data context
