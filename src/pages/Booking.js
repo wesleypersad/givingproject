@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import { Button, Card } from 'react-bootstrap';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
+import { useAuthContext } from '../hooks/useAuthContext';
 import useFetch from "../components/useFetch";
 
 const locales = {
@@ -28,6 +29,17 @@ const localizer = dateFnsLocalizer({
 function Booking () {
     // from  the data context
     const { EVENT_URL } = useContext(DataContext);
+    const { user } = useAuthContext();
+    let options = {};
+
+    // see if there is an authorized user
+    if (user) {
+        options = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        };
+    };
 
     const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""});
     const [allEvents, setAllEvents] = useState([]);
@@ -38,7 +50,7 @@ function Booking () {
     };
 
     // get the list of events
-    const { data: events, isPending, error } = useFetch(`${EVENT_URL}`);
+    const { data: events, isPending, error } = useFetch(`${EVENT_URL}`, options);
     const reqEvents = async () => {
         setAllEvents(events);
     };
@@ -63,12 +75,14 @@ function Booking () {
             </div>
             <Calendar localizer={localizer} events={allEvents} 
             startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}} />
-            <Card className="mb-3" style={{ color: "#000"}}>
+            {error && <div>{error} </div>}
+            {isPending && <div>Loading ...</div>}
+            {events && <Card className="mb-3" style={{ color: "#000"}}>
                 <Card.Body>
                 <Card.Title>List Of Events</Card.Title>
-                </Card.Body>
+                </Card.Body>                
                 <Button  className='m-1' onClick={reqEvents} variant="primary">Get list of events JSON Data</Button>
-            </Card>
+            </Card>}
         </div>
     )
 }

@@ -1,29 +1,46 @@
 import { useState } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
+import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
 function BlogForm() {
     // context provided variables
-    const { DB_URL } = useContext(DataContext);
+    const { BLOG_URL } = useContext(DataContext);
+    const { user } = useAuthContext();
+    let options = {};
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [author, setAuthor] = useState('wesley');
     const [isPending, setIsPending]= useState(false);
 
+    // if there is an authorized user set the fetch options
+    if (user) {
+        options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${user.token}`,
+                // definately needed for body to be passed in fetch
+                'Content-type' : 'application/json'
+            }
+        };
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const blog = { title, body, author };
         //console.log(JSON.stringify(blog));
 
+        // problem with useFetch hook so ordinary fetch used ?
+        options = { ...options,
+            body: JSON.stringify(blog)
+        };
+
         setIsPending(true);
 
-        fetch(`${DB_URL}/blogs`, {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(blog)
-        }).then(() => {
+        fetch(`${BLOG_URL}`, options)
+        .then(() => {
             console.log('new blog added');
             setTitle('');
             setBody('');

@@ -13,7 +13,7 @@ const Navbar = () => {
     return (
         <header>
             <div className="container">
-                <h1>React Giving Prototype : </h1>
+                <h1>React Giving Website : </h1>
 
                 <div className='links'>
                     <Link to='/'>Home </Link>
