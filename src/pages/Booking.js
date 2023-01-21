@@ -28,7 +28,7 @@ const localizer = dateFnsLocalizer({
 
 function Booking () {
     // from  the data context
-    const { EVENT_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
@@ -50,7 +50,7 @@ function Booking () {
     };
 
     // get the list of events
-    const { data: events, isPending, error } = useFetch(`${EVENT_URL}`, options);
+    const { data: events, isPending, error } = useFetch(`${SERVER_URL}/event`, options);
     const reqEvents = async () => {
         setAllEvents(events);
     };

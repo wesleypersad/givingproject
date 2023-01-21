@@ -6,7 +6,7 @@ import '../App.css';
 
 function BlogForm() {
     // context provided variables
-    const { BLOG_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
@@ -39,7 +39,7 @@ function BlogForm() {
 
         setIsPending(true);
 
-        fetch(`${BLOG_URL}`, options)
+        fetch(`${SERVER_URL}/blog`, options)
         .then(() => {
             console.log('new blog added');
             setTitle('');

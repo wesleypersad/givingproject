@@ -7,13 +7,13 @@ import DataContext from "../context/DataContext";
 
 function Research () {
     // from  the data context
-    const { CHARITY_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
 
     // define the constants and functions to get the JSON data
     const [charityList, setCharityList] = useState("EMPTY CHARITIES...");
 
     // request the charities data
-    const { data: charities, isPending, error } = useFetch(`${CHARITY_URL}`);
+    const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity`);
     const reqCharity = () => { 
         setCharityList(JSON.stringify(charities));
         console.log(charities);

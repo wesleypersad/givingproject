@@ -9,7 +9,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 function Blog() {
     // from  the data context
-    const { BLOG_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
@@ -23,7 +23,7 @@ function Blog() {
     };
 
     // request the blog data
-    const { data: blogs, isPending, error } = useFetch(`${BLOG_URL}`, options);
+    const { data: blogs, isPending, error } = useFetch(`${SERVER_URL}/blog`, options);
 
     return (
         <div className="blog">

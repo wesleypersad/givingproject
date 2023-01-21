@@ -8,7 +8,7 @@ function Textsms() {
     const [confirm, setConfirm] = useState('EMPTY REPLY');
     const [email, setEmail] = useState('EMPTY');
     const [emconfirm, setEmconfirm] = useState('EMPTY REPLY');
-    const { TWILIO_URL, SENDGRID_URL } = useContext(DataContext);
+    const { SERVER_URL, TWILIO_URL, SENDGRID_URL } = useContext(DataContext);
 
     const textSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ function Textsms() {
             body: JSON.stringify({ message: `${message}`})
         };
 
-        const response = await fetch(`${TWILIO_URL}`, requestOptions);
+        const response = await fetch(`${SERVER_URL}/twilio`, requestOptions);
         const data = await response.json();
         setConfirm(data.message);
     };
@@ -39,7 +39,7 @@ function Textsms() {
             body: JSON.stringify({ message: `${email}`})
         };
 
-        const response = await fetch(`${SENDGRID_URL}`, requestOptions);
+        const response = await fetch(`${SERVER_URL}/email`, requestOptions);
         const data = await response.json();
         setEmconfirm(data.message);
     };

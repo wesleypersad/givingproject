@@ -9,13 +9,13 @@ export const useLogin = () => {
     const { dispatch } = useAuthContext();
 
     // get the user path from  the data context
-    const { USER_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
 
     const login = async (username, password) => {
         setIsloading(true);
         setError(null);
 
-        const response = await fetch(`${USER_URL}/login`, {
+        const response = await fetch(`${SERVER_URL}/user/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({username, password})

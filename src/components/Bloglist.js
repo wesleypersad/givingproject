@@ -5,7 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 const  BlogList= ({blogs}) => {
     // from  the data context
-    const { BLOG_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     const title = 'List Of Blogs';
     let options = {};
@@ -29,7 +29,7 @@ const  BlogList= ({blogs}) => {
             body: JSON.stringify({"_id": `${_id}`})
         };
         console.log(options);
-        fetch(`${BLOG_URL}`, options)
+        fetch(`${SERVER_URL}/blog`, options)
         .then(response => response.json())
         .then(data => console.log(data));
     };
