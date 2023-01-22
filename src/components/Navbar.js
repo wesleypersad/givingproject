@@ -17,6 +17,9 @@ const Navbar = () => {
 
                 <div className='links'>
                     <Link to='/'>Home </Link>
+                </div>
+                {user && (
+                <div className='links'>
                     <Link to='/blog'>Blog </Link>
                     <Link to='/chat'>Chat </Link>
                     <Link to='/donate'>Donate </Link>
@@ -24,6 +27,7 @@ const Navbar = () => {
                     <Link to='/textsms'>Textsms </Link>
                     <Link to='/research'>Research </Link>
                 </div>
+                )}
                 {!user && (
                     <div className='links'>
                         <Link to='/signup'>Signup </Link>

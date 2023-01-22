@@ -8,7 +8,7 @@ function Textsms() {
     const [confirm, setConfirm] = useState('EMPTY REPLY');
     const [email, setEmail] = useState('EMPTY');
     const [emconfirm, setEmconfirm] = useState('EMPTY REPLY');
-    const { SERVER_URL, TWILIO_URL, SENDGRID_URL } = useContext(DataContext);
+    const { SERVER_URL } = useContext(DataContext);
 
     const textSubmit = async (e) => {
         e.preventDefault();

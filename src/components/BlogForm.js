@@ -12,7 +12,7 @@ function BlogForm() {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('wesley');
+    const [author, setAuthor] = useState(`${user.username}`);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -44,7 +44,6 @@ function BlogForm() {
             console.log('new blog added');
             setTitle('');
             setBody('');
-            setAuthor('wesley');
             setIsPending(false);
             //navigate('/blog');
             window.location.reload();
@@ -68,16 +67,7 @@ function BlogForm() {
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                <label>Blog author:</label>
-                <select
-                    value={author}
-                    onChange= {(e) => setAuthor(e.target.value)}
-                >
-                    <option value="wesley">wesley</option>
-                    <option value="omattie">omattie</option>
-                    <option value="harish">harish</option>
-                    <option value="sunita">sunita</option>
-                </select>
+                <label>Blog author: {author}</label>
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}
             </form>

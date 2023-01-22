@@ -3,6 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAuthContext } from './hooks/useAuthContext';
 
 //import the navigation & main function
 import Navbar from "./components/Navbar";
@@ -18,6 +19,9 @@ import Login from "./pages/Login";
 import NotFound from "./pages/Notfound";
 
 function App() {
+  // get user to see if anyone logged in
+  //const { user } = useAuthContext();
+
   return (
     <div className="App">
         <Router>

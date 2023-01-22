@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 
@@ -8,11 +9,14 @@ function Signup() {
     const [email, setEmail] = useState('');
     const {signup, error, isLoading} = useSignup();
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         await signup(username, password, email);
         //console.log(username, password);
+        navigate('/');
     };
 
     return (
