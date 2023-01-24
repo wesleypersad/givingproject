@@ -12,7 +12,7 @@ function BlogForm() {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [author, setAuthor] = useState(`${user.username}`);
+    //const [author, setAuthor] = useState(`${user.username}`);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -29,7 +29,7 @@ function BlogForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const blog = { title, body, author };
+        const blog = { title, body };
         //console.log(JSON.stringify(blog));
 
         // problem with useFetch hook so ordinary fetch used ?
@@ -67,7 +67,6 @@ function BlogForm() {
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                <label>Blog author: {author}</label>
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}
             </form>

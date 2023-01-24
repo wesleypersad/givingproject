@@ -36,21 +36,42 @@ function Booking () {
     if (user) {
         options = {
             headers: {
-                'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${user.token}`,
+                // definately needed for body to be passed in fetch
+                'Content-type' : 'application/json'
             }
         };
     };
 
+    // initialize state variables
     const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""});
     const [allEvents, setAllEvents] = useState([]);
+    const [isPending, setIsPending]= useState(false);
 
     // add a new event to the list of events
     function handleAddEvent() {
         setAllEvents([...allEvents, newEvent]);
+
+        // also have to add this to the events database
+        // first add newEvent to body of options
+        options = { ...options,
+            method: 'POST',
+            body: JSON.stringify(newEvent)
+        };
+
+        setIsPending(true);
+
+        // then use fetch to write with a POST method to the even route
+        fetch(`${SERVER_URL}/event`, options)
+        .then(() => {
+            console.log('new event added');
+            setIsPending(false);
+            //window.location.reload();
+        })
     };
 
     // get the list of events
-    const { data: events, isPending, error } = useFetch(`${SERVER_URL}/event`, options);
+    const { data: events, isPending2, error } = useFetch(`${SERVER_URL}/event`, options);
     const reqEvents = async () => {
         setAllEvents(events);
     };
@@ -59,6 +80,13 @@ function Booking () {
         <div className="booking">
             <h1>Bookings</h1>
             <h2>Schedule Availability & Collections</h2>
+            <Calendar localizer={localizer} events={allEvents} 
+            startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}} />
+            {error && <div>{error} </div>}
+            {isPending2 && <div>Loading ...</div>}
+            {events && <Card className="mb-3" style={{ color: "#000"}}>
+                <Button  className='m-1' onClick={reqEvents} variant="primary">Get list of events JSON Data</Button>
+            </Card>}
             <div>
                 <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
                 value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
@@ -71,18 +99,9 @@ function Booking () {
                     placeholderText="End Date" 
                     selected={newEvent.end} onChange={(end) => setNewEvent({...newEvent, end})}
                 />
+                <label>Event creator: {newEvent.author}</label>
                 <button style={{marginTop:"10px"}} onClick={handleAddEvent}>Add Event</button>
             </div>
-            <Calendar localizer={localizer} events={allEvents} 
-            startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}} />
-            {error && <div>{error} </div>}
-            {isPending && <div>Loading ...</div>}
-            {events && <Card className="mb-3" style={{ color: "#000"}}>
-                <Card.Body>
-                <Card.Title>List Of Events</Card.Title>
-                </Card.Body>                
-                <Button  className='m-1' onClick={reqEvents} variant="primary">Get list of events JSON Data</Button>
-            </Card>}
         </div>
     )
 }
