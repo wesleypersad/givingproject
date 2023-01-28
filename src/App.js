@@ -14,6 +14,7 @@ import Donate from "./pages/Donate";
 import Booking from "./pages/Booking";
 import Textsms from "./pages/Textsms";
 import Research from "./pages/Research";
+import Admin from "./pages/Admin";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import NotFound from "./pages/Notfound";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/booking" element={<Booking />} />
             <Route path="/textsms" element={<Textsms />} />            
             <Route path="/research" element={<Research />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />

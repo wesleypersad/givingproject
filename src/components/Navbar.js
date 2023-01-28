@@ -10,6 +10,9 @@ const Navbar = () => {
         logout();
     };
 
+    // set the admin flag to allow display of admin page
+    const admin = (!user) ? false : ((user.role !== 'admin') ? false : true);
+
     return (
         <header>
             <div className="container">
@@ -26,6 +29,11 @@ const Navbar = () => {
                     <Link to='/booking'>Booking </Link>
                     <Link to='/textsms'>Textsms </Link>
                     <Link to='/research'>Research </Link>
+                </div>
+                )}
+                {(admin) && (
+                <div className='links'>
+                    <Link to='/admin'>Admin </Link>
                 </div>
                 )}
                 {!user && (

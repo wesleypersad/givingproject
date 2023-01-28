@@ -22,7 +22,7 @@ function Textsms() {
             body: JSON.stringify({ message: `${message}`})
         };
 
-        const response = await fetch(`${SERVER_URL}/twilio`, requestOptions);
+        const response = await fetch(`${SERVER_URL}/send/sms`, requestOptions);
         const data = await response.json();
         setConfirm(data.message);
     };
@@ -39,7 +39,7 @@ function Textsms() {
             body: JSON.stringify({ message: `${email}`})
         };
 
-        const response = await fetch(`${SERVER_URL}/email`, requestOptions);
+        const response = await fetch(`${SERVER_URL}/send/email`, requestOptions);
         const data = await response.json();
         setEmconfirm(data.message);
     };
