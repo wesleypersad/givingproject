@@ -3,7 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useAuthContext } from './hooks/useAuthContext';
+import socketIO from 'socket.io-client';
 
 //import the navigation & main function
 import Navbar from "./components/Navbar";
@@ -18,11 +18,13 @@ import Admin from "./pages/Admin";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import NotFound from "./pages/Notfound";
+import ChatPage from './components/ChatPage';
+
+// get the server URL directly from the environment variables
+const { REACT_APP_SERVER_URL } = process.env;
+const socket = socketIO.connect(`${REACT_APP_SERVER_URL}`);
 
 function App() {
-  // get user to see if anyone logged in
-  //const { user } = useAuthContext();
-
   return (
     <div className="App">
         <Router>
@@ -30,7 +32,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} /> 
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat" element={<Chat socket={socket}/>} />
+            <Route path="/chatpage" element={<ChatPage socket={socket} />}></Route>
             <Route path="/donate" element={<Donate />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/textsms" element={<Textsms />} />            
