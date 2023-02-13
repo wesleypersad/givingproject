@@ -34,11 +34,19 @@ const  BlogList= ({blogs}) => {
         .then(data => console.log(data));
     };
 
+    const myComponent = {
+        color: 'blue',
+        background: 'gold',
+        width: '1200px',
+        height: '200px',
+        overflow: 'scroll'
+    };
+
     return (
         <div className="blog-list">
             <h2>{ title }</h2>
             {blogs.map((blog) => (
-                <div className="blog-details" key={blog._id}>
+                <div className="blog-details" key={blog._id} style={myComponent}>
                     <div>
                         <h2>{ blog.title }</h2>
                         <p>Written by <strong>{blog.author}</strong></p>

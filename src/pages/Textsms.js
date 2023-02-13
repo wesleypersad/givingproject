@@ -1,3 +1,4 @@
+import { Container, Button } from 'react-bootstrap';
 import { useState } from "react";
 //import useFetch from "../components/useFetch";
 import { useContext } from "react";
@@ -45,33 +46,38 @@ function Textsms() {
     };
 
     return (
-        <div>
-            <form className="textsms" onSubmit={textSubmit}>
-                <h3>Send Text SMS</h3>
-                <label>Message Text:</label>
-                <input 
-                    type="text" 
-                    onChange={(e) => setMessage(e.target.value)}
-                    value={message}
-                />
-                <button>Send SMS Message</button>
-                <br />
-                <label>Text Server Confimation </label>
-                <p>{confirm}</p>
-            </form>
-            <form className="textemail" onSubmit={emailSubmit}>
-            <h3>Send Email</h3>
-                <label>Email Text:</label>
-                <input 
-                    type="text" 
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                />
-                <button>Send EMail Message</button>
-                <br />
-                <label>Email Server Confimation </label>
-                <p>{emconfirm}</p>
-            </form>
+        <div classname="textsms">
+            <h1>SMS & Email Page</h1>
+            <Container>
+                <form className="textsms" onSubmit={textSubmit}>
+                    <h3>Send Text SMS</h3>
+                    <label>Message Text:</label>
+                    <input 
+                        type="text" 
+                        onChange={(e) => setMessage(e.target.value)}
+                        value={message}
+                    />
+                    <button>Send SMS Message</button>
+                    <br />
+                    <label>Text Server Confimation </label>
+                    <p>{confirm}</p>
+                </form>                
+            </Container>
+            <Container>
+                <form className="textemail" onSubmit={emailSubmit}>
+                <h3>Send Email</h3>
+                    <label>Email Text:</label>
+                    <input 
+                        type="text" 
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />
+                    <button>Send EMail Message</button>
+                    <br />
+                    <label>Email Server Confimation </label>
+                    <p>{emconfirm}</p>
+                </form>
+            </Container>
         </div>
     )
 }

@@ -10,7 +10,7 @@ function Donate() {
 
     return (
         <div className="donate">
-            <h1>Donations</h1>
+            <h1>Donations Page</h1>
         </div>
     );
 }

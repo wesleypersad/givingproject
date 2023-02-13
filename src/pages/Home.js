@@ -1,5 +1,6 @@
 import "../App.css";
 //import { useState } from "react";
+import { Container } from 'react-bootstrap';
 import BlogList from "../components/Bloglist";
 import useFetch from "../components/useFetch";
 import { useContext } from "react";
@@ -26,9 +27,12 @@ function Home() {
 
     return (
         <div className="home">
-        {error && <div>{error} </div>}
-        {isPending && <div>Loading ...</div>}
-        {blogs && <BlogList blogs={blogs} title="Home Page" />}
+            <h1>Home Page</h1>
+            <Container>
+                {error && <div>{error} </div>}
+                {isPending && <div>Loading ...</div>}
+                {blogs && <BlogList blogs={blogs} title="Home Page" />}                
+            </Container>
         </div>
     );
 }

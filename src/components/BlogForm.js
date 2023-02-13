@@ -50,8 +50,16 @@ function BlogForm() {
         })
     };
 
+    const myComponent = {
+        color: 'blue',
+        background: 'gold',
+        width: '1200px',
+        height: '200px',
+        overflow: 'scroll'
+    };
+
     return (
-        <div className='create'>
+        <div className='create' style={myComponent}>
             <h1>Add A New Blog</h1>
             <form onSubmit={handleSubmit}>
                 <label>Blog title:</label>

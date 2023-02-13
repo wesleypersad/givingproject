@@ -78,7 +78,7 @@ function Booking () {
 
     return (
         <div className="booking">
-            <h1>Bookings</h1>
+            <h1>Bookings Page</h1>
             <h2>Schedule Availability & Collections</h2>
             <Calendar localizer={localizer} events={allEvents} 
             startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}} />

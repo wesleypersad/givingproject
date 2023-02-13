@@ -1,5 +1,6 @@
 import "../App.css";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
+import { Container } from 'react-bootstrap';
 import BlogList from "../components/Bloglist";
 import useFetch from "../components/useFetch";
 import BlogForm from "../components/BlogForm";
@@ -27,10 +28,15 @@ function Blog() {
 
     return (
         <div className="blog">
-        {error && <div>{error} </div>}
-        {isPending && <div>Loading ...</div>}
-        {blogs && <BlogList blogs={blogs} title="Read/Create Blogs" />}
-        <BlogForm />
+            <h1>Blog Page</h1>
+            <Container>
+                {error && <div>{error} </div>}
+                {isPending && <div>Loading ...</div>}
+                {blogs && <BlogList blogs={blogs} title="Read/Create Blogs" />}                
+            </Container>
+            <Container>
+                <BlogForm />
+            </Container>
         </div>
     );
 }
