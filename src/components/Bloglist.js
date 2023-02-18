@@ -37,8 +37,8 @@ const  BlogList= ({blogs}) => {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
-        height: '200px',
+        width: '90%',
+        maxheight: '100px',
         overflow: 'scroll'
     };
 
@@ -52,7 +52,7 @@ const  BlogList= ({blogs}) => {
                         <p>Written by <strong>{blog.author}</strong></p>
                         <p><strong>{ blog.body }</strong></p>
                     </div>
-                    <span onClick={() => handleClick(blog._id)}>Delete</span>
+                    <button onClick={() => handleClick(blog._id)}>Delete</button>
                 </div>
             ))}
         </div>

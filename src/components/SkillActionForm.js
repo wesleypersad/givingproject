@@ -4,19 +4,22 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function SkillForm() {
+function SkillActionForm({rowData, setRowData}) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    const [skills, setSkills] = useState('');
+    console.log('ACTION FORM=', rowData);
+
+    const [_id, setId] = useState(rowData._id);
+    const [skills, setSkills] = useState(rowData.skills);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
     if (user) {
         options = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${user.token}`,
                 // definately needed for body to be passed in fetch
@@ -25,15 +28,17 @@ function SkillForm() {
         };
     };
 
-    const handleSubmit = (e) => {
+    const handleAction = (e) => {
         e.preventDefault();
-        const skill = { skills };
+        const skill = { _id, skills };
         //console.log(JSON.stringify(skill));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
             body: JSON.stringify(skill)
         };
+
+        console.log(options);
 
         setIsPending(true);
 
@@ -56,20 +61,21 @@ function SkillForm() {
     };
 
     return (
-        <div className='create' style={myComponent}>
-            <h1>Donate A New Skill</h1>
-            <form onSubmit={handleSubmit}>
-                <label>skill :</label>
+        <div className='action' style={myComponent}>
+            <h1>Action Skill</h1>
+            <form onSubmit={handleAction}>
+                <label>Modify Skill id = {_id}</label>
+                <label>Skills :</label>
                 <textarea
                     required 
                     value={ skills }
-                    onChange={(e) => setSkills(e.target.value)}
+                    // onChange={(e) => setAmount(e.target.value)}
                 ></textarea>
-                {!isPending && <button>Add skill</button>}
-                {isPending && <button disabled>Adding Skill</button>}
+                {!isPending && <button>Action Skill</button>}
+                {isPending && <button disabled>Actioning Skill</button>}
             </form>
         </div>
     );
 }
 
-export default SkillForm;
+export default SkillActionForm;

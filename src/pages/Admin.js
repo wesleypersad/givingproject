@@ -8,6 +8,10 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
 import ItemAddForm from "../components/ItemAddForm";
 import ItemEditForm from "../components/ItemEditForm";
+import SkillAddForm from "../components/SkillAddForm";
+import SkillEditForm from "../components/SkillEditForm";
+import PaymentAddForm from "../components/PaymentAddForm";
+import PaymentEditForm from "../components/PaymentEditForm";
 
 function Admin() {
     // from  the data context
@@ -34,8 +38,15 @@ function Admin() {
 
     //define the highligted row data
     // set highlighted row
-    const [highlightedRow, setHighlightedRow] = useState(-99);
-    const [rowData, setRowData] = useState();
+    // for item
+    const [highlightedRowItem, setHighlightedRowItem] = useState(-99);
+    const [rowDataItem, setRowDataItem] = useState();
+    // for skill
+    const [highlightedRowSkill, setHighlightedRowSkill] = useState(-99);
+    const [rowDataSkill, setRowDataSkill] = useState();
+    // for payment
+    const [highlightedRowPayment, setHighlightedRowPayment] = useState(-99);
+    const [rowDataPayment, setRowDataPayment] = useState();
 
     // request the user data
     const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user`);
@@ -79,14 +90,31 @@ function Admin() {
         console.log(items);
     };
 
-    // when highligtedRow changes get the data
+    // when highlightedRow changes get the data
+    // for item list
     useEffect(() => {
-        if (highlightedRow >= 0) {
-            setRowData(itemList[highlightedRow]);
+        if (highlightedRowItem >= 0) {
+            setRowDataItem(itemList[highlightedRowItem]);
         } else {
-            setRowData();
+            setRowDataItem();
         }
-    }, [itemList, highlightedRow]);
+    }, [itemList, highlightedRowItem]);
+    // for skilllist
+    useEffect(() => {
+        if (highlightedRowSkill >= 0) {
+            setRowDataSkill(skillList[highlightedRowSkill]);
+        } else {
+            setRowDataSkill();
+        }
+    }, [skillList, highlightedRowSkill]);
+    // for payment list
+    useEffect(() => {
+        if (highlightedRowPayment >= 0) {
+            setRowDataPayment(paymentList[highlightedRowPayment]);
+        } else {
+            setRowDataPayment();
+        }
+    }, [paymentList, highlightedRowPayment]);
 
     return (
         <div className="admin">
@@ -105,17 +133,21 @@ function Admin() {
             </Container>
             <Container>
                 <Button onClick={reqPayment} variant="primary">Get payment JSON Data</Button>
-                {paymentList && <Table tbodyData={paymentList}/>}
+                {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
+                {!rowDataPayment && <PaymentAddForm />}
+                {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
                 <Button onClick={reqSkill} variant="primary">Get skill JSON Data</Button>
-                {skillList && <Table tbodyData={skillList}/>}
+                {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
+                {!rowDataSkill && <SkillAddForm />}
+                {rowDataSkill && <SkillEditForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
             </Container>
             <Container>
                 <Button onClick={reqItem} variant="primary">Get item JSON Data</Button>
-                {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRow} setHighlightedRow ={setHighlightedRow} />}
-                {!rowData && <ItemAddForm />}
-                {rowData && <ItemEditForm rowData={rowData} setRowData={setRowData} />}
+                {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
+                {!rowDataItem && <ItemAddForm />}
+                {rowDataItem && <ItemEditForm rowData={rowDataItem} setRowData={setRowDataItem} />}
             </Container>
         </div>
     );

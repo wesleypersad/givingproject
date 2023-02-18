@@ -1,6 +1,6 @@
 import '../App.css';
 import { Container, Button } from 'react-bootstrap';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useContext } from "react";
 import useFetch from "../components/useFetch";
 import DataContext from "../context/DataContext";
@@ -11,11 +11,15 @@ function Research () {
     const { SERVER_URL } = useContext(DataContext);
 
     // define the constants and functions to get the JSON data
-    const [charityList, setCharityList] = useState([{}]);
-    const [charityDetails, setCharityDetails] = useState([{}]);
-    const [charityFinancials, setCharityFinancials] = useState([{}]);
-    const [charityName, setCharityName] = useState('EMPTY NAME');
+    const [charityList, setCharityList] = useState();
+    const [charityDetails, setCharityDetails] = useState();
+    const [charityFinancials, setCharityFinancials] = useState();
+    const [charityName, setCharityName] = useState('salvation army');
     const [charityNumber, setCharityNumber] = useState('214779');
+
+    // for charity slected from table
+    const [highlightedRow, setHighlightedRow] = useState(-99);
+    const [rowDataCharity, setRowDataCharity] = useState([]);
 
     // request charity list of that name
     const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
@@ -27,15 +31,34 @@ function Research () {
     // request charity details
     const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
     const reqDetails = () => { 
-        setCharityDetails(details);
+        setCharityDetails([details]);
         console.log(details);
     };
 
     // request charity financial details
     const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
     const reqFinancials = () => {
-        setCharityFinancials(financials);
+        setCharityFinancials([financials]);
         console.log(financials);
+    };
+
+    // when highlightedRow changes get the data
+    // for charity list
+    useEffect(() => {
+        if (highlightedRow >= 0) {
+            setRowDataCharity(charityList[highlightedRow]);
+            setCharityNumber(`${charityList[highlightedRow].reg_charity_number}`);
+        } else {
+            setRowDataCharity([{}]);
+        }
+    }, [charityList, highlightedRow]);
+
+    const myComponent = {
+        color: 'blue',
+        background: 'gold',
+        width: '90%',
+        maxheight: '100px',
+        overflow: 'scroll'
     };
 
     return (
@@ -50,7 +73,8 @@ function Research () {
             />
             <Container>
                 <Button onClick={reqList} variant="primary">Get List Of Charities</Button>
-                {charityList && <Table tbodyData={charityList}/>}
+                {charityList && <Table tbodyData={charityList} highlightedRow={highlightedRow} setHighlightedRow ={setHighlightedRow} />}
+                {/* <p>{JSON.stringify(rowDataCharity)}</p> */}
             </Container>            
             <h3>Charity Number</h3>
             <label>Enter Number:</label>
@@ -59,14 +83,15 @@ function Research () {
                 onChange={(e) => setCharityNumber(e.target.value)}
                 value={charityNumber}
             />
-            <Container>
+            <Container style={myComponent}>
                 <Button onClick={reqDetails} variant="primary">Get Charity Details</Button>
-                {charityDetails && <p>{JSON.stringify(charityDetails)}</p>}
                 {/* {charityDetails && <Table tbodyData={charityDetails}/>} */}
+                <pre>{JSON.stringify(charityDetails, null, 2)}</pre>
             </Container>
-            <Container>
+            <Container  style={myComponent}>
                 <Button onClick={reqFinancials} variant="primary">Get Financial History</Button>
-                {charityFinancials && <Table tbodyData={charityFinancials}/>}
+                {/* {charityFinancials && <Table tbodyData={charityFinancials}/>} */}
+                <pre>{JSON.stringify(charityFinancials, null, 2)}</pre>
             </Container>
         </div>
     );

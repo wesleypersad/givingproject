@@ -4,13 +4,13 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function ItemAddForm() {
+function SkillAddForm() {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    const [description, setDescription] = useState();
+    const [skills, setSkills] = useState();
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -27,20 +27,20 @@ function ItemAddForm() {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const item = { description };
-        //console.log(JSON.stringify(item));
+        const skill = { skills };
+        //console.log(JSON.stringify(skill));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(item)
+            body: JSON.stringify(skill)
         };
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/item`, options)
+        fetch(`${SERVER_URL}/skill`, options)
         .then(() => {
-            console.log('new item added');
-            setDescription('');
+            console.log('new skill added');
+            setSkills('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
@@ -57,19 +57,19 @@ function ItemAddForm() {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Add A New Item</h1>
+            <h1>Add A New skill</h1>
                 <form onSubmit={handleCreate}>
-                    <label>Create Item :</label>
+                    <label>Create skill :</label>
                     <textarea
                         required 
-                        value={ description }
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={ skills }
+                        onChange={(e) => setSkills(e.target.value)}
                     ></textarea>
-                    {!isPending && <button>Add item</button>}
-                    {isPending && <button disabled>Adding item</button>}
+                    {!isPending && <button>Add skill</button>}
+                    {isPending && <button disabled>Adding skill</button>}
                 </form>
         </div>
     );
 }
 
-export default ItemAddForm;
+export default SkillAddForm;

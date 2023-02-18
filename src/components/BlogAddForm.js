@@ -4,15 +4,15 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function RecordForm({recordType, action}={}) {
+function BlogForm() {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    // this generic form can add, edit(delete)
-    const [formAction, setFormAction] = useState();
-    const [description, setDescription] = useState('');
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    //const [author, setAuthor] = useState(`${user.username}`);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -29,22 +29,23 @@ function RecordForm({recordType, action}={}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const item = { description };
-        //console.log(JSON.stringify(item));
+        const blog = { title, body };
+        //console.log(JSON.stringify(blog));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(item)
+            body: JSON.stringify(blog)
         };
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/item`, options)
+        fetch(`${SERVER_URL}/blog`, options)
         .then(() => {
-            console.log('new item added');
-            setDescription('');
+            console.log('new blog added');
+            setTitle('');
+            setBody('');
             setIsPending(false);
-            //navigate('/donate');
+            //navigate('/blog');
             window.location.reload();
         })
     };
@@ -52,29 +53,33 @@ function RecordForm({recordType, action}={}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
-        height: '200px',
+        width: '90%',
+        maxheight: '100px',
         overflow: 'scroll'
     };
 
     return (
         <div className='create' style={myComponent}>
-            {(recordType === 'item') &&  
-            <div>
-                <h1>Donate A New Item</h1>
-                <form onSubmit={handleSubmit}>
-                    <label>item :</label>
-                    <textarea
-                        required 
-                        value={ description }
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                    {!isPending && <button>Add item</button>}
-                    {isPending && <button disabled>Adding item</button>}
-                </form>
-            </div>}
+            <h1>Add A New Blog</h1>
+            <form onSubmit={handleSubmit}>
+                <label>Blog title:</label>
+                <input 
+                    type="text"
+                    required 
+                    value={ title }
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <label>Blog body:</label>
+                <textarea
+                    required
+                    value={ body }
+                    onChange={(e) => setBody(e.target.value)}
+                ></textarea>
+                {!isPending && <button>Add Blog</button>}
+                {isPending && <button disabled>Adding Blog</button>}
+            </form>
         </div>
     );
 }
 
-export default RecordForm;
+export default BlogForm;

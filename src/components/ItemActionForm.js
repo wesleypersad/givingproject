@@ -4,21 +4,22 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function BlogForm() {
+function ItemActionForm({rowData, setRowData}) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    //const [author, setAuthor] = useState(`${user.username}`);
+    console.log('ACTION FORM=', rowData);
+
+    const [_id, setId] = useState(rowData._id);
+    const [description, setDescription] = useState(rowData.description);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
     if (user) {
         options = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${user.token}`,
                 // definately needed for body to be passed in fetch
@@ -27,25 +28,26 @@ function BlogForm() {
         };
     };
 
-    const handleSubmit = (e) => {
+    const handleAction = (e) => {
         e.preventDefault();
-        const blog = { title, body };
-        //console.log(JSON.stringify(blog));
+        const item = { _id, description };
+        //console.log(JSON.stringify(Item));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(blog)
+            body: JSON.stringify(item)
         };
+
+        console.log(options);
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/blog`, options)
+        fetch(`${SERVER_URL}/item`, options)
         .then(() => {
-            console.log('new blog added');
-            setTitle('');
-            setBody('');
+            console.log('new item added');
+            setDescription('');
             setIsPending(false);
-            //navigate('/blog');
+            //navigate('/donate');
             window.location.reload();
         })
     };
@@ -59,27 +61,21 @@ function BlogForm() {
     };
 
     return (
-        <div className='create' style={myComponent}>
-            <h1>Add A New Blog</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Blog title:</label>
-                <input 
-                    type="text"
-                    required 
-                    value={ title }
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <label>Blog body:</label>
+        <div className='action' style={myComponent}>
+            <h1>Action Item</h1>
+            <form onSubmit={handleAction}>
+                <label>Modify Item id = {_id}</label>
+                <label>Description :</label>
                 <textarea
-                    required
-                    value={ body }
-                    onChange={(e) => setBody(e.target.value)}
+                    required 
+                    value={ description }
+                    // onChange={(e) => setAmount(e.target.value)}
                 ></textarea>
-                {!isPending && <button>Add Blog</button>}
-                {isPending && <button disabled>Adding Blog</button>}
+                {!isPending && <button>Action Item</button>}
+                {isPending && <button disabled>Actioning Item</button>}
             </form>
         </div>
     );
 }
 
-export default BlogForm;
+export default ItemActionForm;

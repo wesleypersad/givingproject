@@ -3,7 +3,7 @@ import "../App.css";
 import { Container } from 'react-bootstrap';
 import BlogList from "../components/Bloglist";
 import useFetch from "../components/useFetch";
-import BlogForm from "../components/BlogForm";
+import BlogAddForm from "../components/BlogAddForm";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -35,7 +35,7 @@ function Blog() {
                 {blogs && <BlogList blogs={blogs} title="Read/Create Blogs" />}                
             </Container>
             <Container>
-                <BlogForm />
+                <BlogAddForm />
             </Container>
         </div>
     );

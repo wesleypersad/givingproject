@@ -4,16 +4,17 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function ItemEditForm({rowData, setRowData}) {
+function PaymentActionForm({rowData, setRowData}) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    console.log('EDIT FORM=', rowData);
+    console.log('ACTION FORM=', rowData);
 
     const [_id, setId] = useState(rowData._id);
-    const [description, setDescription] = useState(rowData.description);
+    const [amount, setAmount] = useState(rowData.amount);
+    const [charity, setCharity] = useState(rowData.charity);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -28,44 +29,29 @@ function ItemEditForm({rowData, setRowData}) {
         };
     };
 
-    const handleModify = (e) => {
+    const handleAction = (e) => {
         e.preventDefault();
-        const item = { _id, description };
-        //console.log(JSON.stringify(item));
+        const payment = { _id, amount, charity };
+        //console.log(JSON.stringify(Payment));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(item)
+            body: JSON.stringify(payment)
         };
 
         console.log(options);
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/item`, options)
+        fetch(`${SERVER_URL}/Payment`, options)
         .then(() => {
-            console.log('new item added');
-            setDescription('');
+            console.log('new Payment added');
+            setAmount('');
+            setCharity('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
         })
-    };
-
-    const handleDelete = (e) => {
-        // problem with useFetch hook so ordinary fetch used ?
-        const item = {_id};
-
-        //modify request to type DELETE
-        options.method = 'DELETE';
-
-        options = { ...options,
-            body: JSON.stringify(item)
-        };
-        console.log(options);
-        fetch(`${SERVER_URL}/item`, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
     };
 
     const myComponent = {
@@ -77,21 +63,27 @@ function ItemEditForm({rowData, setRowData}) {
     };
 
     return (
-        <div className='create' style={myComponent}>
-            <h1>Modify An Item</h1>
-            <form onSubmit={handleModify}>
-                <label>Modify Item id = {_id}</label>
+        <div className='action' style={myComponent}>
+            <h1>Action Payment</h1>
+            <form onSubmit={handleAction}>
+                <label>Modify Payment id = {_id}</label>
+                <label>Amount :</label>
                 <textarea
                     required 
-                    value={ description }
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={ amount }
+                    // onChange={(e) => setAmount(e.target.value)}
                 ></textarea>
-                {!isPending && <button>Modify Item</button>}
-                {isPending && <button disabled>Modfying Item</button>}
+                <label>Charity :</label>
+                <textarea
+                    required 
+                    value={ charity }
+                    // onChange={(e) => setCharity(e.target.value)}
+                ></textarea>
+                {!isPending && <button>Action Payment</button>}
+                {isPending && <button disabled>Actioning Payment</button>}
             </form>
-            <button onClick={() => handleDelete()}>Delete</button>
         </div>
     );
 }
 
-export default ItemEditForm;
+export default PaymentActionForm;
