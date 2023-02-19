@@ -58,6 +58,7 @@ function Admin() {
     // request the blog data
     const { data: blogs, isPending2, error2 } = useFetch(`${SERVER_URL}/blog/all`, options);
     const reqBlog = () => { 
+        //setBlogList(blogs.filter(blog => blog.title.includes('blog')));
         setBlogList(blogs);
         console.log(blogs);
     };

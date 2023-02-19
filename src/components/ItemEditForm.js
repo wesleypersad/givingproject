@@ -14,6 +14,7 @@ function ItemEditForm({rowData, setRowData}) {
 
     const [_id, setId] = useState(rowData._id);
     const [description, setDescription] = useState(rowData.description);
+    const [status, setStatus] = useState(rowData.status);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -85,6 +86,12 @@ function ItemEditForm({rowData, setRowData}) {
                     required 
                     value={ description }
                     onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+                <label>Status :</label>
+                <textarea
+                    required 
+                    value={ status }
+                    onChange={(e) => setStatus(e.target.value)}
                 ></textarea>
                 {!isPending && <button>Modify Item</button>}
                 {isPending && <button disabled>Modfying Item</button>}

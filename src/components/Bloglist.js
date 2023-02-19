@@ -51,6 +51,8 @@ const  BlogList= ({blogs}) => {
                         <h2>{ blog.title }</h2>
                         <p>Written by <strong>{blog.author}</strong></p>
                         <p><strong>{ blog.body }</strong></p>
+                        <p>Link is <strong>{blog.link}</strong></p>
+                        <p>Image is <strong>{blog.image}</strong></p>
                     </div>
                     <button onClick={() => handleClick(blog._id)}>Delete</button>
                 </div>

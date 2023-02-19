@@ -11,14 +11,14 @@ export const useSignup = () => {
     // get the user path from  the data context
     const { SERVER_URL } = useContext(DataContext);
 
-    const signup = async (username, password, email) => {
+    const signup = async (username, password, email, mobile) => {
         setIsloading(true);
         setError(null);
 
         const response = await fetch(`${SERVER_URL}/user/signup`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password, email})
+            body: JSON.stringify({username, password, email, mobile})
         });
 
         const json = await response.json();

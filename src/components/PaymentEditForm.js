@@ -15,6 +15,7 @@ function PaymentEditForm({rowData, setRowData}) {
     const [_id, setId] = useState(rowData._id);
     const [amount, setAmount] = useState(rowData.amount);
     const [charity, setCharity] = useState(rowData.charity);
+    const [status, setStatus] = useState(rowData.status);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -94,6 +95,12 @@ function PaymentEditForm({rowData, setRowData}) {
                     required 
                     value={ charity }
                     onChange={(e) => setCharity(e.target.value)}
+                ></textarea>
+                <label>Status :</label>
+                <textarea
+                    required 
+                    value={ status }
+                    onChange={(e) => setStatus(e.target.value)}
                 ></textarea>
                 {!isPending && <button>Modify Payment</button>}
                 {isPending && <button disabled>Modifying Payment</button>}

@@ -14,6 +14,7 @@ function SkillEditForm({rowData, setRowData}) {
 
     const [_id, setId] = useState(rowData._id);
     const [skills, setSkills] = useState(rowData.skills);
+    const [status, setStatus] = useState(rowData.status);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -85,6 +86,12 @@ function SkillEditForm({rowData, setRowData}) {
                     required 
                     value={ skills }
                     onChange={(e) => setSkills(e.target.value)}
+                ></textarea>
+                <label>Status :</label>
+                <textarea
+                    required 
+                    value={ status }
+                    onChange={(e) => setStatus(e.target.value)}
                 ></textarea>
                 {!isPending && <button>Modify Skills</button>}
                 {isPending && <button disabled>Modfying Skills</button>}

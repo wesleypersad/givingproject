@@ -12,6 +12,8 @@ function BlogForm() {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [link, setLink] = useState('');
+    const [image, setImage] = useState('');
     //const [author, setAuthor] = useState(`${user.username}`);
     const [isPending, setIsPending]= useState(false);
 
@@ -29,7 +31,7 @@ function BlogForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const blog = { title, body };
+        const blog = { title, body, link, image };
         //console.log(JSON.stringify(blog));
 
         // problem with useFetch hook so ordinary fetch used ?
@@ -44,6 +46,8 @@ function BlogForm() {
             console.log('new blog added');
             setTitle('');
             setBody('');
+            setLink('');
+            setImage('');
             setIsPending(false);
             //navigate('/blog');
             window.location.reload();
@@ -69,11 +73,23 @@ function BlogForm() {
                     value={ title }
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <label>Blog body:</label>
+                <label>Body:</label>
                 <textarea
                     required
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
+                ></textarea>
+                <label>Link:</label>
+                <textarea
+                    required
+                    value={ link }
+                    onChange={(e) => setLink(e.target.value)}
+                ></textarea>
+                <label>Image:</label>
+                <textarea
+                    required
+                    value={ image }
+                    onChange={(e) => setImage(e.target.value)}
                 ></textarea>
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}

@@ -7,6 +7,7 @@ function Signup() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [mobile, setMobile] = useState('');
     const {signup, error, isLoading} = useSignup();
 
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await signup(username, password, email);
+        await signup(username, password, email, mobile);
         //console.log(username, password);
         navigate('/');
     };
@@ -39,6 +40,12 @@ function Signup() {
                 type="email" 
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+            />
+            <label>Mobile:</label>
+            <input 
+                type="mobile" 
+                onChange={(e) => setMobile(e.target.value)}
+                value={mobile}
             />
             <button disabled={isLoading}>Sign up</button>
             {error && <div className="error">{error}</div>}
