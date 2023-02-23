@@ -70,6 +70,7 @@ function SkillActionForm({rowData, setRowData}) {
                     required 
                     value={ skills }
                     // onChange={(e) => setAmount(e.target.value)}
+                    readOnly
                 ></textarea>
                 {!isPending && <button>Action Skill</button>}
                 {isPending && <button disabled>Actioning Skill</button>}

@@ -72,12 +72,14 @@ function PaymentActionForm({rowData, setRowData}) {
                     required 
                     value={ amount }
                     // onChange={(e) => setAmount(e.target.value)}
+                    readOnly
                 ></textarea>
                 <label>Charity :</label>
                 <textarea
                     required 
                     value={ charity }
                     // onChange={(e) => setCharity(e.target.value)}
+                    readOnly
                 ></textarea>
                 {!isPending && <button>Action Payment</button>}
                 {isPending && <button disabled>Actioning Payment</button>}

@@ -12,8 +12,8 @@ function Research () {
 
     // define the constants and functions to get the JSON data
     const [charityList, setCharityList] = useState();
-    const [charityDetails, setCharityDetails] = useState();
-    const [charityFinancials, setCharityFinancials] = useState();
+    const [charityDetails, setCharityDetails] = useState([]);
+    const [charityFinancials, setCharityFinancials] = useState([]);
     const [charityName, setCharityName] = useState('salvation army');
     const [charityNumber, setCharityNumber] = useState('214779');
 
@@ -62,7 +62,7 @@ function Research () {
     };
 
     return (
-        <div className="research">
+        <div className="research container square border border-info border-2">
             <h1>Research Page</h1>
             <h3>Charity Name</h3>
             <label>Enter Name:</label>

@@ -70,6 +70,7 @@ function ItemActionForm({rowData, setRowData}) {
                     required 
                     value={ description }
                     // onChange={(e) => setAmount(e.target.value)}
+                    readOnly
                 ></textarea>
                 {!isPending && <button>Action Item</button>}
                 {isPending && <button disabled>Actioning Item</button>}

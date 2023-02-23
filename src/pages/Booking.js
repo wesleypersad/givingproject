@@ -44,7 +44,7 @@ function Booking () {
     };
 
     // initialize state variables
-    const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""});
+    const [newEvent, setNewEvent] = useState({title: "", body: "", start: "", end: ""});
     const [allEvents, setAllEvents] = useState([]);
     const [isPending, setIsPending]= useState(false);
 
@@ -77,7 +77,7 @@ function Booking () {
     };
 
     return (
-        <div className="booking">
+        <div className="booking container square border border-info border-2">
             <h1>Bookings Page</h1>
             <h2>Schedule Availability & Collections</h2>
             <Calendar localizer={localizer} events={allEvents} 
@@ -90,6 +90,9 @@ function Booking () {
             <div>
                 <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
                 value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
+                />
+                <input type="text" placeholder="Add Body" style={{width:"20%", marginRight:"10pz"}}
+                value={newEvent.body} onChange={(e) => setNewEvent({...newEvent, body: e.target.value})}
                 />
                 <DatePicker 
                     placeholderText="Start Date" style={{marginRight:"10px"}}

@@ -12,24 +12,25 @@ const ChatFooter = ({ socket }) => {
             socket.emit('message', {
             text: message,
             name: localStorage.getItem('userName'),
+            time: new Date().toLocaleString(),
             id: `${socket.id}${Math.random()}`,
-            socketID: socket.id,
+            socketID: socket.id
             });
         }
         setMessage('');
     };
 
     return (
-    <div className="chat__footer">
+    <div className="chat__footer square border border-info border-2">
         <form className="form" onSubmit={handleSendMessage}>
-        <input
-            type="text"
-            placeholder="Write message"
-            className="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleTyping}
-        />
+            <input
+                type="text"
+                placeholder="Write message"
+                className="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={handleTyping}
+            />
         <button className="sendBtn">SEND</button>
         </form>
     </div>

@@ -10,8 +10,6 @@ function PaymentEditForm({rowData, setRowData}) {
     const { user } = useAuthContext();
     let options = {};
 
-    console.log('EDIT FORM=', rowData);
-
     const [_id, setId] = useState(rowData._id);
     const [amount, setAmount] = useState(rowData.amount);
     const [charity, setCharity] = useState(rowData.charity);

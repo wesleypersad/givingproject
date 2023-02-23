@@ -58,7 +58,7 @@ function PaymentAddForm() {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Add A New Payment</h1>
+            <h1>Add A Payment</h1>
                 <form onSubmit={handleCreate}>
                     <label>Create payment :</label>
                     <label>Amount :</label>

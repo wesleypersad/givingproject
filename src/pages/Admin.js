@@ -6,6 +6,8 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
+import EventAddForm from "../components/EventAddForm";
+import EventEditForm from "../components/EventEditForm";
 import ItemAddForm from "../components/ItemAddForm";
 import ItemEditForm from "../components/ItemEditForm";
 import SkillAddForm from "../components/SkillAddForm";
@@ -38,6 +40,9 @@ function Admin() {
 
     //define the highligted row data
     // set highlighted row
+    // for event
+    const [highlightedRowEvent, setHighlightedRowEvent] = useState(-99);
+    const [rowDataEvent, setRowDataEvent] = useState();
     // for item
     const [highlightedRowItem, setHighlightedRowItem] = useState(-99);
     const [rowDataItem, setRowDataItem] = useState();
@@ -92,6 +97,16 @@ function Admin() {
     };
 
     // when highlightedRow changes get the data
+    // for event list
+    useEffect(() => {
+        
+        if (highlightedRowEvent >= 0) {
+            setRowDataEvent(eventList[highlightedRowEvent]);
+        } else {
+            setRowDataItem();
+        };
+        console.log('eventRow = ',rowDataEvent);
+    }, [eventList, highlightedRowEvent]);
     // for item list
     useEffect(() => {
         if (highlightedRowItem >= 0) {
@@ -118,7 +133,7 @@ function Admin() {
     }, [paymentList, highlightedRowPayment]);
 
     return (
-        <div className="admin">
+        <div className="admin container square border border-info border-2">
             <h1>Admin Page</h1>
             <Container>
                 <Button onClick={reqUser} variant="primary">Get user JSON Data</Button>
@@ -130,7 +145,9 @@ function Admin() {
             </Container>
             <Container>
                 <Button onClick={reqEvent} variant="primary">Get event JSON Data</Button>
-                {eventList && <Table tbodyData={eventList}/>}
+                {eventList && <Table tbodyData={eventList} highlightedRow={highlightedRowEvent} setHighlightedRow ={setHighlightedRowEvent}/>}
+                {!rowDataEvent && <EventAddForm />}
+                {rowDataEvent && <EventEditForm rowData={rowDataEvent} setRowData={setRowDataEvent} />}
             </Container>
             <Container>
                 <Button onClick={reqPayment} variant="primary">Get payment JSON Data</Button>

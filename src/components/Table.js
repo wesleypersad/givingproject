@@ -1,7 +1,6 @@
-export default function Table({tbodyData, highlightedRow, setHighlightedRow}) {
-    // get today's date for key value
-    const date = new Date();
+import { v4 as uuidv4 } from 'uuid';
 
+export default function Table({tbodyData, highlightedRow, setHighlightedRow}) {
     // select the table row 
     const ClickHighlight = (e,index) => {
         // check if (set)highlightedRow passed
@@ -14,6 +13,8 @@ export default function Table({tbodyData, highlightedRow, setHighlightedRow}) {
             }
         };
     };
+
+    //console.log('UUID =',uuidv4());
 
     // define function to the get keys from json data
     const getHeadings = (json) => {
@@ -36,19 +37,18 @@ export default function Table({tbodyData, highlightedRow, setHighlightedRow}) {
             <table>
                 <thead>
                     <tr>
-                    {theadData.map((heading) => {
-                        return <th key={heading}>{heading}</th>
+                    {theadData.map((heading, column) => {
+                        return <th key={column}>{heading}</th>
                     })}
                     </tr>
                 </thead>
                 <tbody>
                     {tbodyData.map((rowdata, index) => {
-                        return <tr key={rowdata._id} onMouseDown={(e) => ClickHighlight(e,index)} 
+                        return <tr key={uuidv4()} onMouseDown={(e) => ClickHighlight(e,index)} 
                             style={ (index === highlightedRow) ? { backgroundColor: 'cyan' } : {}}
                         >
-                            {theadData.map((key, column) => {
-                                // make the key unique by adding index
-                                return <td key={rowdata[key]+column}>{rowdata[key]}</td>
+                            {theadData.map((heading, column) => {
+                                return <td key={uuidv4()}>{rowdata[heading]}</td>
                             })}
                         </tr>;
                     })}

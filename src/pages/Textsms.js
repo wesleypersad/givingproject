@@ -46,7 +46,7 @@ function Textsms() {
     };
 
     return (
-        <div classname="textsms">
+        <div className="textsms container square border border-info border-2">
             <h1>SMS & Email Page</h1>
             <Container>
                 <form className="textsms" onSubmit={textSubmit}>

@@ -93,7 +93,7 @@ function Donate() {
     }, [paymentList, highlightedRowPayment, isPending4]);
 
     return (
-        <div className="admin">
+        <div className="donate container square border border-info border-2">
             <h1>Donations Page</h1>
             <Container>
                 <Button onClick={reqPayment} variant="primary">Get payment JSON Data</Button>

@@ -57,7 +57,7 @@ function SkillAddForm() {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Add A New skill</h1>
+            <h1>Add A Skill</h1>
                 <form onSubmit={handleCreate}>
                     <label>Create skill :</label>
                     <textarea

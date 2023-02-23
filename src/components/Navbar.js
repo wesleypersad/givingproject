@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
         <header>
-            <div className="container">
+            <div className="container square border border-info border-5">
                 <h1>React Giving Website : </h1>
 
                 <div className='links'>

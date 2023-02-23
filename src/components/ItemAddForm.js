@@ -57,7 +57,7 @@ function ItemAddForm() {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Add A New Item</h1>
+            <h1>Add An Item</h1>
                 <form onSubmit={handleCreate}>
                     <label>Create Item :</label>
                     <textarea
