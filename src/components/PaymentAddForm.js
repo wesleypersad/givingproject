@@ -52,7 +52,7 @@ function PaymentAddForm() {
         color: 'blue',
         background: 'gold',
         width: '90%',
-        maxheight: '100px',
+        height: 'auto',
         overflow: 'scroll'
     };
 

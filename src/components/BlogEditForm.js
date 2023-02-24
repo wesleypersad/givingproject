@@ -76,7 +76,7 @@ function BlogEditForm({ blog }) {
         color: 'blue',
         background: 'gold',
         width: '100%',
-        maxheight: '100px',
+        height: 'auto',
         overflow: 'scroll'
     };
 
@@ -98,18 +98,6 @@ function BlogEditForm({ blog }) {
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-{/*                 <label>Link:</label>
-                <textarea
-                    required
-                    value={ link }
-                    onChange={(e) => setLink(e.target.value)}
-                ></textarea>
-                <label>Image:</label>
-                <textarea
-                    required
-                    value={ image }
-                    onChange={(e) => setImage(e.target.value)}
-                ></textarea> */}
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}
             </form>

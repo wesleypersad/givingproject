@@ -8,27 +8,12 @@ import getStripe from '../lib/getStripe';
 
 function PaymentActionForm({rowData, setRowData}) {
     // context provided variables
-    const { SERVER_URL } = useContext(DataContext);
     const { FRONTEND_URL } = useContext(DataContext);
     const { user } = useAuthContext();
-    let options = {};
 
     const [_id, setId] = useState(rowData._id);
     const [amount, setAmount] = useState(rowData.amount);
     const [charity, setCharity] = useState(rowData.charity);
-    //const [isPending, setIsPending]= useState(false);
-
-    // if there is an authorized user set the fetch options
-    if (user) {
-        options = {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${user.token}`,
-                // definately needed for body to be passed in fetch
-                'Content-type' : 'application/json'
-            }
-        };
-    };
 
     // define function to handle Stripe checkout
     async function handleCheckout() {
@@ -52,7 +37,7 @@ function PaymentActionForm({rowData, setRowData}) {
         color: 'blue',
         background: 'gold',
         width: '1200px',
-        height: '200px',
+        height: 'auto',
         overflow: 'scroll'
     };
 

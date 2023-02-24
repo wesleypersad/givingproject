@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
+import EventAddForm from './EventAddForm';
 import '../App.css';
 
 function ItemAddForm() {
@@ -51,7 +52,7 @@ function ItemAddForm() {
         color: 'blue',
         background: 'gold',
         width: '90%',
-        maxheight: '100px',
+        height: 'auto',
         overflow: 'scroll'
     };
 

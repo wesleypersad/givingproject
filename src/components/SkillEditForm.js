@@ -73,7 +73,7 @@ function SkillEditForm({rowData, setRowData}) {
         color: 'blue',
         background: 'gold',
         width: '1200px',
-        height: '200px',
+        height: 'auto',
         overflow: 'scroll'
     };
 
