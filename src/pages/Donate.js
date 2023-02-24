@@ -46,7 +46,7 @@ function Donate() {
     const [rowDataPayment, setRowDataPayment] = useState();
 
     // request the payment data
-    const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment/all`, options);
+    const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment`, options);
     const reqPayment = () => { 
         setPaymentList(payments);
         console.log(payments);

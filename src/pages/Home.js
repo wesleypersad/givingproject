@@ -32,11 +32,15 @@ function Home() {
     return (
         <div className="home container square border border-info border-2">
         <h1>Home Page</h1>
+        <div>
+        </div>
+        <Container>
             <div className = 'text-start'>
                 {error && <div>{error} </div>}
                 {isPending && <div>Loading ...</div>}
                 {blogs && <BlogViewList blogs={blogs} title="Home Page" />}
             </div>
+        </Container>
         </div>
     );
 }

@@ -3,19 +3,20 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+// import the getStripe function
+import getStripe from '../lib/getStripe';
 
 function PaymentActionForm({rowData, setRowData}) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
+    const { FRONTEND_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
-
-    console.log('ACTION FORM=', rowData);
 
     const [_id, setId] = useState(rowData._id);
     const [amount, setAmount] = useState(rowData.amount);
     const [charity, setCharity] = useState(rowData.charity);
-    const [isPending, setIsPending]= useState(false);
+    //const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
     if (user) {
@@ -29,29 +30,22 @@ function PaymentActionForm({rowData, setRowData}) {
         };
     };
 
-    const handleAction = (e) => {
-        e.preventDefault();
-        const payment = { _id, amount, charity };
-        //console.log(JSON.stringify(Payment));
-
-        // problem with useFetch hook so ordinary fetch used ?
-        options = { ...options,
-            body: JSON.stringify(payment)
-        };
-
-        console.log(options);
-
-        setIsPending(true);
-
-        fetch(`${SERVER_URL}/Payment`, options)
-        .then(() => {
-            console.log('new Payment added');
-            setAmount('');
-            setCharity('');
-            setIsPending(false);
-            //navigate('/donate');
-            window.location.reload();
-        })
+    // define function to handle Stripe checkout
+    async function handleCheckout() {
+        const stripe = await getStripe();
+        const { error } = await stripe.redirectToCheckout({
+            lineItems: [
+            {
+                price: process.env.REACT_APP_PUBLIC_STRIPE_PRICE_ID,
+                quantity: 1,
+            },
+            ],
+            mode: 'payment',
+            successUrl: `${FRONTEND_URL}/donate`,    //success
+            cancelUrl: `${FRONTEND_URL}/cancel`,     //cancel
+            customerEmail: 'vasudeo.persad@gmail.com',
+        });
+        console.warn(error.message);
     };
 
     const myComponent = {
@@ -65,7 +59,7 @@ function PaymentActionForm({rowData, setRowData}) {
     return (
         <div className='action' style={myComponent}>
             <h1>Action Payment</h1>
-            <form onSubmit={handleAction}>
+            <form>
                 <label>Modify Payment id = {_id}</label>
                 <label>Amount :</label>
                 <textarea
@@ -81,9 +75,11 @@ function PaymentActionForm({rowData, setRowData}) {
                     // onChange={(e) => setCharity(e.target.value)}
                     readOnly
                 ></textarea>
-                {!isPending && <button>Action Payment</button>}
-                {isPending && <button disabled>Actioning Payment</button>}
             </form>
+            <div>
+                <label>Go To Stripe Checkout To Make Payment</label>
+                <button onClick={handleCheckout}>Action Payment</button>
+            </div>
         </div>
     );
 }
