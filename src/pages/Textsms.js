@@ -9,18 +9,26 @@ function Textsms() {
     const [confirm, setConfirm] = useState('EMPTY REPLY');
     const [email, setEmail] = useState('EMPTY');
     const [emconfirm, setEmconfirm] = useState('EMPTY REPLY');
+    const [sendnum, setSendnum] = useState('+14246553367');
+    const [recvnum, setRecvnum] = useState('+447398787851');
+    const [sendemail, setSendemail] = useState('vasudeo.persad@gmail.com');
+    const [recvemail, setRecvemail] = useState('vas.udeo.persad@gmail.com');
     const { SERVER_URL } = useContext(DataContext);
 
     const textSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('SMS SENT !!!')
+        console.log('SMS SENT !!!');
+
+        //now set the values within smsbody
+        let smsbody = { sendnum, recvnum, message:email };
 
         // get the required users (from the TWILIO JSON server)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: `${message}`})
+            // body: JSON.stringify({ message: `${message}`})
+            body: JSON.stringify(smsbody)
         };
 
         const response = await fetch(`${SERVER_URL}/send/sms`, requestOptions);
@@ -31,13 +39,17 @@ function Textsms() {
     const emailSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('EMAIL SENT !!!')
+        console.log('EMAIL SENT !!!');
+
+        //now set the values within emailbody
+        let emailbody = { sendemail, recvemail, email };
 
         // get the required users (from the TWILIO JSON server)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: `${email}`})
+            // body: JSON.stringify({ message: `${email}`})
+            body: JSON.stringify(emailbody)
         };
 
         const response = await fetch(`${SERVER_URL}/send/email`, requestOptions);
