@@ -45,7 +45,7 @@ function PaymentActionForm({rowData, setRowData}) {
         <div className='action' style={myComponent}>
             <h1>Action Payment</h1>
             <form>
-                <label>Modify Payment id = {_id}</label>
+                <label>Modify Payment :</label>
                 <label>Amount :</label>
                 <textarea
                     required 

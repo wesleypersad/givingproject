@@ -21,7 +21,7 @@ function Textsms() {
         console.log('SMS SENT !!!');
 
         //now set the values within smsbody
-        let smsbody = { sendnum, recvnum, message:email };
+        let smsbody = { sendnum, recvnum, message };
 
         // get the required users (from the TWILIO JSON server)
         const requestOptions = {
@@ -42,7 +42,7 @@ function Textsms() {
         console.log('EMAIL SENT !!!');
 
         //now set the values within emailbody
-        let emailbody = { sendemail, recvemail, email };
+        let emailbody = { sendemail, recvemail, message:email };
 
         // get the required users (from the TWILIO JSON server)
         const requestOptions = {
