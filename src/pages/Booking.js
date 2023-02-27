@@ -6,13 +6,15 @@ import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "../App.css";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import DatePicker from "react-datepicker";
 import { Button, Card } from 'react-bootstrap';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import useFetch from "../components/useFetch";
+import EventAddForm from "../components/EventAddForm";
+import EventEditForm from "../components/EventEditForm";
 
 const locales = {
     "en-GB": require("date-fns/locale/en-GB")
@@ -46,9 +48,10 @@ function Booking () {
     // initialize state variables
     const [newEvent, setNewEvent] = useState({title: "", body: "", start: "", end: ""});
     const [allEvents, setAllEvents] = useState([]);
+    const [editEvent, setEditEvent] = useState();
     const [isPending, setIsPending]= useState(false);
 
-    // add a new event to the list of events
+/*     // add a new event to the list of events
     function handleAddEvent() {
         setAllEvents([...allEvents, newEvent]);
 
@@ -68,7 +71,7 @@ function Booking () {
             setIsPending(false);
             //window.location.reload();
         })
-    };
+    }; */
 
     // get the list of events
     const { data: events, isPending2, error } = useFetch(`${SERVER_URL}/event`, options);
@@ -76,35 +79,39 @@ function Booking () {
         setAllEvents(events);
     };
 
+    // return event selected from grid
+    const handleSelectEvent = useCallback((event) => {
+        //window.alert(event.title);
+        if (editEvent === event) {
+            // clear event first
+            setEditEvent();
+        } else {
+            // set if cleared
+            setEditEvent(event);
+        };        
+    },[]);
+
+    // set the events state variable with results of fetch
+    useEffect( () => {
+        if (events) {
+            setAllEvents(events);
+        };
+    }, [events]);
+
     return (
         <div className="booking container square border border-info border-2">
             <h1>Bookings Page</h1>
             <h2>Schedule Availability & Collections</h2>
             <Calendar localizer={localizer} events={allEvents} 
-            startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}} />
+            startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}}  onSelectEvent={handleSelectEvent}
+            />
             {error && <div>{error} </div>}
             {isPending2 && <div>Loading ...</div>}
             {events && <Card className="mb-3" style={{ color: "#000"}}>
                 <Button  className='m-1' onClick={reqEvents} variant="primary">Get list of events JSON Data</Button>
             </Card>}
-            <div>
-                <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
-                value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
-                />
-                <input type="text" placeholder="Add Body" style={{width:"20%", marginRight:"10pz"}}
-                value={newEvent.body} onChange={(e) => setNewEvent({...newEvent, body: e.target.value})}
-                />
-                <DatePicker 
-                    placeholderText="Start Date" style={{marginRight:"10px"}}
-                    selected={newEvent.start} onChange={(start) => setNewEvent({...newEvent, start})}
-                />
-                <DatePicker 
-                    placeholderText="End Date" 
-                    selected={newEvent.end} onChange={(end) => setNewEvent({...newEvent, end})}
-                />
-                <label>Event creator: {newEvent.author}</label>
-                <button style={{marginTop:"10px"}} onClick={handleAddEvent}>Add Event</button>
-            </div>
+            {!editEvent && <EventAddForm />}
+            {editEvent && <EventEditForm rowData={editEvent} setRowData={setEditEvent} />}
         </div>
     )
 }

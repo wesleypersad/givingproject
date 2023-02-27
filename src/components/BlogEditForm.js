@@ -10,11 +10,15 @@ function BlogEditForm({ blog }) {
     const { user } = useAuthContext();
     let options = {};
 
-    const [_id, setId] = useState(blog._id);
-    const [title, setTitle] = useState(blog.title);
+/*     const [title, setTitle] = useState(blog.title);
     const [body, setBody] = useState(blog.body);
     const [link, setLink] = useState(blog.link);
-    const [image, setImage] = useState(blog.image);
+    const [image, setImage] = useState(blog.image); */
+    const [_id, setId] = useState();
+    const [title, setTitle] = useState();
+    const [body, setBody] = useState();
+    const [link, setLink] = useState();
+    const [image, setImage] = useState();
     //const [author, setAuthor] = useState(`${user.username}`);
     const [isPending, setIsPending]= useState(false);
 
@@ -82,7 +86,7 @@ function BlogEditForm({ blog }) {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Edit Blog (HTML)</h1>
+            <h1>Modify Blog (HTML)</h1>
             <form onSubmit={handleModify}>
                 <label>Modify Item id = {_id}</label>
                 <label>Blog title:</label>
@@ -97,6 +101,18 @@ function BlogEditForm({ blog }) {
                     required
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
+                ></textarea>
+                <label>Link:</label>
+                <textarea
+                    required
+                    value={ link }
+                    onChange={(e) => setLink(e.target.value)}
+                ></textarea>
+                <label>Image:</label>
+                <textarea
+                    required
+                    value={ image }
+                    onChange={(e) => setImage(e.target.value)}
                 ></textarea>
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}

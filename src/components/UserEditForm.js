@@ -4,7 +4,7 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function ItemEditForm({rowData, setRowData}) {
+function UserEditForm({rowData, setRowData}) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -13,8 +13,11 @@ function ItemEditForm({rowData, setRowData}) {
     console.log('EDIT FORM=', rowData);
 
     const [_id, setId] = useState(rowData._id);
-    const [description, setDescription] = useState(rowData.description);
-    const [status, setStatus] = useState(rowData.status);
+    const [username, setUsername] = useState(rowData.username);
+    const [password, setPassword] = useState(rowData.password);
+    const [email, setEmail] = useState(rowData.email);
+    const [mobile, setMobile] = useState(rowData.mobile);
+    const [role, setRole] = useState(rowData.role);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -31,22 +34,26 @@ function ItemEditForm({rowData, setRowData}) {
 
     const handleModify = (e) => {
         e.preventDefault();
-        const item = { _id, description };
-        //console.log(JSON.stringify(item));
+        const thisuser = { _id, username, password, email, mobile, role };
+        //console.log(JSON.stringify(thisuser));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(item)
+            body: JSON.stringify(thisuser)
         };
 
         console.log(options);
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/item`, options)
+        fetch(`${SERVER_URL}/user`, options)
         .then(() => {
-            console.log('new item added');
-            setDescription('');
+            console.log('user modified');
+            setUsername('');
+            setPassword('');
+            setEmail('');
+            setMobile('');
+            setRole('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
@@ -55,16 +62,16 @@ function ItemEditForm({rowData, setRowData}) {
 
     const handleDelete = (e) => {
         // problem with useFetch hook so ordinary fetch used ?
-        const item = {_id};
+        const thisuser = {_id};
 
         //modify request to type DELETE
         options.method = 'DELETE';
 
         options = { ...options,
-            body: JSON.stringify(item)
+            body: JSON.stringify(thisuser)
         };
         console.log(options);
-        fetch(`${SERVER_URL}/item`, options)
+        fetch(`${SERVER_URL}/user`, options)
         .then(response => response.json())
         .then(data => console.log(data));
     };
@@ -79,26 +86,45 @@ function ItemEditForm({rowData, setRowData}) {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Modify Item</h1>
+            <h1>Modify User</h1>
             <form onSubmit={handleModify}>
-                <label>Modify Item id = {_id}</label>
+                <label>Modify user id = {_id}</label>
+                <label>Username :</label>
                 <textarea
                     required 
-                    value={ description }
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={ username }
+                    onChange={(e) => setUsername(e.target.value)}
                 ></textarea>
-                <label>Status :</label>
+                <label>Password :</label>
                 <textarea
                     required 
-                    value={ status }
-                    onChange={(e) => setStatus(e.target.value)}
+                    value={ password }
+                    onChange={(e) => setPassword(e.target.value)}
                 ></textarea>
-                {!isPending && <button>Modify Item</button>}
-                {isPending && <button disabled>Modfying Item</button>}
+                <label>Email :</label>
+                <textarea
+                    required 
+                    value={ email }
+                    onChange={(e) => setEmail(e.target.value)}
+                ></textarea>
+                <label>Mobile :</label>
+                <textarea
+                    required 
+                    value={ mobile }
+                    onChange={(e) => setMobile(e.target.value)}
+                ></textarea>
+                <label>Role :</label>
+                <textarea
+                    required 
+                    value={ role }
+                    onChange={(e) => setRole(e.target.value)}
+                ></textarea>
+                {!isPending && <button>Modify user</button>}
+                {isPending && <button disabled>Modfying user</button>}
             </form>
             <button onClick={() => handleDelete()}>Delete</button>
         </div>
     );
 }
 
-export default ItemEditForm;
+export default UserEditForm;

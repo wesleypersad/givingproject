@@ -14,6 +14,10 @@ import SkillAddForm from "../components/SkillAddForm";
 import SkillEditForm from "../components/SkillEditForm";
 import PaymentAddForm from "../components/PaymentAddForm";
 import PaymentEditForm from "../components/PaymentEditForm";
+import BlogAddForm from "../components/BlogAddForm";
+import BlogEditForm from "../components/BlogEditForm";
+import UserAddForm from "../components/UserAddForm";
+import UserEditForm from "../components/UserEditForm";
 
 function Admin() {
     // from  the data context
@@ -40,6 +44,12 @@ function Admin() {
 
     //define the highligted row data
     // set highlighted row
+    // for user
+    const [highlightedRowUser, setHighlightedRowUser] = useState(-99);
+    const [rowDataUser, setRowDataUser] = useState();
+    // for blog
+    const [highlightedRowBlog, setHighlightedRowBlog] = useState(-99);
+    const [rowDataBlog, setRowDataBlog] = useState();
     // for event
     const [highlightedRowEvent, setHighlightedRowEvent] = useState(-99);
     const [rowDataEvent, setRowDataEvent] = useState();
@@ -54,7 +64,7 @@ function Admin() {
     const [rowDataPayment, setRowDataPayment] = useState();
 
     // request the user data
-    const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user`);
+    const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user`, options);
     const reqUser = () => { 
         setUserList(users);
         console.log(users);
@@ -63,7 +73,6 @@ function Admin() {
     // request the blog data
     const { data: blogs, isPending2, error2 } = useFetch(`${SERVER_URL}/blog/all`, options);
     const reqBlog = () => { 
-        //setBlogList(blogs.filter(blog => blog.title.includes('blog')));
         setBlogList(blogs);
         console.log(blogs);
     };
@@ -97,13 +106,30 @@ function Admin() {
     };
 
     // when highlightedRow changes get the data
+    // for user list
+    useEffect(() => {    
+        if (highlightedRowUser >= 0) {
+            setRowDataUser(userList[highlightedRowUser]);
+        } else {
+            setRowDataUser();
+        };
+        console.log('userRow = ',rowDataUser);
+    }, [userList, highlightedRowUser]);
+    // for blog list
+    useEffect(() => {    
+        if (highlightedRowBlog >= 0) {
+            setRowDataBlog(blogList[highlightedRowBlog]);
+        } else {
+            setRowDataBlog();
+        };
+        console.log('blogRow = ',rowDataBlog);
+    }, [blogList, highlightedRowBlog]);
     // for event list
     useEffect(() => {
-        
         if (highlightedRowEvent >= 0) {
             setRowDataEvent(eventList[highlightedRowEvent]);
         } else {
-            setRowDataItem();
+            setRowDataEvent();
         };
         console.log('eventRow = ',rowDataEvent);
     }, [eventList, highlightedRowEvent]);
@@ -137,11 +163,15 @@ function Admin() {
             <h1>Admin Page</h1>
             <Container>
                 <Button onClick={reqUser} variant="primary">Get user JSON Data</Button>
-                {userList && <Table tbodyData={userList}/>}                
+                {userList && <Table tbodyData={userList} highlightedRow={highlightedRowUser} setHighlightedRow ={setHighlightedRowUser}/>}
+                {!rowDataUser && <UserAddForm />}
+                {rowDataUser && <UserEditForm rowData={rowDataUser} setRowData={setRowDataUser} />}            
             </Container>
             <Container>
                 <Button onClick={reqBlog} variant="primary">Get blog JSON Data</Button>
-                {blogList && <Table tbodyData={blogList}/>}
+                {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog} setHighlightedRow ={setHighlightedRowBlog}/>}
+                {!rowDataBlog && <BlogAddForm />}
+                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />}
             </Container>
             <Container>
                 <Button onClick={reqEvent} variant="primary">Get event JSON Data</Button>

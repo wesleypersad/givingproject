@@ -64,7 +64,7 @@ function BlogAddForm() {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Add A New Blog</h1>
+            <h1>Add A Blog</h1>
             <form onSubmit={handleSubmit}>
                 <label>Blog title:</label>
                 <input 
