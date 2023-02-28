@@ -47,23 +47,29 @@ function Donate() {
 
     // request the payment data
     const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment`, options);
-    const reqPayment = () => { 
-        setPaymentList(payments);
-        console.log(payments);
+    const reqPayment = () => {
+        if (payments.length) {
+            setPaymentList(payments);
+            console.log(payments);
+        };
     };
 
     // request the skill data
     const { data: skills, isPending5, error5 } = useFetch(`${SERVER_URL}/skill/all`, options);
     const reqSkill = () => { 
-        setSkillList(skills);
-        console.log(skills);
+        if (skills.length) {
+            setSkillList(skills);
+            console.log(skills);
+        };
     };
 
     // request the item data
     const { data: items, isPending6, error6 } = useFetch(`${SERVER_URL}/item/all`, options);
     const reqItem = () => { 
-        setItemList(items);
-        console.log(items);
+        if (items.length) {
+            setItemList(items);
+            console.log(items);
+        };
     };
 
     // when highlightedRow changes get the data

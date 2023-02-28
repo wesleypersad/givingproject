@@ -12,8 +12,8 @@ function Research () {
 
     // define the constants and functions to get the JSON data
     const [charityList, setCharityList] = useState();
-    const [charityDetails, setCharityDetails] = useState([]);
-    const [charityFinancials, setCharityFinancials] = useState([]);
+    const [charityDetails, setCharityDetails] = useState();
+    const [charityFinancials, setCharityFinancials] = useState();
     const [charityName, setCharityName] = useState('salvation army');
     const [charityNumber, setCharityNumber] = useState('214779');
 
@@ -24,22 +24,29 @@ function Research () {
     // request charity list of that name
     const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
     const reqList = () => {
-        setCharityList(charities);
-        console.log(charities);
+        if (charities.length) {
+            setCharityList(charities);
+            console.log(charities);
+        };
     };
 
     // request charity details
     const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
-    const reqDetails = () => { 
-        setCharityDetails([details]);
-        console.log(details);
+    const reqDetails = () => {
+        console.log('REQ DETAILS', typeof(details));
+        if (details) {
+            setCharityDetails(details);
+            console.log(details);
+        };
     };
 
     // request charity financial details
     const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
     const reqFinancials = () => {
-        setCharityFinancials([financials]);
-        console.log(financials);
+        if (financials.length) {
+            setCharityFinancials(financials);
+            console.log(financials);
+        };
     };
 
     // when highlightedRow changes get the data
@@ -57,7 +64,7 @@ function Research () {
         color: 'blue',
         background: 'gold',
         width: '90%',
-        maxheight: '100px',
+        maxheight: 'auto',
         overflow: 'scroll'
     };
 
@@ -85,13 +92,13 @@ function Research () {
             />
             <Container style={myComponent}>
                 <Button onClick={reqDetails} variant="primary">Get Charity Details</Button>
-                {/* {charityDetails && <Table tbodyData={charityDetails}/>} */}
+                {/* {charityDetails && <Table tbodyData={[charityDetails]}/>} */}
                 <pre>{JSON.stringify(charityDetails, null, 2)}</pre>
             </Container>
             <Container  style={myComponent}>
                 <Button onClick={reqFinancials} variant="primary">Get Financial History</Button>
-                {/* {charityFinancials && <Table tbodyData={charityFinancials}/>} */}
-                <pre>{JSON.stringify(charityFinancials, null, 2)}</pre>
+                {charityFinancials && <Table tbodyData={charityFinancials}/>}
+                {/* <pre>{JSON.stringify(charityFinancials, null, 2)}</pre> */}
             </Container>
         </div>
     );
