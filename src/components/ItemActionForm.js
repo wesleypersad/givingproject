@@ -93,7 +93,7 @@ function ItemActionForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -105,6 +105,7 @@ function ItemActionForm({rowData, setRowData}) {
                 <label>Modify Item :</label>
                 <label>Description :</label>
                 <textarea
+                    className="form-control"
                     required 
                     value={ description }
                     // onChange={(e) => setAmount(e.target.value)}

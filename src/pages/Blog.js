@@ -7,6 +7,7 @@ import BlogAddForm from "../components/BlogAddForm";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import blog from '../images/blog.jpg';                // image by freepix
 
 function Blog() {
     // from  the data context
@@ -35,7 +36,7 @@ function Blog() {
     } = useFetch(`${SERVER_URL}/blog`, options);
 
     return (
-        <div className="blog container square border border-info border-2">
+        <div className="blog container square border border-info border-2" style={{backgroundImage:`url(${blog})`}} >
         <h1>Blog Page</h1>
         <Container>
             {error && <div>{error} </div>}

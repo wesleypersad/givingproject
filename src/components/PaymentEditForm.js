@@ -72,8 +72,8 @@ function PaymentEditForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
-        height: '200px',
+        width: 'auto',
+        height: 'auto',
         overflow: 'scroll'
     };
 
@@ -81,7 +81,6 @@ function PaymentEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify Payment</h1>
             <form onSubmit={handleModify}>
-                <label>Modify Payment id = {_id}</label>
                 <label>Amount :</label>
                 <textarea
                     required 

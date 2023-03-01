@@ -72,7 +72,7 @@ function ItemEditForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -81,8 +81,9 @@ function ItemEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify Item</h1>
             <form onSubmit={handleModify}>
-                <label>Modify Item id = {_id}</label>
+                <label>Description</label>
                 <textarea
+                    className="form-control"
                     required 
                     value={ description }
                     onChange={(e) => setDescription(e.target.value)}

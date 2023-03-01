@@ -15,6 +15,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import useFetch from "../components/useFetch";
 import EventAddForm from "../components/EventAddForm";
 import EventEditForm from "../components/EventEditForm";
+import booking from '../images/booking.jpg';                // image by freepix
 
 const locales = {
     "en-GB": require("date-fns/locale/en-GB")
@@ -99,7 +100,7 @@ function Booking () {
     }, [events]);
 
     return (
-        <div className="booking container square border border-info border-2">
+        <div className="booking container square border border-info border-2"  style={{backgroundImage:`url(${booking})`}} >
             <h1>Bookings Page</h1>
             <h2>Schedule Availability & Collections</h2>
             <Calendar localizer={localizer} events={allEvents} 

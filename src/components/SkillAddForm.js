@@ -50,7 +50,7 @@ function SkillAddForm() {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '90%',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -61,6 +61,7 @@ function SkillAddForm() {
                 <form onSubmit={handleCreate}>
                     <label>Create skill :</label>
                     <textarea
+                        className="form-control"
                         required 
                         value={ skills }
                         onChange={(e) => setSkills(e.target.value)}

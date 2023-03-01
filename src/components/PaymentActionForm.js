@@ -36,7 +36,7 @@ function PaymentActionForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -45,7 +45,6 @@ function PaymentActionForm({rowData, setRowData}) {
         <div className='action' style={myComponent}>
             <h1>Action Payment</h1>
             <form>
-                <label>Modify Payment :</label>
                 <label>Amount :</label>
                 <textarea
                     required 

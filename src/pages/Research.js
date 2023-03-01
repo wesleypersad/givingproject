@@ -5,6 +5,7 @@ import { useContext } from "react";
 import useFetch from "../components/useFetch";
 import DataContext from "../context/DataContext";
 import Table from "../components/Table";
+import research from '../images/research.jpg';                // image by freepix
 
 function Research () {
     // from  the data context
@@ -24,7 +25,7 @@ function Research () {
     // request charity list of that name
     const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
     const reqList = () => {
-        if (charities.length) {
+        if (charities.length && !isPending) {
             setCharityList(charities);
             console.log(charities);
         };
@@ -34,7 +35,7 @@ function Research () {
     const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
     const reqDetails = () => {
         console.log('REQ DETAILS', typeof(details));
-        if (details) {
+        if (details && !isPending2) {
             setCharityDetails(details);
             console.log(details);
         };
@@ -43,7 +44,7 @@ function Research () {
     // request charity financial details
     const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
     const reqFinancials = () => {
-        if (financials.length) {
+        if (financials.length && !isPending3) {
             setCharityFinancials(financials);
             console.log(financials);
         };
@@ -69,7 +70,7 @@ function Research () {
     };
 
     return (
-        <div className="research container square border border-info border-2">
+        <div className="research container square border border-info border-2" style={{backgroundImage:`url(${research})`}} >
             <h1>Research Page</h1>
             <h3>Charity Name</h3>
             <label>Enter Name:</label>

@@ -10,16 +10,11 @@ function BlogEditForm({ blog }) {
     const { user } = useAuthContext();
     let options = {};
 
-/*     const [title, setTitle] = useState(blog.title);
+    const [title, setTitle] = useState(blog.title);
     const [body, setBody] = useState(blog.body);
     const [link, setLink] = useState(blog.link);
-    const [image, setImage] = useState(blog.image); */
+    const [image, setImage] = useState(blog.image);
     const [_id, setId] = useState();
-    const [title, setTitle] = useState();
-    const [body, setBody] = useState();
-    const [link, setLink] = useState();
-    const [image, setImage] = useState();
-    //const [author, setAuthor] = useState(`${user.username}`);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -79,7 +74,7 @@ function BlogEditForm({ blog }) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '100%',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -98,11 +93,12 @@ function BlogEditForm({ blog }) {
                 />
                 <label>Body:</label>
                 <textarea
+                    className="form-control"
                     required
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                <label>Link:</label>
+{/*                 <label>Link:</label>
                 <textarea
                     required
                     value={ link }
@@ -113,7 +109,7 @@ function BlogEditForm({ blog }) {
                     required
                     value={ image }
                     onChange={(e) => setImage(e.target.value)}
-                ></textarea>
+                ></textarea> */}
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}
             </form>

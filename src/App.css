@@ -40,3 +40,23 @@
 .blog-preview a{
   text-decoration: none;
 } 
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: gold;
+  color: blue;
+  text-align: center;
+}
+
+.navbar {
+  /* position: fixed; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: gold;
+  color: blue;
+  text-align: center;
+}

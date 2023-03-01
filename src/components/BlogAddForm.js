@@ -57,7 +57,7 @@ function BlogAddForm() {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '90%',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -75,6 +75,7 @@ function BlogAddForm() {
                 />
                 <label>Body:</label>
                 <textarea
+                    className="form-control"
                     required
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}

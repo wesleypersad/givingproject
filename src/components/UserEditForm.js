@@ -79,7 +79,7 @@ function UserEditForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -88,7 +88,7 @@ function UserEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify User</h1>
             <form onSubmit={handleModify}>
-                <label>Modify user id = {_id}</label>
+                <label>Modify User</label>
                 <label>Username :</label>
                 <textarea
                     required 

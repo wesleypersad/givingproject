@@ -6,6 +6,7 @@ import useFetch from "../components/useFetch";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import home from '../images/home.jpg';                // image by freepix
 
 function Home() {
     // from  the data context
@@ -30,17 +31,19 @@ function Home() {
     } = useFetch(`${SERVER_URL}/blog/all`, options);
 
     return (
-        <div className="home container square border border-info border-2">
-        <h1>Home Page</h1>
-        <div>
+        <div className="home container square border border-info border-2" style={{backgroundImage:`url(${home})`}} >
+            <h1>Home Page</h1>
+                <div></div>
+                <Container>
+                    <div className = 'text-start'>
+                        {error && <div>{error} </div>}
+                        {isPending && <div>Loading ...</div>}
+                        {blogs && <BlogViewList blogs={blogs} title="Home Page" />}
+                    </div>
+                </Container>
+            <div>
         </div>
-        <Container>
-            <div className = 'text-start'>
-                {error && <div>{error} </div>}
-                {isPending && <div>Loading ...</div>}
-                {blogs && <BlogViewList blogs={blogs} title="Home Page" />}
-            </div>
-        </Container>
+
         </div>
     );
 }

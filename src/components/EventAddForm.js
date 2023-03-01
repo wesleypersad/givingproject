@@ -58,7 +58,7 @@ function EventAddForm() {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -70,9 +70,13 @@ function EventAddForm() {
                 <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
                 value={title} onChange={(e) => setTitle(e.target.value)}
                 />
-                <input type="text" placeholder="Add Body" style={{width:"20%", marginRight:"10pz"}}
-                value={body} onChange={(e) => setBody(e.target.value)}
-                />
+                <label>Body:</label>
+                <textarea
+                    className="form-control"
+                    required
+                    value={ body }
+                    onChange={(e) => setBody(e.target.value)}
+                ></textarea>
                 <DatePicker 
                     placeholderText="Start Date" style={{marginRight:"10px"}}
                     selected={start} onChange={(start) => setStart(start)}

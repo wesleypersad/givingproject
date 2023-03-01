@@ -51,7 +51,7 @@ function ItemAddForm() {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '90%',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -62,6 +62,7 @@ function ItemAddForm() {
                 <form onSubmit={handleCreate}>
                     <label>Create Item :</label>
                     <textarea
+                        className="form-control"
                         required 
                         value={ description }
                         onChange={(e) => setDescription(e.target.value)}

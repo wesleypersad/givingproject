@@ -16,7 +16,7 @@ const  BlogViewList= ({blogs}) => {
 
     return (
         <div className="blog-list">
-            <h2>List Of Blogs To View</h2>
+            <h2>List Of Blogs</h2>
             {blogs.map((blog) => (
                 <div className="blog-details text-start" key={blog._id} style={myComponent}>
                     <h1>{blog.title}</h1>

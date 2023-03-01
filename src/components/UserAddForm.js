@@ -58,7 +58,7 @@ function UserAddForm() {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '90%',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };

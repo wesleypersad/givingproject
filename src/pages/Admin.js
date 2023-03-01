@@ -18,6 +18,7 @@ import BlogAddForm from "../components/BlogAddForm";
 import BlogEditForm from "../components/BlogEditForm";
 import UserAddForm from "../components/UserAddForm";
 import UserEditForm from "../components/UserEditForm";
+import admin from '../images/admin.jpg';                // image by freepix
 
 function Admin() {
     // from  the data context
@@ -65,44 +66,56 @@ function Admin() {
 
     // request the user data
     const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user`, options);
-    const reqUser = () => { 
-        setUserList(users);
-        console.log(users);
+    const reqUser = () => {
+        if (users.length && !isPending) {
+            setUserList(users);
+            console.log(users);
+        };
     };
 
     // request the blog data
     const { data: blogs, isPending2, error2 } = useFetch(`${SERVER_URL}/blog/all`, options);
-    const reqBlog = () => { 
-        setBlogList(blogs);
-        console.log(blogs);
+    const reqBlog = () => {
+        if (blogs.length && !isPending2) {
+            setBlogList(blogs);
+            console.log(blogs);
+        };
     };
 
     // request the event data
     const { data: events, isPending3, error3 } = useFetch(`${SERVER_URL}/event/all`, options);
-    const reqEvent = () => { 
-        setEventList(events);
-        console.log(events);
+    const reqEvent = () => {
+        if (events.length && !isPending3) {
+            setEventList(events);
+            console.log(events);
+        };
     };
 
     // request the payment data
     const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment/all`, options);
     const reqPayment = () => { 
-        setPaymentList(payments);
-        console.log(payments);
+        if (payments.length && !isPending4) {
+            setPaymentList(payments);
+            console.log(payments);
+        };
     };
 
     // request the skill data
     const { data: skills, isPending5, error5 } = useFetch(`${SERVER_URL}/skill/all`, options);
     const reqSkill = () => { 
-        setSkillList(skills);
-        console.log(skills);
+        if (skills.length && !isPending5) {
+            setSkillList(skills);
+            console.log(skills);            
+        };
     };
 
     // request the item data
     const { data: items, isPending6, error6 } = useFetch(`${SERVER_URL}/item/all`, options);
-    const reqItem = () => { 
-        setItemList(items);
-        console.log(items);
+    const reqItem = () => {
+        if (items.length && !isPending6) {
+            setItemList(items);
+            console.log(items);
+        };
     };
 
     // when highlightedRow changes get the data
@@ -159,7 +172,7 @@ function Admin() {
     }, [paymentList, highlightedRowPayment]);
 
     return (
-        <div className="admin container square border border-info border-2">
+        <div className="admin container square border border-info border-2" style={{backgroundImage:`url(${admin})`}} >
             <h1>Admin Page</h1>
             <Container>
                 <Button onClick={reqUser} variant="primary">Get user JSON Data</Button>
@@ -169,7 +182,7 @@ function Admin() {
             </Container>
             <Container>
                 <Button onClick={reqBlog} variant="primary">Get blog JSON Data</Button>
-                {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog} setHighlightedRow ={setHighlightedRowBlog}/>}
+                {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
                 {!rowDataBlog && <BlogAddForm />}
                 {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />}
             </Container>

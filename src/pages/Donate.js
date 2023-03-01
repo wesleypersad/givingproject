@@ -12,6 +12,7 @@ import SkillAddForm from "../components/SkillAddForm";
 import SkillActionForm from "../components/SkillActionForm";
 import PaymentAddForm from "../components/PaymentAddForm";
 import PaymentActionForm from "../components/PaymentActionForm";
+import donate from '../images/donate.jpg';                // image by freepix
 
 function Donate() {
     // from  the data context
@@ -48,7 +49,7 @@ function Donate() {
     // request the payment data
     const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment`, options);
     const reqPayment = () => {
-        if (payments.length) {
+        if (payments.length && !isPending4) {
             setPaymentList(payments);
             console.log(payments);
         };
@@ -57,7 +58,7 @@ function Donate() {
     // request the skill data
     const { data: skills, isPending5, error5 } = useFetch(`${SERVER_URL}/skill/all`, options);
     const reqSkill = () => { 
-        if (skills.length) {
+        if (skills.length && !isPending5) {
             setSkillList(skills);
             console.log(skills);
         };
@@ -66,7 +67,7 @@ function Donate() {
     // request the item data
     const { data: items, isPending6, error6 } = useFetch(`${SERVER_URL}/item/all`, options);
     const reqItem = () => { 
-        if (items.length) {
+        if (items.length && !isPending6) {
             setItemList(items);
             console.log(items);
         };
@@ -99,7 +100,7 @@ function Donate() {
     }, [paymentList, highlightedRowPayment, isPending4]);
 
     return (
-        <div className="donate container square border border-info border-2">
+        <div className="donate container square border border-info border-2" style={{backgroundImage:`url(${donate})`}} >
             <h1>Donations Page</h1>
             <Container>
                 <Button onClick={reqPayment} variant="primary">Get payment JSON Data</Button>

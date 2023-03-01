@@ -6,6 +6,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import DataContext from "../context/DataContext";
 import { useContext } from "react";
 import Select from 'react-select';
+import chat from '../images/chat.jpg';                // image by freepix
 
 function Chat({ socket }) {
     // from  the data context
@@ -40,7 +41,7 @@ function Chat({ socket }) {
     console.log(socket.id);
 
     return (
-        <div className="chat container square border border-info border-2">
+        <div className="chat container square border border-info border-2" style={{backgroundImage:`url(${chat})`}} >
             <h1>Chat Page</h1>
             <Container>
                 <form className="home__container" onSubmit={handleSubmit}>

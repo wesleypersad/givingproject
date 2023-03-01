@@ -1,3 +1,5 @@
+import "../App.css";
+import giving from '../images/giving.png';                // image by freepix
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -15,9 +17,9 @@ const Navbar = () => {
 
     return (
         <header>
-            <div className="container square border border-info border-5">
-                <h1>React Giving Website : </h1>
-
+            <div className="square border border-info border-5 navbar">
+                <h1>The Giving App : </h1>
+                <img src={giving} width={100} height={100} />
                 <div className='links'>
                     <Link to='/'>Home </Link>
                 </div>
@@ -27,7 +29,7 @@ const Navbar = () => {
                     <Link to='/chat'>Chat </Link>
                     <Link to='/donate'>Donate </Link>
                     <Link to='/booking'>Booking </Link>
-                    <Link to='/textsms'>Textsms </Link>
+                    {/* <Link to='/textsms'>Textsms </Link> */}
                     <Link to='/research'>Research </Link>
                 </div>
                 )}
@@ -45,7 +47,7 @@ const Navbar = () => {
                 {user && (
                     <div>
                         <button onClick={handleClick}>Log out</button>
-                        <span>{user.username} </span>
+                        <span> {user.username}</span>
                     </div>
                 )}
             </div>

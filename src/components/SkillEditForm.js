@@ -72,7 +72,7 @@ function SkillEditForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -81,9 +81,10 @@ function SkillEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify Skills</h1>
             <form onSubmit={handleModify}>
-                <label>Modify skills id = {_id}</label>
+                <label>Modify Skills</label>
                 <textarea
-                    required 
+                    className="form-control"
+                    required
                     value={ skills }
                     onChange={(e) => setSkills(e.target.value)}
                 ></textarea>

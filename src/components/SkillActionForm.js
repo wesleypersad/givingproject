@@ -93,7 +93,7 @@ function SkillActionForm({rowData, setRowData}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '1200px',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -102,9 +102,9 @@ function SkillActionForm({rowData, setRowData}) {
         <div className='action' style={myComponent}>
             <h1>Action Skill</h1>
             <form>
-                <label>Modify Skill :</label>
-                <label>Skills :</label>
+                <label>Modify Skills :</label>
                 <textarea
+                    className="form-control"
                     required 
                     value={ skills }
                     // onChange={(e) => setAmount(e.target.value)}

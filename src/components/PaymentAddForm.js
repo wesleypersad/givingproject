@@ -51,7 +51,7 @@ function PaymentAddForm() {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '90%',
+        width: 'auto',
         height: 'auto',
         overflow: 'scroll'
     };
@@ -60,7 +60,6 @@ function PaymentAddForm() {
         <div className='create' style={myComponent}>
             <h1>Add A Payment</h1>
                 <form onSubmit={handleCreate}>
-                    <label>Create payment :</label>
                     <label>Amount :</label>
                     <textarea
                         required 

@@ -5,6 +5,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
+import chat from '../images/chat.jpg';                // image by freepix
 
 const ChatPage = ({ socket }) => {
     // from  the data context
@@ -33,7 +34,7 @@ const ChatPage = ({ socket }) => {
     };
 
     return (
-    <div className="chat container square border border-info border-2">
+    <div className="chat container square border border-info border-2" style={{backgroundImage:`url(${chat})`}} >
         <ChatBar socket={socket} room={room} />
         <div className="chat__main" style={myComponent}>
             <ChatBody

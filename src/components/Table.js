@@ -27,7 +27,7 @@ export default function Table({tbodyData, highlightedRow, setHighlightedRow}) {
     const myComponent = {
         color: 'blue',
         background: 'gold',
-        width: '90%',
+        width: 'auto',
         maxheight: '100px',
         overflow: 'scroll'
     };

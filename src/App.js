@@ -19,6 +19,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import NotFound from "./pages/Notfound";
 import ChatPage from './components/ChatPage';
+import Footer from "./components/Footer";
 
 // get the server URL directly from the environment variables
 const { REACT_APP_SERVER_URL } = process.env;
@@ -36,13 +37,14 @@ function App() {
             <Route path="/chatpage" element={<ChatPage socket={socket} />}></Route>
             <Route path="/donate" element={<Donate />} />
             <Route path="/booking" element={<Booking />} />
-            <Route path="/textsms" element={<Textsms />} />            
+            {/* <Route path="/textsms" element={<Textsms />} />             */}
             <Route path="/research" element={<Research />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Footer />
         </Router>
     </div>
   );
