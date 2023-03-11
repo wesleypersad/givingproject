@@ -103,19 +103,19 @@ function Donate() {
         <div className="donate container square border border-info border-2" style={{backgroundImage:`url(${donate})`}} >
             <h1>Donations Page</h1>
             <Container>
-                <Button onClick={reqPayment} variant="primary">Get payment JSON Data</Button>
+                <Button onClick={reqPayment} variant="primary">Get Payment Data</Button>
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
                 {!rowDataPayment && <PaymentAddForm />}
                 {rowDataPayment && <PaymentActionForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
-                <Button onClick={reqSkill} variant="primary">Get skill JSON Data</Button>
+                <Button onClick={reqSkill} variant="primary">Get Skill Data</Button>
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
                 {!rowDataSkill && <SkillAddForm />}
                 {rowDataSkill && <SkillActionForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
             </Container>
             <Container>
-                <Button onClick={reqItem} variant="primary">Get item JSON Data</Button>
+                <Button onClick={reqItem} variant="primary">Get Item Data</Button>
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
                 {!rowDataItem && <ItemAddForm />}
                 {rowDataItem && <ItemActionForm rowData={rowDataItem} setRowData={setRowDataItem} />}

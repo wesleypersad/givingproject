@@ -175,37 +175,37 @@ function Admin() {
         <div className="admin container square border border-info border-2" style={{backgroundImage:`url(${admin})`}} >
             <h1>Admin Page</h1>
             <Container>
-                <Button onClick={reqUser} variant="primary">Get user JSON Data</Button>
+                <Button onClick={reqUser} variant="primary">Get User Data</Button>
                 {userList && <Table tbodyData={userList} highlightedRow={highlightedRowUser} setHighlightedRow ={setHighlightedRowUser}/>}
                 {!rowDataUser && <UserAddForm />}
                 {rowDataUser && <UserEditForm rowData={rowDataUser} setRowData={setRowDataUser} />}            
             </Container>
             <Container>
-                <Button onClick={reqBlog} variant="primary">Get blog JSON Data</Button>
+                <Button onClick={reqBlog} variant="primary">Get Blog Data</Button>
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
                 {!rowDataBlog && <BlogAddForm />}
                 {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />}
             </Container>
             <Container>
-                <Button onClick={reqEvent} variant="primary">Get event JSON Data</Button>
+                <Button onClick={reqEvent} variant="primary">Get Event Data</Button>
                 {eventList && <Table tbodyData={eventList} highlightedRow={highlightedRowEvent} setHighlightedRow ={setHighlightedRowEvent}/>}
                 {!rowDataEvent && <EventAddForm />}
                 {rowDataEvent && <EventEditForm rowData={rowDataEvent} setRowData={setRowDataEvent} />}
             </Container>
             <Container>
-                <Button onClick={reqPayment} variant="primary">Get payment JSON Data</Button>
+                <Button onClick={reqPayment} variant="primary">Get Payment Data</Button>
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
                 {!rowDataPayment && <PaymentAddForm />}
                 {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
-                <Button onClick={reqSkill} variant="primary">Get skill JSON Data</Button>
+                <Button onClick={reqSkill} variant="primary">Get Skill Data</Button>
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
                 {!rowDataSkill && <SkillAddForm />}
                 {rowDataSkill && <SkillEditForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
             </Container>
             <Container>
-                <Button onClick={reqItem} variant="primary">Get item JSON Data</Button>
+                <Button onClick={reqItem} variant="primary">Get Item Data</Button>
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
                 {!rowDataItem && <ItemAddForm />}
                 {rowDataItem && <ItemEditForm rowData={rowDataItem} setRowData={setRowDataItem} />}

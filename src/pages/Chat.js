@@ -32,8 +32,7 @@ function Chat({ socket }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         localStorage.setItem('userName', userName);
-        //sends the username and socket ID to the Node.js server
-        //socket.emit('newUser', { userName, socketID: socket.id, room });
+        //sends the username, socket ID and room to the Node.js server
         socket.emit('joinRoom', { userName, socketID: socket.id, room });
         navigate('/chatpage');
     };

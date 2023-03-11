@@ -1,5 +1,4 @@
 import "../App.css";
-//import { useState } from "react";
 import { Container } from "react-bootstrap";
 import BlogViewList from "../components/BlogViewList";
 import useFetch from "../components/useFetch";

@@ -52,28 +52,6 @@ function Booking () {
     const [editEvent, setEditEvent] = useState();
     const [isPending, setIsPending]= useState(false);
 
-/*     // add a new event to the list of events
-    function handleAddEvent() {
-        setAllEvents([...allEvents, newEvent]);
-
-        // also have to add this to the events database
-        // first add newEvent to body of options
-        options = { ...options,
-            method: 'POST',
-            body: JSON.stringify(newEvent)
-        };
-
-        setIsPending(true);
-
-        // then use fetch to write with a POST method to the even route
-        fetch(`${SERVER_URL}/event`, options)
-        .then(() => {
-            console.log('new event added');
-            setIsPending(false);
-            //window.location.reload();
-        })
-    }; */
-
     // get the list of events
     const { data: events, isPending2, error } = useFetch(`${SERVER_URL}/event`, options);
     const reqEvents = async () => {
@@ -109,7 +87,7 @@ function Booking () {
             {error && <div>{error} </div>}
             {isPending2 && <div>Loading ...</div>}
             {events && <Card className="mb-3" style={{ color: "#000"}}>
-                <Button  className='m-1' onClick={reqEvents} variant="primary">Get list of events JSON Data</Button>
+                <Button  className='m-1' onClick={reqEvents} variant="primary">Get List Of Events</Button>
             </Card>}
             {!editEvent && <EventAddForm />}
             {editEvent && <EventEditForm rowData={editEvent} setRowData={setEditEvent} />}
