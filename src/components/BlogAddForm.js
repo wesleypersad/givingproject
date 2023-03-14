@@ -31,8 +31,8 @@ function BlogAddForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const blog = { title, body, link, image };
-        //console.log(JSON.stringify(blog));
+        const blog = { title, body, link, image, user };
+        console.log(JSON.stringify(blog));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
@@ -64,7 +64,7 @@ function BlogAddForm() {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Add A Blog</h1>
+            <h1>Add A Blog (HTML)</h1>
             <form onSubmit={handleSubmit}>
                 <label>Blog title:</label>
                 <input 
@@ -80,7 +80,7 @@ function BlogAddForm() {
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                <label>Link:</label>
+{/*                 <label>Link:</label>
                 <textarea
                     required
                     value={ link }
@@ -91,7 +91,7 @@ function BlogAddForm() {
                     required
                     value={ image }
                     onChange={(e) => setImage(e.target.value)}
-                ></textarea>
+                ></textarea> */}
                 {!isPending && <button>Add Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}
             </form>

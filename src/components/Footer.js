@@ -29,12 +29,12 @@ const Footer = ({ socket }) => {
     };
 
     // load up the numbers
-    const { data: userKount, isPending, isError } = useFetch(`${SERVER_URL}/user/count`, options);
-    const { data: skillKount, isPending2, isError2 } = useFetch(`${SERVER_URL}/skill/count`, options);
-    const { data: paymentKount, isPending3, isError3 } = useFetch(`${SERVER_URL}/payment/count`, options);
-    const { data: itemKount, isPending4, isError4 } = useFetch(`${SERVER_URL}/item/count`, options);
-    const { data: eventKount, isPending5, isError5 } = useFetch(`${SERVER_URL}/event/count`, options);
-    const { data: blogKount, isPending6, isError6 } = useFetch(`${SERVER_URL}/blog/count`, options);
+    const { data: userKount, isPending, isError } = useFetch(`${SERVER_URL}/noauth/usercount`, options);
+    const { data: skillKount, isPending2, isError2 } = useFetch(`${SERVER_URL}/noauth/skillcount`, options);
+    const { data: paymentKount, isPending3, isError3 } = useFetch(`${SERVER_URL}/noauth/paymentcount`, options);
+    const { data: itemKount, isPending4, isError4 } = useFetch(`${SERVER_URL}/noauth/itemcount`, options);
+    const { data: eventKount, isPending5, isError5 } = useFetch(`${SERVER_URL}/noauth/eventcount`, options);
+    const { data: blogKount, isPending6, isError6 } = useFetch(`${SERVER_URL}/noauth/blogcount`, options);
 
     // set the numbers
     useEffect(() => {

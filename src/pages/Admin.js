@@ -65,7 +65,7 @@ function Admin() {
     const [rowDataPayment, setRowDataPayment] = useState();
 
     // request the user data
-    const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user`, options);
+    const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user/all`, options);
     const reqUser = () => {
         if (users.length && !isPending) {
             setUserList(users);
@@ -123,33 +123,34 @@ function Admin() {
     useEffect(() => {    
         if (highlightedRowUser >= 0) {
             setRowDataUser(userList[highlightedRowUser]);
+            console.log('userRow = ',rowDataUser);
         } else {
             setRowDataUser();
         };
-        console.log('userRow = ',rowDataUser);
     }, [userList, highlightedRowUser]);
     // for blog list
     useEffect(() => {    
         if (highlightedRowBlog >= 0) {
             setRowDataBlog(blogList[highlightedRowBlog]);
+            console.log('blogRow = ',rowDataBlog);
         } else {
             setRowDataBlog();
         };
-        console.log('blogRow = ',rowDataBlog);
     }, [blogList, highlightedRowBlog]);
     // for event list
     useEffect(() => {
         if (highlightedRowEvent >= 0) {
             setRowDataEvent(eventList[highlightedRowEvent]);
+            console.log('eventRow = ',rowDataEvent);
         } else {
             setRowDataEvent();
         };
-        console.log('eventRow = ',rowDataEvent);
     }, [eventList, highlightedRowEvent]);
     // for item list
     useEffect(() => {
         if (highlightedRowItem >= 0) {
             setRowDataItem(itemList[highlightedRowItem]);
+            console.log('itemRow = ',rowDataItem);
         } else {
             setRowDataItem();
         }
@@ -158,6 +159,7 @@ function Admin() {
     useEffect(() => {
         if (highlightedRowSkill >= 0) {
             setRowDataSkill(skillList[highlightedRowSkill]);
+            console.log('eventSkill = ',rowDataSkill);
         } else {
             setRowDataSkill();
         }
@@ -184,7 +186,7 @@ function Admin() {
                 <Button onClick={reqBlog} variant="primary">Get Blog Data</Button>
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
                 {!rowDataBlog && <BlogAddForm />}
-                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />}
+{/*                 {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />} */}
             </Container>
             <Container>
                 <Button onClick={reqEvent} variant="primary">Get Event Data</Button>

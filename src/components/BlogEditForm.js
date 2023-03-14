@@ -12,9 +12,7 @@ function BlogEditForm({ blog }) {
 
     const [title, setTitle] = useState(blog.title);
     const [body, setBody] = useState(blog.body);
-    const [link, setLink] = useState(blog.link);
-    const [image, setImage] = useState(blog.image);
-    const [_id, setId] = useState();
+    const [_id, setId] = useState(blog._id);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -31,8 +29,8 @@ function BlogEditForm({ blog }) {
 
     const handleModify = (e) => {
         e.preventDefault();
-        const blog = { _id, title, body, link, image };
-        //console.log(JSON.stringify(blog));
+        const blog = { _id, title, body };
+        console.log(JSON.stringify(blog));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
@@ -43,11 +41,9 @@ function BlogEditForm({ blog }) {
 
         fetch(`${SERVER_URL}/blog`, options)
         .then(() => {
-            console.log('new blog added');
+            console.log('blog modified');
             setTitle('');
             setBody('');
-            setLink('');
-            setImage('');
             setIsPending(false);
             //navigate('/blog');
             window.location.reload();
@@ -55,7 +51,7 @@ function BlogEditForm({ blog }) {
     };
 
     // add the _id to the body of the fetch options
-    const handleDelete = async (_id) => {
+    const handleDelete = async () => {
         // problem with useFetch hook so ordinary fetch used ?
 
         //modify request to type DELETE
@@ -65,7 +61,7 @@ function BlogEditForm({ blog }) {
             body: JSON.stringify({"_id": `${_id}`})
         };
 
-        console.log(options);
+        //console.log(options);
         fetch(`${SERVER_URL}/blog`, options)
         .then(response => response.json())
         .then(data => console.log(data));
@@ -98,19 +94,7 @@ function BlogEditForm({ blog }) {
                     value={ body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-{/*                 <label>Link:</label>
-                <textarea
-                    required
-                    value={ link }
-                    onChange={(e) => setLink(e.target.value)}
-                ></textarea>
-                <label>Image:</label>
-                <textarea
-                    required
-                    value={ image }
-                    onChange={(e) => setImage(e.target.value)}
-                ></textarea> */}
-                {!isPending && <button>Add Blog</button>}
+                {!isPending && <button>Modify Blog</button>}
                 {isPending && <button disabled>Adding Blog</button>}
             </form>
             <button onClick={() => handleDelete()}>Delete</button>

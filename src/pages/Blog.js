@@ -33,7 +33,7 @@ function Blog() {
         data: blogs,
         isPending,
         error,
-    } = useFetch(`${SERVER_URL}/blog/${user.username}`, options);
+    } = useFetch(`${SERVER_URL}/blog`, options);
 
     return (
         <div className="blog container square border border-info border-2" style={{backgroundImage:`url(${blog})`}} >

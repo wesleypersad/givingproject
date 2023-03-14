@@ -27,7 +27,7 @@ function Home() {
         data: blogs,
         isPending,
         error,
-    } = useFetch(`${SERVER_URL}/blog/all`, options);
+    } = useFetch(`${SERVER_URL}/noauth/blogall`, options);
 
     return (
         <div className="home container square border border-info border-2" style={{backgroundImage:`url(${home})`}} >
