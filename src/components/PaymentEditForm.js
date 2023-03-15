@@ -81,19 +81,19 @@ function PaymentEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify Payment</h1>
             <form onSubmit={handleModify}>
-                <label>Amount :</label>
+                <label>Modify Amount:</label>
                 <textarea
                     required 
                     value={ amount }
                     onChange={(e) => setAmount(e.target.value)}
                 ></textarea>
-                <label>Charity :</label>
+                <label>Charity:</label>
                 <textarea
                     required 
                     value={ charity }
                     onChange={(e) => setCharity(e.target.value)}
                 ></textarea>
-                <label>Status :</label>
+                <label>Status:</label>
                 <textarea
                     required 
                     value={ status }

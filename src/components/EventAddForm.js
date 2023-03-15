@@ -67,6 +67,7 @@ function EventAddForm() {
         <div className='create' style={myComponent}>
             <h1>Add An Event</h1>
             <form onSubmit={handleSubmit}>
+            <label>Title:</label>
                 <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
                 value={title} onChange={(e) => setTitle(e.target.value)}
                 />

@@ -88,32 +88,31 @@ function UserEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify User</h1>
             <form onSubmit={handleModify}>
-                <label>Modify User</label>
-                <label>Username :</label>
+                <label>Modify Username:</label>
                 <textarea
                     required 
                     value={ username }
                     onChange={(e) => setUsername(e.target.value)}
                 ></textarea>
-                <label>Password :</label>
+                <label>Password:</label>
                 <textarea
                     required 
                     value={ password }
                     onChange={(e) => setPassword(e.target.value)}
                 ></textarea>
-                <label>Email :</label>
+                <label>Email:</label>
                 <textarea
                     required 
                     value={ email }
                     onChange={(e) => setEmail(e.target.value)}
                 ></textarea>
-                <label>Mobile :</label>
+                <label>Mobile:</label>
                 <textarea
                     required 
                     value={ mobile }
                     onChange={(e) => setMobile(e.target.value)}
                 ></textarea>
-                <label>Role :</label>
+                <label>Role:</label>
                 <textarea
                     required 
                     value={ role }

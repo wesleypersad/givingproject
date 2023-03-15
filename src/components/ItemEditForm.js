@@ -81,14 +81,14 @@ function ItemEditForm({rowData, setRowData}) {
         <div className='create' style={myComponent}>
             <h1>Modify Item</h1>
             <form onSubmit={handleModify}>
-                <label>Description</label>
+                <label>Modify Description:</label>
                 <textarea
                     className="form-control"
                     required 
                     value={ description }
                     onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
-                <label>Status :</label>
+                <label>Status:</label>
                 <textarea
                     required 
                     value={ status }

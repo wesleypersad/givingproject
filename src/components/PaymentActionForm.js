@@ -45,14 +45,14 @@ function PaymentActionForm({rowData, setRowData}) {
         <div className='action' style={myComponent}>
             <h1>Action Payment</h1>
             <form>
-                <label>Amount :</label>
+                <label>Amount:</label>
                 <textarea
                     required 
                     value={ amount }
                     // onChange={(e) => setAmount(e.target.value)}
                     readOnly
                 ></textarea>
-                <label>Charity :</label>
+                <label>Charity:</label>
                 <textarea
                     required 
                     value={ charity }

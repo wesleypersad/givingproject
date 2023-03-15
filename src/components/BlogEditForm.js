@@ -4,15 +4,15 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function BlogEditForm({ blog }) {
+function BlogEditForm({ rowData, setRowData }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    const [title, setTitle] = useState(blog.title);
-    const [body, setBody] = useState(blog.body);
-    const [_id, setId] = useState(blog._id);
+    const [title, setTitle] = useState(rowData.title);
+    const [body, setBody] = useState(rowData.body);
+    const [_id, setId] = useState(rowData._id);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -79,8 +79,7 @@ function BlogEditForm({ blog }) {
         <div className='create' style={myComponent}>
             <h1>Modify Blog (HTML)</h1>
             <form onSubmit={handleModify}>
-                <label>Modify Item id = {_id}</label>
-                <label>Blog title:</label>
+                <label>Modify Title:</label>
                 <input 
                     type="text"
                     required 

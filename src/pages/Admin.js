@@ -127,7 +127,7 @@ function Admin() {
         } else {
             setRowDataUser();
         };
-    }, [userList, highlightedRowUser]);
+    }, [userList, highlightedRowUser, rowDataUser]);
     // for blog list
     useEffect(() => {    
         if (highlightedRowBlog >= 0) {
@@ -136,7 +136,7 @@ function Admin() {
         } else {
             setRowDataBlog();
         };
-    }, [blogList, highlightedRowBlog]);
+    }, [blogList, highlightedRowBlog, rowDataBlog]);
     // for event list
     useEffect(() => {
         if (highlightedRowEvent >= 0) {
@@ -145,7 +145,7 @@ function Admin() {
         } else {
             setRowDataEvent();
         };
-    }, [eventList, highlightedRowEvent]);
+    }, [eventList, highlightedRowEvent, rowDataEvent]);
     // for item list
     useEffect(() => {
         if (highlightedRowItem >= 0) {
@@ -154,7 +154,7 @@ function Admin() {
         } else {
             setRowDataItem();
         }
-    }, [itemList, highlightedRowItem]);
+    }, [itemList, highlightedRowItem, rowDataItem]);
     // for skilllist
     useEffect(() => {
         if (highlightedRowSkill >= 0) {
@@ -163,7 +163,7 @@ function Admin() {
         } else {
             setRowDataSkill();
         }
-    }, [skillList, highlightedRowSkill]);
+    }, [skillList, highlightedRowSkill, rowDataSkill]);
     // for payment list
     useEffect(() => {
         if (highlightedRowPayment >= 0) {
@@ -171,7 +171,7 @@ function Admin() {
         } else {
             setRowDataPayment();
         }
-    }, [paymentList, highlightedRowPayment]);
+    }, [paymentList, highlightedRowPayment, rowDataPayment]);
 
     return (
         <div className="admin container square border border-info border-2" style={{backgroundImage:`url(${admin})`}} >
@@ -186,7 +186,7 @@ function Admin() {
                 <Button onClick={reqBlog} variant="primary">Get Blog Data</Button>
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
                 {!rowDataBlog && <BlogAddForm />}
-{/*                 {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />} */}
+                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />}
             </Container>
             <Container>
                 <Button onClick={reqEvent} variant="primary">Get Event Data</Button>

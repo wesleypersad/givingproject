@@ -102,7 +102,7 @@ function SkillActionForm({rowData, setRowData}) {
         <div className='action' style={myComponent}>
             <h1>Action Skill</h1>
             <form>
-                <label>Modify Skills :</label>
+                <label>Modify Skills:</label>
                 <textarea
                     className="form-control"
                     required 
@@ -112,7 +112,7 @@ function SkillActionForm({rowData, setRowData}) {
                 ></textarea>
             </form>
             <div>
-                <label>Enter Message</label>
+                <label>Enter Message:</label>
                 <input 
                     type="text" 
                     onChange={(e) => setMessage(e.target.value)}
@@ -120,14 +120,13 @@ function SkillActionForm({rowData, setRowData}) {
                 />
             </div>
             <div>
-                <label>Send SMS Message To Doner</label>
-                <label>Sender Number :</label>
+                <label>Sender Number:</label>
                 <input 
                     type="text" 
                     onChange={(e) => setSendnum(e.target.value)}
                     value={sendnum}
                 />
-                <label>Receiver Number :</label>
+                <label>Receiver Number:</label>
                 <input 
                     type="text" 
                     onChange={(e) => setRecvnum(e.target.value)}
@@ -139,14 +138,13 @@ function SkillActionForm({rowData, setRowData}) {
                 <p>{confirmSms}</p>
             </div>
             <div>
-                <label>Send Email Message To Doner</label>
-                <label>Sender Number :</label>
+                <label>Sender Email:</label>
                 <input 
                     type="text" 
                     onChange={(e) => setSendemail(e.target.value)}
                     value={sendemail}
                 />
-                <label>Receiver Number :</label>
+                <label>Receiver Email:</label>
                 <input 
                     type="text" 
                     onChange={(e) => setRecvemail(e.target.value)}
