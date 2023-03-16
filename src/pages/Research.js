@@ -25,7 +25,7 @@ function Research () {
     // request charity list of that name
     const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
     const reqList = () => {
-        if (charities.length && !isPending) {
+        if (charities.length && !isPending && !error) {
             setCharityList(charities);
             console.log(charities);
         };
@@ -35,7 +35,7 @@ function Research () {
     const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
     const reqDetails = () => {
         console.log('REQ DETAILS', typeof(details));
-        if (details && !isPending2) {
+        if (details && !isPending2 && !error2) {
             setCharityDetails(details);
             console.log(details);
         };
@@ -44,7 +44,7 @@ function Research () {
     // request charity financial details
     const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
     const reqFinancials = () => {
-        if (financials.length && !isPending3) {
+        if (financials.length && !isPending3 && !error3) {
             setCharityFinancials(financials);
             console.log(financials);
         };
@@ -93,7 +93,6 @@ function Research () {
             />
             <Container style={myComponent}>
                 <Button onClick={reqDetails} variant="primary">Get Charity Details</Button>
-                {/* {charityDetails && <Table tbodyData={[charityDetails]}/>} */}
                 <pre>{JSON.stringify(charityDetails, null, 2)}</pre>
             </Container>
             <Container  style={myComponent}>

@@ -1,3 +1,4 @@
+import "../App.css";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -5,9 +6,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
-import "../App.css";
 import React, { useState, useCallback } from "react";
-import DatePicker from "react-datepicker";
 import { Button, Card } from 'react-bootstrap';
 import { useContext, useEffect } from "react";
 import DataContext from "../context/DataContext";
@@ -47,15 +46,15 @@ function Booking () {
     };
 
     // initialize state variables
-    const [newEvent, setNewEvent] = useState({title: "", body: "", start: "", end: ""});
     const [allEvents, setAllEvents] = useState([]);
     const [editEvent, setEditEvent] = useState();
-    const [isPending, setIsPending]= useState(false);
 
     // get the list of events
     const { data: events, isPending2, error } = useFetch(`${SERVER_URL}/event`, options);
     const reqEvents = async () => {
-        setAllEvents(events);
+        if (events && !isPending2 && !error) {
+            setAllEvents(events);
+        };
     };
 
     // return event selected from grid
@@ -68,7 +67,7 @@ function Booking () {
             // set if cleared
             setEditEvent(event);
         };        
-    },[]);
+    },[editEvent]);
 
     // set the events state variable with results of fetch
     useEffect( () => {
