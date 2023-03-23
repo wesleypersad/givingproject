@@ -1,16 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import {App, reqItems} from './App';
+import App from './App';
 
 test('expect app function to exist', () => {
   expect(App).toBeDefined();
 });
 
-test('expect reqItems function to exist', () => {
-  expect(reqItems).toBeDefined();
-});
+/* test('confirm navbar component is rendered', () => {
+  const { getByText } = render(<App />);
+  const navElement = getByText("home");
+  expect(navElement).toBeTruthy();
+}); */
 
-test('renders learn react link', () => {
+/* test('find all roles on page', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+  const roleList = await screen.findAllByRole("Routes");
+  console.log(roleList);
+  expect(roleList).toBeGreaterThan(0);
+}); */
