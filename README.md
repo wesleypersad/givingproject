@@ -1,3 +1,6 @@
+# Computer Science Final Project - The Giving App
+![TheGivingApp](https://user-images.githubusercontent.com/26929215/227799254-a62b88f7-c627-46d9-9e9c-374a6ada1864.jpg)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
