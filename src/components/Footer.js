@@ -39,22 +39,22 @@ const Footer = ({ socket }) => {
     // set the numbers
     useEffect(() => {
         setUserCount(userKount);
-    }, [userKount, isPending, isError]);
+    }, [userKount, setUserCount, isPending, isError]);
     useEffect(() => {
         setSkillCount(skillKount);
-    }, [skillKount, isPending2, isError2]);
+    }, [skillKount, setSkillCount, isPending2, isError2]);
     useEffect(() => {
         setPaymentCount(paymentKount);
-    }, [paymentKount, isPending3, isError3]);
+    }, [paymentKount, setPaymentCount, isPending3, isError3]);
     useEffect(() => {
         setItemCount(itemKount);
-    }, [itemKount, isPending4, isError4]);
+    }, [itemKount, setItemCount, isPending4, isError4]);
     useEffect(() => {
         setEventCount(eventKount);
-    }, [eventKount, isPending5, isError5]);
+    }, [eventKount, setEventCount, isPending5, isError5]);
     useEffect(() => {
-        setBlogCount(blogKount, isError6);
-    }, [blogKount, isPending6]);
+        setBlogCount(blogKount);
+    }, [blogKount, setBlogCount, isPending6, isError6]);
 
     const year = new Date().getFullYear();
 
