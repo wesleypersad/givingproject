@@ -23,7 +23,7 @@ import Footer from "./components/Footer";
 
 // get the server URL directly from the environment variables
 const { REACT_APP_SERVER_URL } = process.env;
-const socket = socketIO.connect(`${REACT_APP_SERVER_URL}`);
+const socket = socketIO.connect(`${REACT_APP_SERVER_URL}`, {transports: ['websocket']});
 
 function App() {
   return (
