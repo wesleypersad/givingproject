@@ -14,6 +14,9 @@ const useFetch = (url, options = {}) => {
                 if (!response.ok) {
                     throw Error('There was a problem with the fetch operation: ' + error.message);
                 }
+                if (!response.headers.get('content-type').includes('application/json')) {
+                    throw Error('Received non-JSON response');
+                }
                 const data = await response.json();
                 setData(data);
                 setIsPending(false);
