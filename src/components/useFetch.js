@@ -31,12 +31,13 @@ const useFetch = (url, options = {}) => {
             }
         };
 
+        //console.log('useFetch: fetching data from url: ', url);
         fetchData();
 
         return () => abortCont.abort();
-    }, [url, options, error]);
+    }, [url]);
 
-    return { data, isPending, error }
+    return { data, isPending, error };
 }
 
 export default useFetch;

@@ -1,6 +1,6 @@
 import "../App.css";
 import { Container, Button } from 'react-bootstrap';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import useFetch from "../components/useFetch";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
@@ -18,16 +18,18 @@ function Donate() {
     // from  the data context
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
-    let options = {};
 
-    // see if there is an authorized user
-    if (user) {
-        options = {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
+    // see if there is an authorized user and useMemo to set the options
+    const options = useMemo(() => {
+        if (user) {
+            return {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            };
         };
-    };
+        return {};
+    }, [user]);
 
     // define the constants and functions to get the JSON data
     const [paymentList, setPaymentList] = useState([{}]);
@@ -103,19 +105,25 @@ function Donate() {
         <div className="donate container square border border-info border-2" style={{backgroundImage:`url(${donate})`}} >
             <h1>Donations Page</h1>
             <Container>
-                <Button onClick={reqPayment} variant="primary">Get Payment Data</Button>
+                {!isPending4 && <Button onClick={reqPayment} variant="primary">Show Payment Data</Button>}
+                {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
+                {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
                 {!rowDataPayment && <PaymentAddForm />}
                 {rowDataPayment && <PaymentActionForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
-                <Button onClick={reqSkill} variant="primary">Get Skill Data</Button>
+                {!isPending5 && <Button onClick={reqSkill} variant="primary">Show Skill Data</Button>}
+                {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
+                {error5 && <div>{error5}</div>}              
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
                 {!rowDataSkill && <SkillAddForm />}
                 {rowDataSkill && <SkillActionForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
             </Container>
             <Container>
-                <Button onClick={reqItem} variant="primary">Get Item Data</Button>
+                {!isPending6 && <Button onClick={reqItem} variant="primary">Show Item Data</Button>}
+                {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
+                {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
                 {!rowDataItem && <ItemAddForm />}
                 {rowDataItem && <ItemActionForm rowData={rowDataItem} setRowData={setRowDataItem} />}

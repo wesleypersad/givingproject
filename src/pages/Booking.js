@@ -8,7 +8,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState, useCallback } from "react";
 import { Button, Card } from 'react-bootstrap';
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import useFetch from "../components/useFetch";
@@ -32,18 +32,18 @@ function Booking () {
     // from  the data context
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
-    let options = {};
 
     // see if there is an authorized user
-    if (user) {
-        options = {
-            headers: {
-                'Authorization': `Bearer ${user.token}`,
-                // definately needed for body to be passed in fetch
-                'Content-type' : 'application/json'
-            }
+    const options = useMemo(() => {
+        if (user) {
+            return {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            };
         };
-    };
+        return {};
+    }, [user]);
 
     // initialize state variables
     const [allEvents, setAllEvents] = useState([]);

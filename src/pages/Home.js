@@ -2,7 +2,7 @@ import "../App.css";
 import { Container } from "react-bootstrap";
 import BlogViewList from "../components/BlogViewList";
 import useFetch from "../components/useFetch";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import home from '../images/home.jpg';                // image by freepix
@@ -11,16 +11,18 @@ function Home() {
     // from  the data context
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
-    let options = {};
 
     // see if there is an authorized user
-    if (user) {
-        options = {
-        headers: {
-            Authorization: `Bearer ${user.token}`,
-        },
+    const options = useMemo(() => {
+        if (user) {
+            return {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            };
         };
-    };
+        return {};
+    }, [user]);
 
     // request the blog data
     const {
@@ -36,13 +38,10 @@ function Home() {
                 <Container>
                     <div className = 'text-start'>
                         {error && <div>{error} </div>}
-                        {isPending && <div>Loading ...</div>}
+                        {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                         {blogs && <BlogViewList blogs={blogs} title="Home Page" />}
                     </div>
                 </Container>
-            <div>
-        </div>
-
         </div>
     );
 }

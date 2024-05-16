@@ -3,7 +3,7 @@ import "../App.css";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import useFetch from "../components/useFetch";
@@ -17,16 +17,17 @@ const Footer = ({ socket }) => {
     } = useContext(DataContext);
     const { user } = useAuthContext();
 
-    let options = {};
-
-    // see if there is an authorized user
-    if (user) {
-        options = {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
+    // set options for the fetch with user dependancy
+    const options = useMemo(() => {
+        if (user) {
+            return {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            };
         };
-    };
+        return {};
+    }, [user]);
 
     // load up the numbers
     const { data: userKount, isPending, isError } = useFetch(`${SERVER_URL}/noauth/usercount`, options);

@@ -25,7 +25,7 @@ function Research () {
     // request charity list of that name
     const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
     const reqList = () => {
-        if (charities.length && !isPending && !error) {
+        if (charities && !isPending && !error) {
             setCharityList(charities);
             console.log(charities);
         };
@@ -34,7 +34,6 @@ function Research () {
     // request charity details
     const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
     const reqDetails = () => {
-        console.log('REQ DETAILS', typeof(details));
         if (details && !isPending2 && !error2) {
             setCharityDetails(details);
             console.log(details);
@@ -44,7 +43,7 @@ function Research () {
     // request charity financial details
     const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
     const reqFinancials = () => {
-        if (financials.length && !isPending3 && !error3) {
+        if (financials && !isPending3 && !error3) {
             setCharityFinancials(financials);
             console.log(financials);
         };
@@ -80,7 +79,9 @@ function Research () {
                 value={charityName}
             />
             <Container>
-                <Button onClick={reqList} variant="primary">Get List Of Charities</Button>
+                {!isPending && <Button onClick={reqList} variant="primary">Get List Of Charities</Button>}
+                {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
+                {error && <div>{error}</div>}
                 {charityList && <Table tbodyData={charityList} highlightedRow={highlightedRow} setHighlightedRow ={setHighlightedRow} />}
                 {/* <p>{JSON.stringify(rowDataCharity)}</p> */}
             </Container>            
@@ -92,11 +93,15 @@ function Research () {
                 value={charityNumber}
             />
             <Container style={myComponent}>
-                <Button onClick={reqDetails} variant="primary">Get Charity Details</Button>
+                {!isPending2 && <Button onClick={reqDetails} variant="primary">Get Charity Details</Button>}
+                {isPending2 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
+                {error2 && <div>{error2}</div>}
                 <pre>{JSON.stringify(charityDetails, null, 2)}</pre>
             </Container>
             <Container  style={myComponent}>
-                <Button onClick={reqFinancials} variant="primary">Get Financial History</Button>
+                {!isPending3 && <Button onClick={reqFinancials} variant="primary">Get Financial History</Button>}
+                {isPending3 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
+                {error3 && <div>{error3}</div>}
                 {charityFinancials && <Table tbodyData={charityFinancials}/>}
                 {/* <pre>{JSON.stringify(charityFinancials, null, 2)}</pre> */}
             </Container>

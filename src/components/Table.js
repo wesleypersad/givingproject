@@ -1,6 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Table({tbodyData, highlightedRow, setHighlightedRow}) {
+    //check for an empty object
+    if (tbodyData.length === 0) {
+        return <div style={{ color: 'white', background: 'red' }}>NO DATA TO DISPLAY !!!</div>;
+    };
+
     // select the table row 
     const ClickHighlight = (e,index) => {
         // check if (set)highlightedRow passed

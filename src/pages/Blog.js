@@ -1,5 +1,5 @@
 import "../App.css";
-//import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
 import useFetch from "../components/useFetch";
@@ -13,20 +13,19 @@ function Blog() {
     // from  the data context
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
-    let options = {};
 
     // see if there is an authorized user also put the user in the body 
     // to ensure we can filter the blog results as authorisation no loger required
-    // so user is not passed to get method
-    if (user) {
-        options = {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            }
+    const options = useMemo(() => {
+        if (user) {
+            return {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            };
         };
-    };
-
-    console.log('NOW OPTIONS CONTAIN ',options);
+        return {};
+    }, [user]);
 
     // request the blog data
     const {
@@ -40,7 +39,7 @@ function Blog() {
         <h1>Blog Page</h1>
         <Container>
             {error && <div>{error} </div>}
-            {isPending && <div>Loading ...</div>}
+            {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
             {blogs && <BlogList blogs={blogs} title="Read/Create Blogs" />}
         </Container>
         <Container>
