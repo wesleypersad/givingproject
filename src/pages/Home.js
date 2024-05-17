@@ -16,6 +16,7 @@ function Home() {
     const options = useMemo(() => {
         if (user) {
             return {
+                mode: 'cors',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
