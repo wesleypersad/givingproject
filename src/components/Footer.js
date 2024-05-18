@@ -21,7 +21,7 @@ const Footer = ({ socket }) => {
     const options = useMemo(() => {
         if (user) {
             return {
-                mode: 'cors',
+                mode: 'no-cors',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
