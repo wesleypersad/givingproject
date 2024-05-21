@@ -1,23 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function UserEditForm({ rowData }) {
+    
+function UserForm( {rowData} ) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
     let options = {};
 
-    console.log('EDIT FORM=', rowData);
+    //test for rowData cotaining anything useful
+    const isEmpty = rowData === null || rowData === undefined || Object.keys(rowData).length === 0;
 
-    const [_id, setId] = useState(rowData._id);
-    const [username, setUsername] = useState(rowData.username);
-    const [password, setPassword] = useState(rowData.password);
-    const [email, setEmail] = useState(rowData.email);
-    const [mobile, setMobile] = useState(rowData.mobile);
-    const [role, setRole] = useState(rowData.role);
+    const [_id, setId] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [mobile, setMobile] = useState(null);
+    const [role, setRole] = useState(null);
     const [isPending, setIsPending]= useState(false);
 
     // if there is an authorized user set the fetch options
@@ -30,6 +32,42 @@ function UserEditForm({ rowData }) {
                 'Content-type' : 'application/json'
             }
         };
+    };
+
+    useEffect(() => {
+        const isEmpty = rowData === null || rowData === undefined || Object.keys(rowData).length === 0;
+        setId(!isEmpty ? rowData._id : null);
+        setUsername(!isEmpty ? rowData.username : null);
+        setPassword(!isEmpty ? rowData.password : null);
+        setEmail(!isEmpty ? rowData.email : null);
+        setMobile(!isEmpty ? rowData.mobile : null);
+        setRole(!isEmpty ? rowData.role : null);
+    },[rowData]);
+
+    const handleCreate = (e) => {
+        e.preventDefault();
+        const user = { username, password, email, mobile, role };
+        //console.log(JSON.stringify(user));
+
+        // problem with useFetch hook so ordinary fetch used ?
+        options = { ...options,
+            body: JSON.stringify(user)
+        };
+
+        setIsPending(true);
+
+        fetch(`${SERVER_URL}/user`, options)
+        .then(() => {
+            console.log('new user added');
+            setUsername('');
+            setPassword('');
+            setEmail('');
+            setMobile('');
+            setRole('');
+            setIsPending(false);
+            //navigate('/donate');
+            window.location.reload();
+        })
     };
 
     const handleModify = (e) => {
@@ -86,9 +124,9 @@ function UserEditForm({ rowData }) {
 
     return (
         <div className='create' style={myComponent}>
-            <h1>Modify User</h1>
+            {!isEmpty ? <h1>Modify User</h1> : <h1>Add A User</h1>}
             <form onSubmit={handleModify}>
-                <label>Modify Username:</label>
+                <label>Username:</label>
                 <textarea
                     required 
                     value={ username }
@@ -118,12 +156,16 @@ function UserEditForm({ rowData }) {
                     value={ role }
                     onChange={(e) => setRole(e.target.value)}
                 ></textarea>
-                {!isPending && <button>Modify user</button>}
-                {isPending && <button disabled>Modfying user</button>}
+                {!isPending && 
+                    (!isEmpty ? <button>Modify user</button> : <button>Add user</button>)
+                }
+                {isPending && 
+                    (!isEmpty ? <button disabled>Modfying user</button> : <button disabled>Adding user</button>)
+                }
             </form>
-            <button onClick={() => handleDelete()}>Delete</button>
+            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
         </div>
     );
 }
 
-export default UserEditForm;
+export default UserForm;

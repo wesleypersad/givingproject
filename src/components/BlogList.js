@@ -6,7 +6,6 @@ import BlogEditForm from "./BlogEditForm";
 const  BlogList= ({blogs}) => {
     // store edit status
     const [edit, setEdit] = useState(false);
-    const [dummy, setDummy] = useState();
 
     // toggle the edit flag
     const handleEdit = () => {
@@ -34,7 +33,7 @@ const  BlogList= ({blogs}) => {
                         {parse(blog.body)}
                     </div>
                     <button onClick={() => handleEdit()}>Hide/Unhide Edit</button>
-                    {edit && <div><BlogEditForm rowData={blog} setRowData={setDummy} /></div>}
+                    {edit && <div><BlogEditForm rowData={blog} /></div>}
                 </div>
             ))}
         </div>

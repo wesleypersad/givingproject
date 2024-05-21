@@ -6,7 +6,7 @@ import '../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 
-function EventEditForm({rowData, setRowData}) {
+function EventEditForm({ rowData }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();

@@ -89,7 +89,7 @@ function Booking () {
                 <Button  className='m-1' onClick={reqEvents} variant="primary">Get List Of Events</Button>
             </Card>}
             {!editEvent && <EventAddForm />}
-            {editEvent && <EventEditForm rowData={editEvent} setRowData={setEditEvent} />}
+            {editEvent && <EventEditForm rowData={editEvent} />}
         </div>
     )
 }

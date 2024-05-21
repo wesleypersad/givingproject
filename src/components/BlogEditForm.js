@@ -4,7 +4,7 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function BlogEditForm({ rowData, setRowData }) {
+function BlogEditForm({ rowData }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();

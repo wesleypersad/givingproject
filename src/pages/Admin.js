@@ -18,6 +18,7 @@ import BlogAddForm from "../components/BlogAddForm";
 import BlogEditForm from "../components/BlogEditForm";
 import UserAddForm from "../components/UserAddForm";
 import UserEditForm from "../components/UserEditForm";
+//import UserForm from "../components/UserForm";
 import admin from '../images/admin.jpg';                // image by freepix
 
 function Admin() {
@@ -184,7 +185,7 @@ function Admin() {
                 {error && <div>{error}</div>}
                 {userList && <Table tbodyData={userList} highlightedRow={highlightedRowUser} setHighlightedRow ={setHighlightedRowUser}/>}
                 {!rowDataUser && <UserAddForm />}
-                {rowDataUser && <UserEditForm rowData={rowDataUser} setRowData={setRowDataUser} />}            
+                {rowDataUser && <UserEditForm rowData={rowDataUser} />} 
             </Container>
             <Container>
                 {!isPending2 && <Button onClick={reqBlog} variant="primary">Show Blog Data</Button>}
@@ -192,7 +193,7 @@ function Admin() {
                 {error2 && <div>{error2}</div>}
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
                 {!rowDataBlog && <BlogAddForm />}
-                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} setRowData={setRowDataBlog} />}
+                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} />}
             </Container>
             <Container>
                 {!isPending3 && <Button onClick={reqEvent} variant="primary">Show Event Data</Button>}
@@ -200,7 +201,7 @@ function Admin() {
                 {error3 && <div>{error3}</div>}
                 {eventList && <Table tbodyData={eventList} highlightedRow={highlightedRowEvent} setHighlightedRow ={setHighlightedRowEvent}/>}
                 {!rowDataEvent && <EventAddForm />}
-                {rowDataEvent && <EventEditForm rowData={rowDataEvent} setRowData={setRowDataEvent} />}
+                {rowDataEvent && <EventEditForm rowData={rowDataEvent} />}
             </Container>
             <Container>
                 {!isPending4 && <Button onClick={reqPayment} variant="primary">Show Payment Data</Button>}
@@ -208,7 +209,7 @@ function Admin() {
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
                 {!rowDataPayment && <PaymentAddForm />}
-                {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
+                {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} />}
             </Container>
             <Container>
                 {!isPending5 && <Button onClick={reqSkill} variant="primary">Show Skill Data</Button>}
@@ -216,7 +217,7 @@ function Admin() {
                 {error5 && <div>{error5}</div>}
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
                 {!rowDataSkill && <SkillAddForm />}
-                {rowDataSkill && <SkillEditForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
+                {rowDataSkill && <SkillEditForm rowData={rowDataSkill} />}
             </Container>
             <Container>
                 {!isPending6 && <Button onClick={reqItem} variant="primary">Show Item Data</Button>}
@@ -224,7 +225,7 @@ function Admin() {
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
                 {!rowDataItem && <ItemAddForm />}
-                {rowDataItem && <ItemEditForm rowData={rowDataItem} setRowData={setRowDataItem} />}
+                {rowDataItem && <ItemEditForm rowData={rowDataItem} />}
             </Container>
         </div>
     );
