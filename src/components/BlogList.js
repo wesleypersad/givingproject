@@ -1,7 +1,7 @@
-import { useContext } from "react";
 import { useState } from "react";
 import parse from 'html-react-parser';
-import BlogEditForm from "./BlogEditForm";
+//import BlogEditForm from "./BlogEditForm";
+import BlogForm from "./BlogForm";
 
 const  BlogList= ({blogs}) => {
     // store edit status
@@ -33,7 +33,8 @@ const  BlogList= ({blogs}) => {
                         {parse(blog.body)}
                     </div>
                     <button onClick={() => handleEdit()}>Hide/Unhide Edit</button>
-                    {edit && <div><BlogEditForm rowData={blog} /></div>}
+                    {/* {edit && <div><BlogEditForm rowData={blog} /></div>} */}
+                    {edit && <div><BlogForm rowData={blog} /></div>}
                 </div>
             ))}
         </div>

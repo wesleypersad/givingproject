@@ -12,8 +12,9 @@ import { useContext, useEffect, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import useFetch from "../components/useFetch";
-import EventAddForm from "../components/EventAddForm";
-import EventEditForm from "../components/EventEditForm";
+//import EventAddForm from "../components/EventAddForm";
+//import EventEditForm from "../components/EventEditForm";
+import EventForm from "../components/EventForm";
 import booking from '../images/booking.jpg';                // image by freepix
 
 const locales = {
@@ -88,8 +89,9 @@ function Booking () {
             {events && <Card className="mb-3" style={{ color: "#000"}}>
                 <Button  className='m-1' onClick={reqEvents} variant="primary">Get List Of Events</Button>
             </Card>}
-            {!editEvent && <EventAddForm />}
-            {editEvent && <EventEditForm rowData={editEvent} />}
+{/*             {!editEvent && <EventAddForm />}
+            {editEvent && <EventEditForm rowData={editEvent} />} */}
+            <EventForm rowData={editEvent} />
         </div>
     )
 }

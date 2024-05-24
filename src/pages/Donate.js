@@ -6,11 +6,14 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
-import ItemAddForm from "../components/ItemAddForm";
+//import ItemAddForm from "../components/ItemAddForm";
 import ItemActionForm from "../components/ItemActionForm";
-import SkillAddForm from "../components/SkillAddForm";
+import ItemForm from "../components/ItemForm";
+//import SkillAddForm from "../components/SkillAddForm";
+import SkillForm from "../components/SkillForm";
 import SkillActionForm from "../components/SkillActionForm";
-import PaymentAddForm from "../components/PaymentAddForm";
+//import PaymentAddForm from "../components/PaymentAddForm";
+import PaymentForm from "../components/PaymentForm";
 import PaymentActionForm from "../components/PaymentActionForm";
 import donate from '../images/donate.jpg';                // image by freepix
 
@@ -109,7 +112,8 @@ function Donate() {
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
-                {!rowDataPayment && <PaymentAddForm />}
+                {/* {!rowDataPayment && <PaymentAddForm />} */}
+                {!rowDataPayment && <PaymentForm />}
                 {rowDataPayment && <PaymentActionForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
@@ -117,7 +121,8 @@ function Donate() {
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}              
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
-                {!rowDataSkill && <SkillAddForm />}
+                {/* {!rowDataSkill && <SkillAddForm />} */}
+                {!rowDataSkill && <SkillForm />}
                 {rowDataSkill && <SkillActionForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
             </Container>
             <Container>
@@ -125,7 +130,8 @@ function Donate() {
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
-                {!rowDataItem && <ItemAddForm />}
+                {/* {!rowDataItem && <ItemAddForm />} */}
+                {!rowDataItem && <ItemForm />}
                 {rowDataItem && <ItemActionForm rowData={rowDataItem} setRowData={setRowDataItem} />}
             </Container>
         </div>

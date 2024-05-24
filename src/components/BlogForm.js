@@ -1,24 +1,24 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function PaymentForm({ rowData }) {
+function BlogForm({ rowData }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
 
     //test for rowData cotaining anything useful
     const isEmpty = rowData === null || rowData === undefined || Object.keys(rowData).length === 0;
-    //initialise state variables 
+
+    //initialise state variables
     const [_id, setId] = useState('');
-    const [amount, setAmount] = useState('');
-    const [charity, setCharity] = useState('');
-    const [status, setStatus] = useState('');
+    const [title, setTitle] = useState(''); 
+    const [body, setBody] = useState('');
     const [isPending, setIsPending]= useState(false);
 
-    // if there is an authorized user set the fetch options
+    // see if there is an authorized user set the fetch options
     let options = useMemo(() => {
         if (user) {
             return {
@@ -33,21 +33,19 @@ function PaymentForm({ rowData }) {
         return {};
     }, [user]);
 
-   // see if the rowData or empty status has changed
-   useEffect(() => {
-    if (!isEmpty) {
-        setId(rowData._id);
-        setAmount(rowData.amount);
-        setCharity(rowData.charity);
-        setStatus(rowData.status);
+    // seee if the rowData or empty status has changed
+    useEffect(() => {
+        if (!isEmpty) {
+            setId(rowData._id);
+            setTitle(rowData.title);
+            setBody(rowData.body);
         } else {
-        setId('');
-        setAmount('');
-        setCharity('');
-        setStatus('');
-    }
-},[rowData, isEmpty]);
-
+            setId('');
+            setTitle('');
+            setBody('');
+        }
+    },[rowData, isEmpty]);
+   
     // handle the form submission
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -60,78 +58,77 @@ function PaymentForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const payment = { amount, charity, status};
+        const blog = { title, body };
 
         //modify request to type POST
         options.method = 'POST';
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(payment)
+            body: JSON.stringify(blog)
         };
 
         setIsPending(true);
 
-        //add the payment
-        fetch(`${SERVER_URL}/payment`, options)
+        //add the user
+        fetch(`${SERVER_URL}/blog`, options)
         .then(() => {
-            console.log('new payment added');
-            setAmount('');
-            setCharity('');
-            setStatus('');
+            console.log('new blog added');
+            setTitle('');
+            setBody('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
         })
-    };
+    };  
 
     const handleModify = (e) => {
         e.preventDefault();
-        const thispayment = { _id, amount, status };
+        const thisblog = { _id, title, body };
+
         //modify request to type PUT
         options.method = 'PUT';
+        console.log(JSON.stringify(thisblog));
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(thispayment)
+            body: JSON.stringify(thisblog)
         };
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/payment`, options)
+        //modify the blog
+        fetch(`${SERVER_URL}/blog`, options)
         .then(() => {
-            console.log('new payment added');
-            setAmount('');
-            setCharity('');
-            setStatus('');
+            console.log('blog modified');
+            setTitle('');
+            setBody('');
             setIsPending(false);
-            //navigate('/donate');
+            //navigate('/blog');
             window.location.reload();
         })
     };
 
-    const handleDelete = (e) => {
+    const handleDelete = async () => {
         // problem with useFetch hook so ordinary fetch used ?
-        const thispayment = {_id};
-
+        const thisblog = {_id};
         //modify request to type DELETE
         options.method = 'DELETE';
 
         options = { ...options,
-            body: JSON.stringify(thispayment)
+            body: JSON.stringify(thisblog)
         };
 
-        //delete the payment
-        fetch(`${SERVER_URL}/payment`, options)
+        //delete this blog
+        fetch(`${SERVER_URL}/blog`, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .then(() => {
-            console.log('payment deleted');
-            setAmount('');
-            setCharity('');
-            setStatus('');
+            console.log('blog deleted');
+            setTitle('');
+            setBody('');
             setIsPending(false);
-            //navigate('/donate');
+            //navigate('/blog');
             window.location.reload();
         });
     };
@@ -146,35 +143,27 @@ function PaymentForm({ rowData }) {
 
     return (
         <div className='create' style={myComponent}>
-            {!isEmpty ? <h1>Modify Payment</h1> : <h1>Add A Payment</h1>}
+            {!isEmpty ? <h1>Modify Blog (HTML)</h1> : <h1>Add A Blog (HTML)</h1>}
             <form onSubmit={handleSubmit}>
-                <label>Amount:</label>
-                <textarea
+                <label>Title:</label>
+                <input 
+                    type="text"
                     required 
-                    value={ amount }
-                    onChange={(e) => setAmount(e.target.value)}
-                ></textarea>
-                <label>Charity:</label>
+                    value={ title }
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <label>Body:</label>
                 <textarea
-                    required 
-                    value={ charity }
-                    onChange={(e) => setCharity(e.target.value)}
+                    className="form-control"
+                    required
+                    value={ body }
+                    onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                {!isEmpty && 
-                    <div>
-                        <label>Status :</label>
-                        <textarea
-                            required 
-                            value={ status }
-                            onChange={(e) => setStatus(e.target.value)}
-                        ></textarea>
-                    </div>
-                }
-                {!isPending && 
-                    (!isEmpty ? <button>Modify Payment</button> : <button>Add Payment</button>)
+                {!isPending &&
+                    (!isEmpty ? <button>Modify Blog</button> : <button>Add Blog</button>)
                 }
                 {isPending && 
-                    (!isEmpty ? <button disabled>Modfying Payment</button> : <button disabled>Adding Payment</button>)
+                    (!isEmpty ? <button disabled>Modifying Blog</button> : <button disabled>Adding Blog</button>)
                 }
             </form>
             {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
@@ -182,4 +171,4 @@ function PaymentForm({ rowData }) {
     );
 }
 
-export default PaymentForm;
+export default BlogForm;

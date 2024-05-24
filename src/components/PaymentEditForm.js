@@ -64,7 +64,7 @@ function PaymentEditForm({ rowData }) {
             body: JSON.stringify(payment)
         };
         console.log(options);
-        fetch(`${SERVER_URL}/skill`, options)
+        fetch(`${SERVER_URL}/payment`, options)
         .then(response => response.json())
         .then(data => console.log(data));
     };

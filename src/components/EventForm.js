@@ -3,8 +3,10 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
-    
-function UserForm( {rowData} ) {
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+
+function EventForm({ rowData }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -14,14 +16,14 @@ function UserForm( {rowData} ) {
 
     //initialise state variables
     const [_id, setId] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [mobile, setMobile] = useState('');
-    const [role, setRole] = useState('');
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [allDay, setAllDay] = useState(false);
+    const [start, setStart] = useState('');
+    const [end, setEnd] = useState('');
     const [isPending, setIsPending]= useState(false);
 
-    // see if there is an authorized user
+    // if there is an authorized user
     let options = useMemo(() => {
         if (user) {
             return {
@@ -40,18 +42,18 @@ function UserForm( {rowData} ) {
     useEffect(() => {
         if (!isEmpty) {
             setId(rowData._id);
-            setUsername(rowData.username);
-            setPassword(rowData.password);
-            setEmail(rowData.email);
-            setMobile(rowData.mobile);
-            setRole(rowData.role);
+            setTitle(rowData.title);
+            setBody(rowData.body);
+            setAllDay(rowData.allDay);
+            setStart(new Date(rowData.start));
+            setEnd(new Date(rowData.end));            
         } else {
             setId('');
-            setUsername('');
-            setPassword('');
-            setEmail('');
-            setMobile('');
-            setRole('');
+            setTitle('');
+            setBody('');
+            setAllDay(false);
+            setStart('');
+            setEnd('');
         }
     },[rowData, isEmpty]);
 
@@ -67,56 +69,55 @@ function UserForm( {rowData} ) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const user = { username, password, email, mobile, role };
+        const event = { _id, title, body, allDay, start, end };
+
 
         //modify request to type POST
         options.method = 'POST';
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(user)
+            body: JSON.stringify(event)
         };
 
         setIsPending(true);
 
-        //add the user
+        //add the event
         fetch(`${SERVER_URL}/user`, options)
         .then(() => {
-            console.log('new user added');
-            setUsername('');
-            setPassword('');
-            setEmail('');
-            setMobile('');
-            setRole('');
+            console.log('new event added');
+            setTitle('');
+            setBody('');
+            setAllDay(false);
+            setStart('');
+            setEnd('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
         })
     };
-
     const handleModify = (e) => {
         e.preventDefault();
-        const thisuser = { _id, username, password, email, mobile, role };
+        const thisevent = { _id, title, body, allDay, start, end};
 
         //modify request to type PUT
         options.method = 'PUT';
-
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(thisuser)
+            body: JSON.stringify(thisevent)
         };
 
         setIsPending(true);
 
-        //modify the user
-        fetch(`${SERVER_URL}/user`, options)
+        //modify the event
+        fetch(`${SERVER_URL}/event`, options)
         .then(() => {
-            console.log('user modified');
-            setUsername('');
-            setPassword('');
-            setEmail('');
-            setMobile('');
-            setRole('');
+            console.log('event modified');
+            setTitle('');
+            setBody('');
+            setAllDay(false);
+            setStart('');
+            setEnd('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
@@ -125,30 +126,30 @@ function UserForm( {rowData} ) {
 
     const handleDelete = (e) => {
         // problem with useFetch hook so ordinary fetch used ?
-        const thisuser = {_id};
+        const thisevent = {_id};
 
         //modify request to type DELETE
         options.method = 'DELETE';
 
         options = { ...options,
-            body: JSON.stringify(thisuser)
+            body: JSON.stringify(thisevent)
         };
 
-        //delete the user
-        fetch(`${SERVER_URL}/user`, options)
+        //delete the event
+        fetch(`${SERVER_URL}/event`, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .then(() => {
-            console.log('user deleted');
-            setUsername('');
-            setPassword('');
-            setEmail('');
-            setMobile('');
-            setRole('');
+            console.log('event deleted');
+            setTitle('');
+            setBody('');
+            setAllDay(false);
+            setStart('');
+            setEnd('');
             setIsPending(false);
             //navigate('/donate');
             window.location.reload();
-        });
+        })
     };
 
     const myComponent = {
@@ -161,43 +162,32 @@ function UserForm( {rowData} ) {
 
     return (
         <div className='create' style={myComponent}>
-            {!isEmpty ? <h1>Modify User</h1> : <h1>Add A User</h1>}
+            {!isEmpty ? <h1>Modify Event</h1> : <h1>Add An Event</h1>}
             <form onSubmit={handleSubmit}>
-                <label>Username:</label>
+                <label>Title:</label>
+                <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
+                    value={title} onChange={(e) => setTitle(e.target.value)}
+                />
+                <label>Body:</label>
                 <textarea
-                    required 
-                    value={ username }
-                    onChange={(e) => setUsername(e.target.value)}
+                    className="form-control"
+                    required
+                    value={ body }
+                    onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                <label>Password:</label>
-                <textarea
-                    required 
-                    value={ password }
-                    onChange={(e) => setPassword(e.target.value)}
-                ></textarea>
-                <label>Email:</label>
-                <textarea
-                    required 
-                    value={ email }
-                    onChange={(e) => setEmail(e.target.value)}
-                ></textarea>
-                <label>Mobile:</label>
-                <textarea
-                    required 
-                    value={ mobile }
-                    onChange={(e) => setMobile(e.target.value)}
-                ></textarea>
-                <label>Role:</label>
-                <textarea
-                    required 
-                    value={ role }
-                    onChange={(e) => setRole(e.target.value)}
-                ></textarea>
+                <DatePicker 
+                    placeholderText="Start Date" style={{marginRight:"10px"}}
+                    selected={start} onChange={(start) => setStart(start)}
+                />
+                <DatePicker 
+                    placeholderText="End Date" 
+                    selected={end} onChange={(end) => setEnd(end)}
+                />
                 {!isPending && 
-                    (!isEmpty ? <button>Modify User</button> : <button>Add User</button>)
+                    (!isEmpty ? <button>Modify Event</button> : <button>Add Event</button>)
                 }
                 {isPending && 
-                    (!isEmpty ? <button disabled>Modfying User</button> : <button disabled>Adding User</button>)
+                    (!isEmpty ? <button disabled>Modfying Event</button> : <button disabled>Adding Event</button>)
                 }
             </form>
             {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
@@ -205,4 +195,4 @@ function UserForm( {rowData} ) {
     );
 }
 
-export default UserForm;
+export default EventForm;

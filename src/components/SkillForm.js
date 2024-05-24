@@ -4,7 +4,7 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 
-function PaymentForm({ rowData }) {
+function SkillForm({ rowData }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -13,8 +13,7 @@ function PaymentForm({ rowData }) {
     const isEmpty = rowData === null || rowData === undefined || Object.keys(rowData).length === 0;
     //initialise state variables 
     const [_id, setId] = useState('');
-    const [amount, setAmount] = useState('');
-    const [charity, setCharity] = useState('');
+    const [skills, setSkills] = useState('');
     const [status, setStatus] = useState('');
     const [isPending, setIsPending]= useState(false);
 
@@ -37,13 +36,11 @@ function PaymentForm({ rowData }) {
    useEffect(() => {
     if (!isEmpty) {
         setId(rowData._id);
-        setAmount(rowData.amount);
-        setCharity(rowData.charity);
+        setSkills(rowData.skills);
         setStatus(rowData.status);
         } else {
         setId('');
-        setAmount('');
-        setCharity('');
+        setSkills('');
         setStatus('');
     }
 },[rowData, isEmpty]);
@@ -60,24 +57,23 @@ function PaymentForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const payment = { amount, charity, status};
+        const skill = { skills, status};
 
         //modify request to type POST
         options.method = 'POST';
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(payment)
+            body: JSON.stringify(skill)
         };
 
         setIsPending(true);
 
-        //add the payment
-        fetch(`${SERVER_URL}/payment`, options)
+        //add the user
+        fetch(`${SERVER_URL}/skill`, options)
         .then(() => {
-            console.log('new payment added');
-            setAmount('');
-            setCharity('');
+            console.log('new skill added');
+            setSkills('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
@@ -87,22 +83,21 @@ function PaymentForm({ rowData }) {
 
     const handleModify = (e) => {
         e.preventDefault();
-        const thispayment = { _id, amount, status };
+        const thisskill = { _id, skills, status };
         //modify request to type PUT
         options.method = 'PUT';
 
         // problem with useFetch hook so ordinary fetch used ?
         options = { ...options,
-            body: JSON.stringify(thispayment)
+            body: JSON.stringify(thisskill)
         };
 
         setIsPending(true);
 
-        fetch(`${SERVER_URL}/payment`, options)
+        fetch(`${SERVER_URL}/skill`, options)
         .then(() => {
-            console.log('new payment added');
-            setAmount('');
-            setCharity('');
+            console.log('new skill added');
+            setSkills('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
@@ -112,23 +107,22 @@ function PaymentForm({ rowData }) {
 
     const handleDelete = (e) => {
         // problem with useFetch hook so ordinary fetch used ?
-        const thispayment = {_id};
+        const thisskill = {_id};
 
         //modify request to type DELETE
         options.method = 'DELETE';
 
         options = { ...options,
-            body: JSON.stringify(thispayment)
+            body: JSON.stringify(thisskill)
         };
 
-        //delete the payment
-        fetch(`${SERVER_URL}/payment`, options)
+        //delete the skill
+        fetch(`${SERVER_URL}/skill`, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .then(() => {
-            console.log('payment deleted');
-            setAmount('');
-            setCharity('');
+            console.log('user deleted');
+            setSkills('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
@@ -146,35 +140,30 @@ function PaymentForm({ rowData }) {
 
     return (
         <div className='create' style={myComponent}>
-            {!isEmpty ? <h1>Modify Payment</h1> : <h1>Add A Payment</h1>}
+            {!isEmpty ? <h1>Modify Skills</h1> : <h1>Add Skills</h1>}
             <form onSubmit={handleSubmit}>
-                <label>Amount:</label>
+                <label>Skills:</label>
                 <textarea
+                    className="form-control"
                     required 
-                    value={ amount }
-                    onChange={(e) => setAmount(e.target.value)}
-                ></textarea>
-                <label>Charity:</label>
-                <textarea
-                    required 
-                    value={ charity }
-                    onChange={(e) => setCharity(e.target.value)}
-                ></textarea>
+                    value={ skills }
+                    onChange={(e) => setSkills(e.target.value)}
+                ></textarea>                
                 {!isEmpty && 
                     <div>
-                        <label>Status :</label>
+                        <label>Status:</label>
                         <textarea
                             required 
                             value={ status }
                             onChange={(e) => setStatus(e.target.value)}
                         ></textarea>
-                    </div>
+                    </div>   
                 }
                 {!isPending && 
-                    (!isEmpty ? <button>Modify Payment</button> : <button>Add Payment</button>)
+                    (!isEmpty ? <button>Modify Skills</button> : <button>Add Skills</button>)
                 }
                 {isPending && 
-                    (!isEmpty ? <button disabled>Modfying Payment</button> : <button disabled>Adding Payment</button>)
+                    (!isEmpty ? <button disabled>Modfying Skills</button> : <button disabled>Adding Skills</button>)
                 }
             </form>
             {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
@@ -182,4 +171,4 @@ function PaymentForm({ rowData }) {
     );
 }
 
-export default PaymentForm;
+export default SkillForm;

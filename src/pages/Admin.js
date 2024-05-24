@@ -6,19 +6,24 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
-import EventAddForm from "../components/EventAddForm";
-import EventEditForm from "../components/EventEditForm";
-import ItemAddForm from "../components/ItemAddForm";
-import ItemEditForm from "../components/ItemEditForm";
-import SkillAddForm from "../components/SkillAddForm";
-import SkillEditForm from "../components/SkillEditForm";
-import PaymentAddForm from "../components/PaymentAddForm";
-import PaymentEditForm from "../components/PaymentEditForm";
-import BlogAddForm from "../components/BlogAddForm";
-import BlogEditForm from "../components/BlogEditForm";
-import UserAddForm from "../components/UserAddForm";
-import UserEditForm from "../components/UserEditForm";
-//import UserForm from "../components/UserForm";
+//import EventAddForm from "../components/EventAddForm";
+//import EventEditForm from "../components/EventEditForm";
+import EventForm from "../components/EventForm";
+//import ItemAddForm from "../components/ItemAddForm";
+//import ItemEditForm from "../components/ItemEditForm";
+import ItemForm from "../components/ItemForm";
+//import SkillAddForm from "../components/SkillAddForm";
+//import SkillEditForm from "../components/SkillEditForm";
+import SkillForm from "../components/SkillForm";
+//import PaymentAddForm from "../components/PaymentAddForm";
+//import PaymentEditForm from "../components/PaymentEditForm";
+import PaymentForm from "../components/PaymentForm";
+//import BlogAddForm from "../components/BlogAddForm";
+//import BlogEditForm from "../components/BlogEditForm";
+import BlogForm from "../components/BlogForm";
+//import UserAddForm from "../components/UserAddForm";
+//import UserEditForm from "../components/UserEditForm";
+import UserForm from "../components/UserForm";
 import admin from '../images/admin.jpg';                // image by freepix
 
 function Admin() {
@@ -72,7 +77,7 @@ function Admin() {
     const reqUser = () => {
         if (users.length && !isPending) {
             setUserList(users);
-            console.log(users);
+            //console.log(users);
         };
     };
 
@@ -184,48 +189,54 @@ function Admin() {
                 {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error && <div>{error}</div>}
                 {userList && <Table tbodyData={userList} highlightedRow={highlightedRowUser} setHighlightedRow ={setHighlightedRowUser}/>}
-                {!rowDataUser && <UserAddForm />}
-                {rowDataUser && <UserEditForm rowData={rowDataUser} />} 
+{/*                 {!rowDataUser && <UserAddForm />}
+                {rowDataUser && <UserEditForm rowData={rowDataUser} />} */}
+                <UserForm rowData={rowDataUser} />
             </Container>
             <Container>
                 {!isPending2 && <Button onClick={reqBlog} variant="primary">Show Blog Data</Button>}
                 {isPending2 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error2 && <div>{error2}</div>}
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
-                {!rowDataBlog && <BlogAddForm />}
-                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} />}
+{/*                 {!rowDataBlog && <BlogAddForm />}
+                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} />} */}
+                <BlogForm rowData={rowDataBlog} />
             </Container>
             <Container>
                 {!isPending3 && <Button onClick={reqEvent} variant="primary">Show Event Data</Button>}
                 {isPending3 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error3 && <div>{error3}</div>}
                 {eventList && <Table tbodyData={eventList} highlightedRow={highlightedRowEvent} setHighlightedRow ={setHighlightedRowEvent}/>}
-                {!rowDataEvent && <EventAddForm />}
-                {rowDataEvent && <EventEditForm rowData={rowDataEvent} />}
+{/*                 {!rowDataEvent && <EventAddForm />}
+                {rowDataEvent && <EventEditForm rowData={rowDataEvent} />} */}
+                <EventForm rowData={rowDataEvent} />
             </Container>
             <Container>
                 {!isPending4 && <Button onClick={reqPayment} variant="primary">Show Payment Data</Button>}
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
-                {!rowDataPayment && <PaymentAddForm />}
-                {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} />}
+{/*                 {!rowDataPayment && <PaymentAddForm />}
+                {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} />} */}
+                <PaymentForm rowData={rowDataPayment} />
             </Container>
             <Container>
                 {!isPending5 && <Button onClick={reqSkill} variant="primary">Show Skill Data</Button>}
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
-                {!rowDataSkill && <SkillAddForm />}
-                {rowDataSkill && <SkillEditForm rowData={rowDataSkill} />}
+{/*                 {!rowDataSkill && <SkillAddForm />}
+                {rowDataSkill && <SkillEditForm rowData={rowDataSkill} />} */}
+                <SkillForm rowData={rowDataSkill} />
             </Container>
             <Container>
                 {!isPending6 && <Button onClick={reqItem} variant="primary">Show Item Data</Button>}
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
-                {!rowDataItem && <ItemAddForm />}
-                {rowDataItem && <ItemEditForm rowData={rowDataItem} />}
+{/*                 {!rowDataItem && <ItemAddForm />}
+                {rowDataItem && <ItemEditForm rowData={rowDataItem} />} */}
+                <ItemForm rowData={rowDataItem} />
             </Container>
         </div>
     );
