@@ -3,6 +3,7 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 // import the getStripe function
 import getStripe from '../lib/getStripe';
 
@@ -44,26 +45,33 @@ function PaymentActionForm({rowData, setRowData}) {
     return (
         <div className='action' style={myComponent}>
             <h1>Action Payment</h1>
-            <form>
-                <label>Amount:</label>
-                <textarea
-                    required 
-                    value={ amount }
-                    // onChange={(e) => setAmount(e.target.value)}
-                    readOnly
-                ></textarea>
-                <label>Charity:</label>
-                <textarea
-                    required 
-                    value={ charity }
-                    // onChange={(e) => setCharity(e.target.value)}
-                    readOnly
-                ></textarea>
-            </form>
-            <div>
-                <label>Go To Stripe Checkout To Make Payment</label>
-                <button onClick={handleCheckout}>Action Payment</button>
-            </div>
+            <form className="p-3">
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea"
+                        required 
+                        value={ amount }
+                        // onChange={(e) => setAmount(e.target.value)}
+                        readOnly
+                    ></textarea>
+                    <label htmlFor="floatingTextarea">Amount:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea2"
+                        required 
+                        value={ charity }
+                        // onChange={(e) => setCharity(e.target.value)}
+                        readOnly
+                    ></textarea>
+                    <label htmlFor="floatingTextarea2">Charity:</label>
+                </div>                 
+                <div  className="d-flex justify-content-between">
+                    <button className="btn btn-info" onClick={handleCheckout}>Action Payment - Got To Stripe</button>
+                </div>
+            </form>            
         </div>
     );
 }

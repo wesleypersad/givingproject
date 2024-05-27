@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLogin } from '../hooks/useLogin';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function Login() {
     // username amd password only required for login
@@ -19,22 +20,32 @@ function Login() {
     };
 
     return (
-        <form className="login" onSubmit={handleSubmit}>
-            <h3>Log in</h3>
-            <label>Username:</label>
-            <input 
-                type="text" 
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
-            />
-            <label>Password:</label>
-            <input 
-                type="password" 
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-            />
-            <button disabled={isLoading}>Log in</button>
-            {error && <div className="error">{error}</div>}
+        <form className="login p-3" onSubmit={handleSubmit}>
+            <div className="form-floating mb-3">
+                <h1>Login Page</h1>
+                <div className="form-floating mb-3">
+                    <input
+                        className="form-control" 
+                        id="floatingTextarea"
+                        type="text" 
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                    />
+                    <label htmlFor="floatingTextarea">Username:</label>
+                </div>
+                <div className="form-floating mb-3"> 
+                    <input
+                        className="form-control"
+                        id="floatingTextarea2" 
+                        type="password" 
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                    />
+                    <label htmlFor="floatingTextarea2">Password:</label>
+                </div>                
+                <button disabled={isLoading}>Log in</button>
+                {error && <div className="error">{error}</div>}
+            </div>    
         </form>
     )
 }

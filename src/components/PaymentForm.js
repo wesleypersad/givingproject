@@ -3,6 +3,7 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function PaymentForm({ rowData }) {
     // context provided variables
@@ -81,13 +82,13 @@ function PaymentForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
     const handleModify = (e) => {
         e.preventDefault();
-        const thispayment = { _id, amount, status };
+        const thispayment = { _id, amount, charity, status };
         //modify request to type PUT
         options.method = 'PUT';
 
@@ -106,7 +107,7 @@ function PaymentForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -132,7 +133,7 @@ function PaymentForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         });
     };
 
@@ -147,37 +148,49 @@ function PaymentForm({ rowData }) {
     return (
         <div className='create' style={myComponent}>
             {!isEmpty ? <h1>Modify Payment</h1> : <h1>Add A Payment</h1>}
-            <form onSubmit={handleSubmit}>
-                <label>Amount:</label>
-                <textarea
-                    required 
-                    value={ amount }
-                    onChange={(e) => setAmount(e.target.value)}
-                ></textarea>
-                <label>Charity:</label>
-                <textarea
-                    required 
-                    value={ charity }
-                    onChange={(e) => setCharity(e.target.value)}
-                ></textarea>
+            <form className="p-3" onSubmit={handleSubmit}>
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control" 
+                        id="floatingTextarea" 
+                        required 
+                        value={ amount }
+                        onChange={(e) => setAmount(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea">Amount:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea2"
+                        required 
+                        value={ charity }
+                        onChange={(e) => setCharity(e.target.value)}
+                    ></textarea>      
+                    <label htmlFor="floatingTextarea2">Charity:</label>
+                </div>                
                 {!isEmpty && 
-                    <div>
-                        <label>Status :</label>
+                    <div className="form-floating mb-3">                        
                         <textarea
+                            className="form-control"
+                            id="floatingTextarea3"
                             required 
                             value={ status }
                             onChange={(e) => setStatus(e.target.value)}
                         ></textarea>
+                        <label htmlFor="floatingTextarea3">Status :</label>
                     </div>
                 }
-                {!isPending && 
-                    (!isEmpty ? <button>Modify Payment</button> : <button>Add Payment</button>)
-                }
-                {isPending && 
-                    (!isEmpty ? <button disabled>Modfying Payment</button> : <button disabled>Adding Payment</button>)
-                }
+                <div  className="d-flex justify-content-between">
+                    {!isPending && 
+                        (!isEmpty ? <button>Modify Payment</button> : <button>Add Payment</button>)
+                    }
+                    {isPending && 
+                        (!isEmpty ? <button disabled>Modfying Payment</button> : <button disabled>Adding Payment</button>)
+                    }
+                    {!isEmpty && <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>}
+                </div>                
             </form>
-            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
         </div>
     );
 }

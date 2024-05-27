@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import 'bootstrap/dist/css/bootstrap.css';
 
 function Signup() {
     // username, password and email all required for signup
@@ -21,34 +22,52 @@ function Signup() {
     };
 
     return (
-        <form className="signup" onSubmit={handleSubmit}>
-            <h3>Sign up</h3>
-            <label>Username:</label>
-            <input 
-                type="text" 
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
-            />
-            <label>Password:</label>
-            <input 
-                type="password" 
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-            />
-            <label>Email:</label>
-            <input 
-                type="email" 
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-            />
-            <label>Mobile:</label>
-            <input 
-                type="mobile" 
-                onChange={(e) => setMobile(e.target.value)}
-                value={mobile}
-            />
-            <button disabled={isLoading}>Sign up</button>
-            {error && <div className="error">{error}</div>}
+        <form className="signup p-3" onSubmit={handleSubmit}>
+            <div className="form-floating mb-3">        
+                <h1>Signup Page</h1>
+                <div className="form-floating mb-3">
+                    <input
+                        className="form-control"
+                        id="floatingTextarea" 
+                        type="text" 
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                    />
+                    <label htmlFor="floatingTextarea">Username:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <input
+                        className="form-control"
+                        id="floatingTextarea2" 
+                        type="password" 
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                    />
+                    <label htmlFor="floatingTextarea2">Password:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <input
+                        className="form-control"
+                        id="floatingTextarea3" 
+                        type="email" 
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />
+                    <label htmlFor="floatingTextarea3">Email:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <input
+                        className="form-control"
+                        id="floatingTextarea4"
+                        type="mobile" 
+                        onChange={(e) => setMobile(e.target.value)}
+                        value={mobile}
+                    />                  
+                    <label htmlFor="floatingTextarea4">Mobile:</label>
+                </div>
+                <button disabled={isLoading}>Sign up</button>
+                {error && <div className="error">{error}</div>}        
+            </div>
         </form>
     )
 }

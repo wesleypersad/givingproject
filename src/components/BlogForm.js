@@ -3,6 +3,7 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function BlogForm({ rowData }) {
     // context provided variables
@@ -78,7 +79,7 @@ function BlogForm({ rowData }) {
             setBody('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };  
 
@@ -105,7 +106,7 @@ function BlogForm({ rowData }) {
             setBody('');
             setIsPending(false);
             //navigate('/blog');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -129,7 +130,7 @@ function BlogForm({ rowData }) {
             setBody('');
             setIsPending(false);
             //navigate('/blog');
-            window.location.reload();
+            //window.location.reload();
         });
     };
 
@@ -144,29 +145,39 @@ function BlogForm({ rowData }) {
     return (
         <div className='create' style={myComponent}>
             {!isEmpty ? <h1>Modify Blog (HTML)</h1> : <h1>Add A Blog (HTML)</h1>}
-            <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input 
-                    type="text"
-                    required 
-                    value={ title }
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <label>Body:</label>
-                <textarea
-                    className="form-control"
-                    required
-                    value={ body }
-                    onChange={(e) => setBody(e.target.value)}
-                ></textarea>
-                {!isPending &&
-                    (!isEmpty ? <button>Modify Blog</button> : <button>Add Blog</button>)
-                }
-                {isPending && 
-                    (!isEmpty ? <button disabled>Modifying Blog</button> : <button disabled>Adding Blog</button>)
-                }
-            </form>
-            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
+            <form className="p-3" onSubmit={handleSubmit}>
+                <div className="form-floating mb-3">                    
+                    <input
+                        className="form-control"
+                        id="floatingTextarea"
+                        type="text"
+                        required 
+                        value={ title }
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <label>Title:</label>
+                </div>
+                
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea2"
+                        required
+                        value={ body }
+                        onChange={(e) => setBody(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea2">Body:</label>
+                </div>                
+                <div className="d-flex justify-content-between">
+                    {!isPending &&
+                        (!isEmpty ? <button>Modify Blog</button> : <button>Add Blog</button>)
+                    }
+                    {isPending && 
+                        (!isEmpty ? <button disabled>Modifying Blog</button> : <button disabled>Adding Blog</button>)
+                    }
+                    {!isEmpty && <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>}
+                </div>
+            </form>    
         </div>
     );
 }

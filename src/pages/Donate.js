@@ -7,12 +7,13 @@ import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
 //import ItemAddForm from "../components/ItemAddForm";
-import ItemActionForm from "../components/ItemActionForm";
+//import ItemActionForm from "../components/ItemActionForm";
 import ItemForm from "../components/ItemForm";
 //import SkillAddForm from "../components/SkillAddForm";
 import SkillForm from "../components/SkillForm";
-import SkillActionForm from "../components/SkillActionForm";
+//import SkillActionForm from "../components/SkillActionForm";
 //import PaymentAddForm from "../components/PaymentAddForm";
+import ActionForm from "../components/ActionForm";
 import PaymentForm from "../components/PaymentForm";
 import PaymentActionForm from "../components/PaymentActionForm";
 import donate from '../images/donate.jpg';                // image by freepix
@@ -123,7 +124,8 @@ function Donate() {
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
                 {/* {!rowDataSkill && <SkillAddForm />} */}
                 {!rowDataSkill && <SkillForm />}
-                {rowDataSkill && <SkillActionForm rowData={rowDataSkill} setRowData={setRowDataSkill} />}
+                {/* {rowDataSkill && <SkillActionForm rowData={rowDataSkill} />} */}
+                {rowDataSkill && <ActionForm rowData={rowDataSkill} isItem={ false } />}
             </Container>
             <Container>
                 {!isPending6 && <Button onClick={reqItem} variant="primary">Show Item Data</Button>}
@@ -132,7 +134,8 @@ function Donate() {
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
                 {/* {!rowDataItem && <ItemAddForm />} */}
                 {!rowDataItem && <ItemForm />}
-                {rowDataItem && <ItemActionForm rowData={rowDataItem} setRowData={setRowDataItem} />}
+                {/* {rowDataItem && <ItemActionForm rowData={rowDataItem} />} */}
+                {rowDataItem && <ActionForm rowData={rowDataItem} isItem={ true } />}
             </Container>
         </div>
     );

@@ -3,6 +3,7 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function ItemForm({ rowData }) {
     // context provided variables
@@ -77,7 +78,7 @@ function ItemForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -101,7 +102,7 @@ function ItemForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -126,7 +127,7 @@ function ItemForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         });
     };
 
@@ -141,32 +142,39 @@ function ItemForm({ rowData }) {
     return (
         <div className='create' style={myComponent}>
             {!isEmpty ? <h1>Modify Item</h1> : <h1>Add An Item</h1>}
-            <form onSubmit={handleSubmit}>
-                <label>Description:</label>
-                <textarea
-                    className="form-control"
-                    required 
-                    value={ description }
-                    onChange={(e) => setDescription(e.target.value)}
-                ></textarea>                
+            <form className="p-3" onSubmit={handleSubmit}>
+                <div className="form-floating mb-3">
+                    <textarea 
+                        className="form-control" 
+                        id="floatingTextarea"  
+                        required 
+                        value={description} 
+                        onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea">Description:</label>
+                </div>                
                 {!isEmpty && 
-                    <div>
-                        <label>Status:</label>
+                    <div className="form-floating mb-3">                        
                         <textarea
+                            className="form-control" 
+                            id="floatingTextarea"
                             required 
                             value={ status }
                             onChange={(e) => setStatus(e.target.value)}
-                        ></textarea> 
+                        ></textarea>
+                        <label htmlFor="floatingTextarea">Status:</label>
                     </div>                    
                 }
-                {!isPending && 
-                    (!isEmpty ? <button>Modify Item</button> : <button>Add Item</button>)
-                }
-                {isPending && 
-                    (!isEmpty ? <button disabled>Modfying Item</button> : <button disabled>Adding Item</button>)
-                }
-            </form>
-            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
+                <div className="d-flex justify-content-between">
+                    {!isPending && 
+                        (!isEmpty ? <button>Modify Item</button> : <button>Add Item</button>)
+                    }
+                    {isPending && 
+                        (!isEmpty ? <button disabled>Modifying Item</button> : <button disabled>Adding Item</button>)
+                    }
+                    {!isEmpty && <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>}
+                </div>
+            </form>           
         </div>
     );
 }

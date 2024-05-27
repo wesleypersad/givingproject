@@ -5,6 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import 'bootstrap/dist/css/bootstrap.css';
 
 function EventForm({ rowData }) {
     // context provided variables
@@ -22,6 +23,8 @@ function EventForm({ rowData }) {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
     const [isPending, setIsPending]= useState(false);
+    // variable to contain sendops
+    //const [sendOps, setSendOps] = useState({});
 
     // if there is an authorized user
     let options = useMemo(() => {
@@ -37,6 +40,12 @@ function EventForm({ rowData }) {
         };
         return {};
     }, [user]);
+
+    // set sendops from options
+/*      useEffect(() => {
+        setSendOps(JSON.stringify(options));
+        //console.log('OPTIONS= ',options);
+    }, [options]); */
 
     // see if the rowData or empty status has changed
     useEffect(() => {
@@ -69,8 +78,7 @@ function EventForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const event = { _id, title, body, allDay, start, end };
-
+        const event = { title, body, allDay, start, end };
 
         //modify request to type POST
         options.method = 'POST';
@@ -83,7 +91,7 @@ function EventForm({ rowData }) {
         setIsPending(true);
 
         //add the event
-        fetch(`${SERVER_URL}/user`, options)
+        fetch(`${SERVER_URL}/event`, options)
         .then(() => {
             console.log('new event added');
             setTitle('');
@@ -93,7 +101,7 @@ function EventForm({ rowData }) {
             setEnd('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
     const handleModify = (e) => {
@@ -120,7 +128,7 @@ function EventForm({ rowData }) {
             setEnd('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -148,7 +156,7 @@ function EventForm({ rowData }) {
             setEnd('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -163,34 +171,53 @@ function EventForm({ rowData }) {
     return (
         <div className='create' style={myComponent}>
             {!isEmpty ? <h1>Modify Event</h1> : <h1>Add An Event</h1>}
-            <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
-                    value={title} onChange={(e) => setTitle(e.target.value)}
-                />
-                <label>Body:</label>
-                <textarea
-                    className="form-control"
-                    required
-                    value={ body }
-                    onChange={(e) => setBody(e.target.value)}
-                ></textarea>
-                <DatePicker 
-                    placeholderText="Start Date" style={{marginRight:"10px"}}
-                    selected={start} onChange={(start) => setStart(start)}
-                />
-                <DatePicker 
-                    placeholderText="End Date" 
-                    selected={end} onChange={(end) => setEnd(end)}
-                />
-                {!isPending && 
-                    (!isEmpty ? <button>Modify Event</button> : <button>Add Event</button>)
-                }
-                {isPending && 
-                    (!isEmpty ? <button disabled>Modfying Event</button> : <button disabled>Adding Event</button>)
-                }
-            </form>
-            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
+            <form className="p-3" onSubmit={handleSubmit}>
+                <div className="form-floating mb-3">
+                    <input type="text" placeholder="Add Title" style={{width:"20%", marginRight:"10pz"}}
+                        className="form-control"
+                        required 
+                        id="floatingTextarea"
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <label htmlFor="floatingTextarea">Title:</label>
+                </div>
+                <div className="form-floating mb-3">                  
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea2"
+                        required
+                        value={ body }
+                        onChange={(e) => setBody(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea2">Body:</label>
+                </div>
+                <div className="d-flex justify-content-between mb-3">
+                    <DatePicker 
+                        placeholderText="Start Date" 
+                        selected={start} onChange={(start) => setStart(start)}
+                    />
+                    <DatePicker 
+                        placeholderText="End Date" 
+                        selected={end} onChange={(end) => setEnd(end)}
+                    /> 
+                </div>
+                <div className="d-flex justify-content-between">
+                   {!isPending && 
+                        (!isEmpty ? <button>Modify Event</button> : <button>Add Event</button>)
+                    }
+                    {isPending && 
+                        (!isEmpty ? <button disabled>Modfying Event</button> : <button disabled>Adding Event</button>)
+                    }
+                    {!isEmpty && <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>} 
+                </div>
+{/*                 <div>
+                    <textarea
+                        className="form-control" 
+                        value = {JSON.stringify(sendOps, null, 2)}
+                    ></textarea>
+                </div> */}
+            </form>   
         </div>
     );
 }

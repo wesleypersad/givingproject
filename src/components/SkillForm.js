@@ -3,6 +3,7 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function SkillForm({ rowData }) {
     // context provided variables
@@ -77,7 +78,7 @@ function SkillForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -101,7 +102,7 @@ function SkillForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -126,7 +127,7 @@ function SkillForm({ rowData }) {
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         });
     };
 
@@ -141,32 +142,42 @@ function SkillForm({ rowData }) {
     return (
         <div className='create' style={myComponent}>
             {!isEmpty ? <h1>Modify Skills</h1> : <h1>Add Skills</h1>}
-            <form onSubmit={handleSubmit}>
-                <label>Skills:</label>
-                <textarea
+            <form className="p-3" onSubmit={handleSubmit}>
+                <div  className="form-floating mb-3">
+                   <textarea
                     className="form-control"
+                    id="floatingTextarea"
                     required 
                     value={ skills }
                     onChange={(e) => setSkills(e.target.value)}
-                ></textarea>                
+                    ></textarea>
+                    <label htmlFor="floatingTextarea">Skills:</label>                
+                </div>
+                
+                 
                 {!isEmpty && 
-                    <div>
-                        <label>Status:</label>
+                    <div className="form-floating mb-3">                        
                         <textarea
+                            className="form-control" 
+                            id="floatingTextarea"
                             required 
                             value={ status }
                             onChange={(e) => setStatus(e.target.value)}
                         ></textarea>
+                        <label  htmlFor="floatingTextarea">Status:</label>
                     </div>   
                 }
-                {!isPending && 
-                    (!isEmpty ? <button>Modify Skills</button> : <button>Add Skills</button>)
-                }
-                {isPending && 
-                    (!isEmpty ? <button disabled>Modfying Skills</button> : <button disabled>Adding Skills</button>)
-                }
+                <div className="d-flex justify-content-between">
+                    {!isPending && 
+                        (!isEmpty ? <button>Modify Skills</button> : <button>Add Skills</button>)
+                    }
+                    {isPending && 
+                        (!isEmpty ? <button disabled>Modfying Skills</button> : <button disabled>Adding Skills</button>)
+                    }
+                    {!isEmpty && <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>}
+                </div>    
+                
             </form>
-            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
         </div>
     );
 }

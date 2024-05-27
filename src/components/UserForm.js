@@ -3,6 +3,7 @@ import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
     
 function UserForm( {rowData} ) {
     // context provided variables
@@ -90,7 +91,7 @@ function UserForm( {rowData} ) {
             setRole('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -119,7 +120,7 @@ function UserForm( {rowData} ) {
             setRole('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         })
     };
 
@@ -147,7 +148,7 @@ function UserForm( {rowData} ) {
             setRole('');
             setIsPending(false);
             //navigate('/donate');
-            window.location.reload();
+            //window.location.reload();
         });
     };
 
@@ -162,45 +163,67 @@ function UserForm( {rowData} ) {
     return (
         <div className='create' style={myComponent}>
             {!isEmpty ? <h1>Modify User</h1> : <h1>Add A User</h1>}
-            <form onSubmit={handleSubmit}>
-                <label>Username:</label>
-                <textarea
-                    required 
-                    value={ username }
-                    onChange={(e) => setUsername(e.target.value)}
-                ></textarea>
-                <label>Password:</label>
-                <textarea
-                    required 
-                    value={ password }
-                    onChange={(e) => setPassword(e.target.value)}
-                ></textarea>
-                <label>Email:</label>
-                <textarea
-                    required 
-                    value={ email }
-                    onChange={(e) => setEmail(e.target.value)}
-                ></textarea>
-                <label>Mobile:</label>
-                <textarea
-                    required 
-                    value={ mobile }
-                    onChange={(e) => setMobile(e.target.value)}
-                ></textarea>
-                <label>Role:</label>
-                <textarea
-                    required 
-                    value={ role }
-                    onChange={(e) => setRole(e.target.value)}
-                ></textarea>
-                {!isPending && 
-                    (!isEmpty ? <button>Modify User</button> : <button>Add User</button>)
-                }
-                {isPending && 
-                    (!isEmpty ? <button disabled>Modfying User</button> : <button disabled>Adding User</button>)
-                }
-            </form>
-            {!isEmpty && <button onClick={() => handleDelete()}>Delete</button>}
+            <form className="p-3" onSubmit={handleSubmit}>
+                <div className="form-floating mb-3">                  
+                    <textarea
+                        className="form-control" 
+                        id="floatingTextarea"
+                        required 
+                        value={ username }
+                        onChange={(e) => setUsername(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea">Username:</label> 
+                </div>
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea2"
+                        required 
+                        value={ password }
+                        onChange={(e) => setPassword(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea2">Password:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea3"
+                        required 
+                        value={ email }
+                        onChange={(e) => setEmail(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea3">Email:</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea4"
+                        required 
+                        value={ mobile }
+                        onChange={(e) => setMobile(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea4">Mobile:</label>
+                </div> 
+                <div className="form-floating mb-3">
+                    <textarea
+                        className="form-control"
+                        id="floatingTextarea5"
+                        required 
+                        value={ role }
+                        onChange={(e) => setRole(e.target.value)}
+                    ></textarea>
+                    <label htmlFor="floatingTextarea5">Role:</label>
+                </div>                              
+                <div className="d-flex justify-content-between">
+                    {!isPending && 
+                        (!isEmpty ? <button>Modify User</button> : <button>Add User</button>)
+                    }
+                    {isPending && 
+                        (!isEmpty ? <button disabled>Modfying User</button> : <button disabled>Adding User</button>)
+                    }
+                    {!isEmpty && <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>} 
+                </div>                
+            </form>    
         </div>
     );
 }
