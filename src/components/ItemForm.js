@@ -43,8 +43,7 @@ function ItemForm({ rowData }) {
         setId('');
         setDescription('');
         setStatus('');
-    }
-},[rowData, isEmpty]);
+    }},[rowData, isEmpty]);
 
     // handle the form submission
     const handleSubmit = (e) => {
@@ -118,7 +117,7 @@ function ItemForm({ rowData }) {
         };
 
         //delete the item
-        fetch(`${SERVER_URL}/item`, options)
+         fetch(`${SERVER_URL}/item`, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .then(() => {

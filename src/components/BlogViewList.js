@@ -1,7 +1,3 @@
-import { useContext } from "react";
-import { useState } from "react";
-import DataContext from "../context/DataContext";
-import { useAuthContext } from '../hooks/useAuthContext';
 import parse from 'html-react-parser';
 
 const  BlogViewList= ({blogs}) => {

@@ -1,28 +1,16 @@
 import "../App.css";
 import { Container, Button } from 'react-bootstrap';
 import { useState, useEffect, useMemo } from "react";
-import useFetch from "../components/useFetch";
+import useFetch2 from "../components/useFetch2";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
-//import EventAddForm from "../components/EventAddForm";
-//import EventEditForm from "../components/EventEditForm";
 import EventForm from "../components/EventForm";
-//import ItemAddForm from "../components/ItemAddForm";
-//import ItemEditForm from "../components/ItemEditForm";
 import ItemForm from "../components/ItemForm";
-//import SkillAddForm from "../components/SkillAddForm";
-//import SkillEditForm from "../components/SkillEditForm";
 import SkillForm from "../components/SkillForm";
-//import PaymentAddForm from "../components/PaymentAddForm";
-//import PaymentEditForm from "../components/PaymentEditForm";
 import PaymentForm from "../components/PaymentForm";
-//import BlogAddForm from "../components/BlogAddForm";
-//import BlogEditForm from "../components/BlogEditForm";
 import BlogForm from "../components/BlogForm";
-//import UserAddForm from "../components/UserAddForm";
-//import UserEditForm from "../components/UserEditForm";
 import UserForm from "../components/UserForm";
 import admin from '../images/admin.jpg';                // image by freepix
 
@@ -73,7 +61,7 @@ function Admin() {
     const [rowDataPayment, setRowDataPayment] = useState();
 
     // request the user data
-    const { data: users, isPending, error } = useFetch(`${SERVER_URL}/user/all`, options);
+    const { data: users, isPending, error } = useFetch2(`${SERVER_URL}/user/all`, options, 'users');
     const reqUser = () => {
         if (users.length && !isPending) {
             setUserList(users);
@@ -82,47 +70,47 @@ function Admin() {
     };
 
     // request the blog data
-    const { data: blogs, isPending2, error2 } = useFetch(`${SERVER_URL}/blog/all`, options);
+    const { data: blogs, isPending2, error2 } = useFetch2(`${SERVER_URL}/blog/all`, options, 'blogs');
     const reqBlog = () => {
         if (blogs.length && !isPending2) {
             setBlogList(blogs);
-            console.log(blogs);
+            //console.log(blogs);
         };
     };
 
     // request the event data
-    const { data: events, isPending3, error3 } = useFetch(`${SERVER_URL}/event/all`, options);
+    const { data: events, isPending3, error3 } = useFetch2(`${SERVER_URL}/event/all`, options, 'events');
     const reqEvent = () => {
         if (events.length && !isPending3) {
             setEventList(events);
-            console.log(events);
+            //console.log(events);
         };
     };
 
     // request the payment data
-    const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment/all`, options);
+    const { data: payments, isPending4, error4 } = useFetch2(`${SERVER_URL}/payment/all`, options, 'payments');
     const reqPayment = () => { 
         if (payments.length && !isPending4) {
             setPaymentList(payments);
-            console.log(payments);
+            //console.log(payments);
         };
     };
 
     // request the skill data
-    const { data: skills, isPending5, error5 } = useFetch(`${SERVER_URL}/skill/all`, options);
+    const { data: skills, isPending5, error5 } = useFetch2(`${SERVER_URL}/skill/all`, options, 'skills');
     const reqSkill = () => { 
         if (skills.length && !isPending5) {
             setSkillList(skills);
-            console.log(skills);            
+            //console.log(skills);            
         };
     };
 
     // request the item data
-    const { data: items, isPending6, error6 } = useFetch(`${SERVER_URL}/item/all`, options);
+    const { data: items, isPending6, error6 } = useFetch2(`${SERVER_URL}/item/all`, options, 'items');
     const reqItem = () => {
         if (items.length && !isPending6) {
             setItemList(items);
-            console.log(items);
+            //console.log(items);
         };
     };
 
@@ -189,8 +177,6 @@ function Admin() {
                 {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error && <div>{error}</div>}
                 {userList && <Table tbodyData={userList} highlightedRow={highlightedRowUser} setHighlightedRow ={setHighlightedRowUser}/>}
-{/*                 {!rowDataUser && <UserAddForm />}
-                {rowDataUser && <UserEditForm rowData={rowDataUser} />} */}
                 <UserForm rowData={rowDataUser} />
             </Container>
             <Container>
@@ -198,8 +184,6 @@ function Admin() {
                 {isPending2 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error2 && <div>{error2}</div>}
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
-{/*                 {!rowDataBlog && <BlogAddForm />}
-                {rowDataBlog && <BlogEditForm rowData={rowDataBlog} />} */}
                 <BlogForm rowData={rowDataBlog} />
             </Container>
             <Container>
@@ -207,8 +191,6 @@ function Admin() {
                 {isPending3 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error3 && <div>{error3}</div>}
                 {eventList && <Table tbodyData={eventList} highlightedRow={highlightedRowEvent} setHighlightedRow ={setHighlightedRowEvent}/>}
-{/*                 {!rowDataEvent && <EventAddForm />}
-                {rowDataEvent && <EventEditForm rowData={rowDataEvent} />} */}
                 <EventForm rowData={rowDataEvent} />
             </Container>
             <Container>
@@ -216,8 +198,6 @@ function Admin() {
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
-{/*                 {!rowDataPayment && <PaymentAddForm />}
-                {rowDataPayment && <PaymentEditForm rowData={rowDataPayment} />} */}
                 <PaymentForm rowData={rowDataPayment} />
             </Container>
             <Container>
@@ -225,8 +205,6 @@ function Admin() {
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
-{/*                 {!rowDataSkill && <SkillAddForm />}
-                {rowDataSkill && <SkillEditForm rowData={rowDataSkill} />} */}
                 <SkillForm rowData={rowDataSkill} />
             </Container>
             <Container>
@@ -234,8 +212,6 @@ function Admin() {
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
-{/*                 {!rowDataItem && <ItemAddForm />}
-                {rowDataItem && <ItemEditForm rowData={rowDataItem} />} */}
                 <ItemForm rowData={rowDataItem} />
             </Container>
         </div>

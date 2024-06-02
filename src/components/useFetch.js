@@ -31,6 +31,9 @@ const useFetch = (url, options = {}) => {
             }
         };
 
+        // find out what method is being passed
+        console.log('METHOD IN useFETCH ', options.method);
+
         //console.log('useFetch: fetching data from url: ', url);
         fetchData();
 

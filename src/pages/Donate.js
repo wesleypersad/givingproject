@@ -1,18 +1,13 @@
 import "../App.css";
 import { Container, Button } from 'react-bootstrap';
 import { useState, useEffect, useMemo } from "react";
-import useFetch from "../components/useFetch";
+import useFetch2 from "../components/useFetch2";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
 import Table from "../components/Table";
-//import ItemAddForm from "../components/ItemAddForm";
-//import ItemActionForm from "../components/ItemActionForm";
 import ItemForm from "../components/ItemForm";
-//import SkillAddForm from "../components/SkillAddForm";
 import SkillForm from "../components/SkillForm";
-//import SkillActionForm from "../components/SkillActionForm";
-//import PaymentAddForm from "../components/PaymentAddForm";
 import ActionForm from "../components/ActionForm";
 import PaymentForm from "../components/PaymentForm";
 import PaymentActionForm from "../components/PaymentActionForm";
@@ -53,7 +48,7 @@ function Donate() {
     const [rowDataPayment, setRowDataPayment] = useState();
 
     // request the payment data
-    const { data: payments, isPending4, error4 } = useFetch(`${SERVER_URL}/payment`, options);
+    const { data: payments, isPending4, error4 } = useFetch2(`${SERVER_URL}/payment`, options, `${user.username}payments`);
     const reqPayment = () => {
         if (payments.length && !isPending4) {
             setPaymentList(payments);
@@ -62,7 +57,7 @@ function Donate() {
     };
 
     // request the skill data
-    const { data: skills, isPending5, error5 } = useFetch(`${SERVER_URL}/skill/all`, options);
+    const { data: skills, isPending5, error5 } = useFetch2(`${SERVER_URL}/skill/all`, options, 'skills');
     const reqSkill = () => { 
         if (skills.length && !isPending5) {
             setSkillList(skills);
@@ -71,7 +66,7 @@ function Donate() {
     };
 
     // request the item data
-    const { data: items, isPending6, error6 } = useFetch(`${SERVER_URL}/item/all`, options);
+    const { data: items, isPending6, error6 } = useFetch2(`${SERVER_URL}/item/all`, options, 'items');
     const reqItem = () => { 
         if (items.length && !isPending6) {
             setItemList(items);
@@ -113,7 +108,6 @@ function Donate() {
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
-                {/* {!rowDataPayment && <PaymentAddForm />} */}
                 {!rowDataPayment && <PaymentForm />}
                 {rowDataPayment && <PaymentActionForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
@@ -122,9 +116,7 @@ function Donate() {
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}              
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
-                {/* {!rowDataSkill && <SkillAddForm />} */}
                 {!rowDataSkill && <SkillForm />}
-                {/* {rowDataSkill && <SkillActionForm rowData={rowDataSkill} />} */}
                 {rowDataSkill && <ActionForm rowData={rowDataSkill} isItem={ false } />}
             </Container>
             <Container>
@@ -132,9 +124,7 @@ function Donate() {
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
-                {/* {!rowDataItem && <ItemAddForm />} */}
                 {!rowDataItem && <ItemForm />}
-                {/* {rowDataItem && <ItemActionForm rowData={rowDataItem} />} */}
                 {rowDataItem && <ActionForm rowData={rowDataItem} isItem={ true } />}
             </Container>
         </div>

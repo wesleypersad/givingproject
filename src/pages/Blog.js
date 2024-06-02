@@ -2,7 +2,7 @@ import "../App.css";
 import { useMemo } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
-import useFetch from "../components/useFetch";
+import useFetch2 from "../components/useFetch2";
 import BlogAddForm from "../components/BlogAddForm";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
@@ -32,7 +32,7 @@ function Blog() {
         data: blogs,
         isPending,
         error,
-    } = useFetch(`${SERVER_URL}/blog`, options);
+    } = useFetch2(`${SERVER_URL}/blog`, options, `${user.username}blogs`);
 
     return (
         <div className="blog container square border border-info border-2" style={{backgroundImage:`url(${blog})`}} >
