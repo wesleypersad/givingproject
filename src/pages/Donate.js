@@ -108,7 +108,7 @@ function Donate() {
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
-                {!rowDataPayment && <PaymentForm />}
+                {!rowDataPayment && <PaymentForm setPaymentList={setPaymentList} sesStoreName={`${user.username}payments`}/>}
                 {rowDataPayment && <PaymentActionForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
@@ -116,7 +116,7 @@ function Donate() {
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}              
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
-                {!rowDataSkill && <SkillForm />}
+                {!rowDataSkill && <SkillForm setSkillList={setSkillList} />}
                 {rowDataSkill && <ActionForm rowData={rowDataSkill} isItem={ false } />}
             </Container>
             <Container>
@@ -124,7 +124,7 @@ function Donate() {
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
-                {!rowDataItem && <ItemForm />}
+                {!rowDataItem && <ItemForm setItemList={setItemList}/>}
                 {rowDataItem && <ActionForm rowData={rowDataItem} isItem={ true } />}
             </Container>
         </div>

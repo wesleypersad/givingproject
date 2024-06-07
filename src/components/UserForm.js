@@ -2,10 +2,11 @@ import { useEffect, useState, useMemo } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
+import useSessionStorage from '../customHooks/useSessionStorage';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
     
-function UserForm( {rowData} ) {
+function UserForm( { rowData, setUserList, sesStoreName='users' } ) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -21,6 +22,9 @@ function UserForm( {rowData} ) {
     const [mobile, setMobile] = useState('');
     const [role, setRole] = useState('');
     const [isPending, setIsPending]= useState(false);
+    
+    // use the session storage hook to store the user token
+    const { deleteRecord, modifyRecord, addRecord } = useSessionStorage(sesStoreName);
 
     // see if there is an authorized user
     let options = useMemo(() => {
@@ -68,7 +72,7 @@ function UserForm( {rowData} ) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const user = { username, password, email, mobile, role };
+        let user = { username, password, email, mobile, role };
 
         //modify request to type POST
         options.method = 'POST';
@@ -82,7 +86,8 @@ function UserForm( {rowData} ) {
 
         //add the user
         fetch(`${SERVER_URL}/user`, options)
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
             console.log('new user added');
             setUsername('');
             setPassword('');
@@ -92,7 +97,13 @@ function UserForm( {rowData} ) {
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+            //extract only the user data from the response
+            user = data.user;
+
+            //add the item to the session storage and update the list
+            const {recordData} = addRecord(user);
+            setUserList(recordData);  
+        });
     };
 
     const handleModify = (e) => {
@@ -121,7 +132,11 @@ function UserForm( {rowData} ) {
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+        });
+        
+        // modify the item from session storage and update the list
+        const {recordData} = modifyRecord(thisuser);
+        setUserList(recordData);
     };
 
     const handleDelete = (e) => {
@@ -150,6 +165,10 @@ function UserForm( {rowData} ) {
             //navigate('/donate');
             //window.location.reload();
         });
+
+        // delete the item from session storage and update the list
+        const {recordData} = deleteRecord(_id);
+        setUserList(recordData);
     };
 
     const myComponent = {

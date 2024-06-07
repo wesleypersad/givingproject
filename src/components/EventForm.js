@@ -2,12 +2,13 @@ import { useEffect, useState, useMemo } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
+import useSessionStorage from '../customHooks/useSessionStorage';
 import '../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import 'bootstrap/dist/css/bootstrap.css';
 
-function EventForm({ rowData }) {
+function EventForm({ rowData, setEventList, sesStoreName='events' }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -23,8 +24,9 @@ function EventForm({ rowData }) {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
     const [isPending, setIsPending]= useState(false);
-    // variable to contain sendops
-    //const [sendOps, setSendOps] = useState({});
+
+    // use the session storage hook to store the user token
+    const { deleteRecord, modifyRecord, addRecord } = useSessionStorage(sesStoreName);
 
     // if there is an authorized user
     let options = useMemo(() => {
@@ -40,12 +42,6 @@ function EventForm({ rowData }) {
         };
         return {};
     }, [user]);
-
-    // set sendops from options
-/*      useEffect(() => {
-        setSendOps(JSON.stringify(options));
-        //console.log('OPTIONS= ',options);
-    }, [options]); */
 
     // see if the rowData or empty status has changed
     useEffect(() => {
@@ -78,7 +74,7 @@ function EventForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const event = { title, body, allDay, start, end };
+        let event = { title, body, allDay, start, end };
 
         //modify request to type POST
         options.method = 'POST';
@@ -92,7 +88,8 @@ function EventForm({ rowData }) {
 
         //add the event
         fetch(`${SERVER_URL}/event`, options)
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
             console.log('new event added');
             setTitle('');
             setBody('');
@@ -102,7 +99,12 @@ function EventForm({ rowData }) {
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+            event = {...data};
+
+            //add the item to the session storage and update the list
+            const {recordData} = addRecord(event);
+            setEventList(recordData);
+        });
     };
     const handleModify = (e) => {
         e.preventDefault();
@@ -129,7 +131,11 @@ function EventForm({ rowData }) {
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+        });
+
+        // modify the item from session storage and update the list
+        const {recordData} = modifyRecord(thisevent);
+        setEventList(recordData);
     };
 
     const handleDelete = (e) => {
@@ -157,7 +163,11 @@ function EventForm({ rowData }) {
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+        });
+
+        // delete the item from session storage and update the list
+        const {recordData} = deleteRecord(_id);
+        setEventList(recordData);
     };
 
     const myComponent = {

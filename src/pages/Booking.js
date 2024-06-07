@@ -7,7 +7,7 @@ import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState, useCallback } from "react";
-import { Button, Card } from 'react-bootstrap';
+//import { Button, Card } from 'react-bootstrap';
 import { useContext, useEffect, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -50,11 +50,11 @@ function Booking () {
 
     // get the list of events
     const { data: events, isPending2, error } = useFetch2(`${SERVER_URL}/event`, options, `${user.username}events`);
-    const reqEvents = async () => {
+/*     const reqEvents = async () => {
         if (events && !isPending2 && !error) {
             setAllEvents(events);
         };
-    };
+    }; */
 
     // return event selected from grid
     const handleSelectEvent = useCallback((event) => {
@@ -84,10 +84,10 @@ function Booking () {
             />
             {error && <div>{error} </div>}
             {isPending2 && <div>Loading ...</div>}
-            {events && <Card className="mb-3" style={{ color: "#000"}}>
+{/*             {events && <Card className="mb-3" style={{ color: "#000"}}>
                 <Button  className='m-1' onClick={reqEvents} variant="primary">Get List Of Events</Button>
-            </Card>}
-            <EventForm rowData={editEvent} />
+            </Card>} */}
+            <EventForm rowData={editEvent} setEventList={setAllEvents} sesStoreName={`${user.username}events`} />
         </div>
     )
 }

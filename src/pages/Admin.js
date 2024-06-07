@@ -177,42 +177,42 @@ function Admin() {
                 {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error && <div>{error}</div>}
                 {userList && <Table tbodyData={userList} highlightedRow={highlightedRowUser} setHighlightedRow ={setHighlightedRowUser}/>}
-                <UserForm rowData={rowDataUser} />
+                <UserForm rowData={rowDataUser} setUserList={setUserList} />
             </Container>
             <Container>
                 {!isPending2 && <Button onClick={reqBlog} variant="primary">Show Blog Data</Button>}
                 {isPending2 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error2 && <div>{error2}</div>}
                 {blogList && <Table tbodyData={blogList} highlightedRow={highlightedRowBlog}  setHighlightedRow ={setHighlightedRowBlog}/>}
-                <BlogForm rowData={rowDataBlog} />
+                <BlogForm rowData={rowDataBlog} setBlogList={setBlogList} />
             </Container>
             <Container>
                 {!isPending3 && <Button onClick={reqEvent} variant="primary">Show Event Data</Button>}
                 {isPending3 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error3 && <div>{error3}</div>}
                 {eventList && <Table tbodyData={eventList} highlightedRow={highlightedRowEvent} setHighlightedRow ={setHighlightedRowEvent}/>}
-                <EventForm rowData={rowDataEvent} />
+                <EventForm rowData={rowDataEvent} setEventList={setEventList} />
             </Container>
             <Container>
                 {!isPending4 && <Button onClick={reqPayment} variant="primary">Show Payment Data</Button>}
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
                 {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
-                <PaymentForm rowData={rowDataPayment} />
+                <PaymentForm rowData={rowDataPayment} setPaymentList={setPaymentList} />
             </Container>
             <Container>
                 {!isPending5 && <Button onClick={reqSkill} variant="primary">Show Skill Data</Button>}
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}
                 {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
-                <SkillForm rowData={rowDataSkill} />
+                <SkillForm rowData={rowDataSkill} setSkillList={setSkillList} />
             </Container>
             <Container>
                 {!isPending6 && <Button onClick={reqItem} variant="primary">Show Item Data</Button>}
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
                 {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
-                <ItemForm rowData={rowDataItem} />
+                <ItemForm rowData={rowDataItem} setItemList={setItemList} />
             </Container>
         </div>
     );

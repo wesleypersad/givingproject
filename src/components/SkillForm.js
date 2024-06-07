@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
+import useSessionStorage from '../customHooks/useSessionStorage';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function SkillForm({ rowData }) {
+function SkillForm({ rowData, setSkillList, sesStoreName = 'skills' }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -17,6 +18,9 @@ function SkillForm({ rowData }) {
     const [skills, setSkills] = useState('');
     const [status, setStatus] = useState('');
     const [isPending, setIsPending]= useState(false);
+    
+    // use the session storage hook to store the user token
+    const { deleteRecord, modifyRecord, addRecord } = useSessionStorage(sesStoreName);
 
     // if there is an authorized user set the fetch options
     let options = useMemo(() => {
@@ -58,7 +62,7 @@ function SkillForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const skill = { skills, status};
+        let skill = { skills, status};
 
         //modify request to type POST
         options.method = 'POST';
@@ -72,14 +76,20 @@ function SkillForm({ rowData }) {
 
         //add the user
         fetch(`${SERVER_URL}/skill`, options)
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
             console.log('new skill added');
             setSkills('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+            skill = {...data};
+
+            //add the item to the session storage and update the list
+            const {recordData} = addRecord(skill);
+            setSkillList(recordData); 
+        });
     };
 
     const handleModify = (e) => {
@@ -103,7 +113,11 @@ function SkillForm({ rowData }) {
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+        });
+
+        // modify the item from session storage and update the list
+        const {recordData} = modifyRecord(thisskill);
+        setSkillList(recordData);
     };
 
     const handleDelete = (e) => {
@@ -129,6 +143,10 @@ function SkillForm({ rowData }) {
             //navigate('/donate');
             //window.location.reload();
         });
+        
+        // delete the item from session storage and update the list
+        const {recordData} = deleteRecord(_id);
+        setSkillList(recordData);
     };
 
     const myComponent = {

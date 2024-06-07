@@ -33,9 +33,8 @@ function Home() {
     } = useFetch2(`${SERVER_URL}/noauth/blogall`, options, 'blogs');
 
     return (
-        <div className="home container square border border-info border-2" style={{backgroundImage:`url(${home})`}} >
+        <div className="home container square border border-info border-2 list-group-item" style={{backgroundImage:`url(${home})`}} >
             <h1>Home Page</h1>
-            <div></div>
             <Container>
                 <div className = 'text-start'>
                     {error && <div>{error} </div>}

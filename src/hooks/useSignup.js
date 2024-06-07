@@ -28,6 +28,8 @@ export const useSignup = () => {
             setError(json.error);
         } else {
             // save user to local storage
+            // remove new user details from json
+            delete json.user;
             localStorage.setItem('user', JSON.stringify(json));
 
             // update the auth context

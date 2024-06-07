@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
+import useSessionStorage from '../customHooks/useSessionStorage';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function ItemForm({ rowData }) {
+function ItemForm({ rowData, setItemList, sesStoreName='items' }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -17,6 +18,9 @@ function ItemForm({ rowData }) {
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('');
     const [isPending, setIsPending]= useState(false);
+
+    // use the session storage hook to store the user token
+    const { deleteRecord, modifyRecord, addRecord } = useSessionStorage(sesStoreName);
 
     // if there is an authorized user set the fetch options
     let options = useMemo(() => {
@@ -57,7 +61,7 @@ function ItemForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const item = { description, status};
+        let item = { description, status};
 
         //modify request to type POST
         options.method = 'POST';
@@ -71,19 +75,26 @@ function ItemForm({ rowData }) {
 
         //add the user
         fetch(`${SERVER_URL}/item`, options)
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
             console.log('new item added');
             setDescription('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+            item = {...data};
+
+            //add the item to the session storage and update the list
+            const {recordData} = addRecord(item);
+            setItemList(recordData);            
+        });
     };
 
     const handleModify = (e) => {
         e.preventDefault();
         const thisitem = { _id, description, status };
+        
         //modify request to type PUT
         options.method = 'PUT';
 
@@ -96,13 +107,17 @@ function ItemForm({ rowData }) {
 
         fetch(`${SERVER_URL}/item`, options)
         .then(() => {
-            console.log('new item added');
+            console.log('existing item modified');
             setDescription('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+        });
+
+        // modify the item from session storage and update the list
+        const {recordData} = modifyRecord(thisitem);
+        setItemList(recordData);
     };
 
     const handleDelete = (e) => {
@@ -121,13 +136,17 @@ function ItemForm({ rowData }) {
         .then(response => response.json())
         .then(data => console.log(data))
         .then(() => {
-            console.log('user deleted');
+            console.log('existing item deleted');
             setDescription('');
             setStatus('');
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
         });
+
+        // delete the item from session storage and update the list
+        const {recordData} = deleteRecord(_id);
+        setItemList(recordData);
     };
 
     const myComponent = {

@@ -2,10 +2,11 @@ import { useEffect, useState, useMemo } from 'react';
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
+import useSessionStorage from '../customHooks/useSessionStorage';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function BlogForm({ rowData }) {
+function BlogForm({ rowData, setBlogList, sesStoreName = 'blogs' }) {
     // context provided variables
     const { SERVER_URL } = useContext(DataContext);
     const { user } = useAuthContext();
@@ -18,6 +19,8 @@ function BlogForm({ rowData }) {
     const [title, setTitle] = useState(''); 
     const [body, setBody] = useState('');
     const [isPending, setIsPending]= useState(false);
+    // use the session storage hook to store the user token
+    const { deleteRecord, modifyRecord, addRecord } = useSessionStorage(sesStoreName);
 
     // see if there is an authorized user set the fetch options
     let options = useMemo(() => {
@@ -34,7 +37,7 @@ function BlogForm({ rowData }) {
         return {};
     }, [user]);
 
-    // seee if the rowData or empty status has changed
+    // see if the rowData or empty status has changed
     useEffect(() => {
         if (!isEmpty) {
             setId(rowData._id);
@@ -59,7 +62,7 @@ function BlogForm({ rowData }) {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        const blog = { title, body };
+        let blog = { title, body };
 
         //modify request to type POST
         options.method = 'POST';
@@ -73,14 +76,21 @@ function BlogForm({ rowData }) {
 
         //add the user
         fetch(`${SERVER_URL}/blog`, options)
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
             console.log('new blog added');
             setTitle('');
             setBody('');
             setIsPending(false);
             //navigate('/donate');
             //window.location.reload();
-        })
+
+            blog = {...data};
+
+            //add the item to the session storage and update the list
+            const {recordData} = addRecord(blog);
+            setBlogList(recordData);
+        });
     };  
 
     const handleModify = (e) => {
@@ -107,7 +117,11 @@ function BlogForm({ rowData }) {
             setIsPending(false);
             //navigate('/blog');
             //window.location.reload();
-        })
+        });
+
+        // modify the item from session storage and update the list
+        const {recordData} = modifyRecord(thisblog);
+        setBlogList(recordData);    
     };
 
     const handleDelete = async () => {
@@ -132,6 +146,10 @@ function BlogForm({ rowData }) {
             //navigate('/blog');
             //window.location.reload();
         });
+
+        // delete the item from session storage and update the list
+        const {recordData} = deleteRecord(_id);
+        setBlogList(recordData);
     };
 
     const myComponent = {
@@ -156,8 +174,7 @@ function BlogForm({ rowData }) {
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <label>Title:</label>
-                </div>
-                
+                </div>                
                 <div className="form-floating mb-3">
                     <textarea
                         className="form-control"
