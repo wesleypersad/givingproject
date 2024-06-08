@@ -22,32 +22,52 @@ function Research () {
     const [highlightedRow, setHighlightedRow] = useState(-99);
     const [rowDataCharity, setRowDataCharity] = useState([]);
 
-    // request charity list of that name
-    const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
-    const reqList = () => {
-        if (charities && !isPending && !error) {
-            setCharityList(charities);
-            console.log(charities);
-        };
+    //state variables for display of tables
+    const [dispList, setDispList] = useState(false);
+    const [dispDetails, setDispDetails] = useState(false);
+    const [dispFin, setDispFin] = useState(false);
+
+    //toggle display variables
+    const handleDispList = () => {
+        setDispList(!dispList);
+    };
+    const handleDispDetails = () => {
+        setDispDetails(!dispDetails);
+    };
+    const handleDispFin = () => {
+        setDispFin(!dispFin);
     };
 
-    // request charity details
+    // request charity list of that name and populate the charity list
+    const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
+
+    useEffect(() => {
+        if (charities) {
+            setCharityList(charities);
+            console.log(charities);
+            setHighlightedRow(-99);
+        };
+    }, [charities]);
+
+    // request charity details and populate the charity details
     const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
-    const reqDetails = () => {
-        if (details && !isPending2 && !error2) {
+
+    useEffect(() => {
+        if (details) {
             setCharityDetails(details);
             console.log(details);
         };
-    };
+    }, [details]);
 
-    // request charity financial details
+    // request charity financial details and populate the charity financial details
     const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
-    const reqFinancials = () => {
-        if (financials && !isPending3 && !error3) {
+
+    useEffect(() => {
+        if (financials) {
             setCharityFinancials(financials);
             console.log(financials);
         };
-    };
+    }, [financials]);
 
     // when highlightedRow changes get the data
     // for charity list
@@ -71,39 +91,45 @@ function Research () {
     return (
         <div className="research container square border border-info border-2" style={{backgroundImage:`url(${research})`}} >
             <h1>Research Page</h1>
-            <h3>Charity Name</h3>
-            <label>Enter Name:</label>
-            <input 
-                type="text" 
-                onChange={(e) => setCharityName(e.target.value)}
-                value={charityName}
-            />
+            {/* <h3>Charity Name</h3> */}
+            <div className="form-floating">
+                <input
+                    className="form-control" 
+                    id="floatingTextarea1"
+                    type="text" 
+                    onChange={(e) => setCharityName(e.target.value)}
+                    value={charityName}
+                />
+                <label htmlFor="floatingTextarea1">Charity Name:</label>
+            </div>
             <Container>
-                {!isPending && <Button onClick={reqList} variant="primary">Get List Of Charities</Button>}
                 {isPending && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error && <div>{error}</div>}
-                {charityList && <Table tbodyData={charityList} highlightedRow={highlightedRow} setHighlightedRow ={setHighlightedRow} />}
-                {/* <p>{JSON.stringify(rowDataCharity)}</p> */}
+                {!isPending && <Button onClick={handleDispList} variant="primary">Show List Of Charities</Button>}
+                {dispList && <Table tbodyData={charityList} highlightedRow={highlightedRow} setHighlightedRow ={setHighlightedRow} />}
             </Container>            
-            <h3>Charity Number</h3>
-            <label>Enter Number:</label>
-            <input 
-                type="text" 
-                onChange={(e) => setCharityNumber(e.target.value)}
-                value={charityNumber}
-            />
+            {/* <h3>Charity Number</h3> */}
+            <div className="form-floating">
+                <input
+                    className="form-control" 
+                    id="floatingTextarea2"
+                    type="text" 
+                    onChange={(e) => setCharityNumber(e.target.value)}
+                    value={charityNumber}
+                />
+                <label htmlFor="floatingTextarea2">Charity Number:</label>
+            </div>
             <Container style={myComponent}>
-                {!isPending2 && <Button onClick={reqDetails} variant="primary">Get Charity Details</Button>}
                 {isPending2 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error2 && <div>{error2}</div>}
-                <pre>{JSON.stringify(charityDetails, null, 2)}</pre>
+                {!isPending2 && <Button onClick={handleDispDetails} variant="primary">Show Charity Details</Button>}
+                {dispDetails && <pre>{JSON.stringify(charityDetails, null, 2)}</pre>}
             </Container>
             <Container  style={myComponent}>
-                {!isPending3 && <Button onClick={reqFinancials} variant="primary">Get Financial History</Button>}
                 {isPending3 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error3 && <div>{error3}</div>}
-                {charityFinancials && <Table tbodyData={charityFinancials}/>}
-                {/* <pre>{JSON.stringify(charityFinancials, null, 2)}</pre> */}
+                {!isPending3 && <Button onClick={handleDispFin} variant="primary">Show Financial History</Button>}
+                {dispFin && <Table tbodyData={charityFinancials}/>}
             </Container>
         </div>
     );
