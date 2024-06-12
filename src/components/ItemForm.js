@@ -60,6 +60,7 @@ function ItemForm({ rowData, setItemList, sesStoreName='items' }) {
     };
 
     const handleCreate = (e) => {
+        console.log('Handle Create Called');
         e.preventDefault();
         let item = { description, status};
 
@@ -92,6 +93,7 @@ function ItemForm({ rowData, setItemList, sesStoreName='items' }) {
     };
 
     const handleModify = (e) => {
+        console.log('Handle Modify Called');
         e.preventDefault();
         const thisitem = { _id, description, status };
         
@@ -121,6 +123,7 @@ function ItemForm({ rowData, setItemList, sesStoreName='items' }) {
     };
 
     const handleDelete = (e) => {
+        console.log('Handle Delete Called');
         // problem with useFetch hook so ordinary fetch used ?
         const thisitem = {_id};
 
@@ -132,7 +135,7 @@ function ItemForm({ rowData, setItemList, sesStoreName='items' }) {
         };
 
         //delete the item
-         fetch(`${SERVER_URL}/item`, options)
+        fetch(`${SERVER_URL}/item`, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .then(() => {

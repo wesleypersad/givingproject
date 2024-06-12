@@ -1,7 +1,7 @@
 import "../App.css";
 import { Container } from "react-bootstrap";
 import BlogViewList from "../components/BlogViewList";
-import useFetch2 from "../components/useFetch2";
+import GetStore from "../functions/GetStore";
 import { useContext, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -30,7 +30,7 @@ function Home() {
         data: blogs,
         isPending,
         error,
-    } = useFetch2(`${SERVER_URL}/noauth/blogall`, options, 'blogs');
+    } = GetStore(`${SERVER_URL}/noauth/blogall`, options, 'blogs');
 
     return (
         <div className="home container square border border-info border-2 list-group-item" style={{backgroundImage:`url(${home})`}} >

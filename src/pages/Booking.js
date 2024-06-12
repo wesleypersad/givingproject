@@ -7,13 +7,12 @@ import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState, useCallback } from "react";
-//import { Button, Card } from 'react-bootstrap';
 import { useContext, useEffect, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
-import useFetch2 from "../components/useFetch2";
 import EventForm from "../components/EventForm";
 import booking from '../images/booking.jpg';                // image by freepix
+import GetStore from "../functions/GetStore";
 
 const locales = {
     "en-GB": require("date-fns/locale/en-GB")
@@ -49,7 +48,7 @@ function Booking () {
     const [editEvent, setEditEvent] = useState();
 
     // get the list of events
-    const { data: events, isPending2, error } = useFetch2(`${SERVER_URL}/event`, options, `${user.username}events`);
+    const { data: events, isPending2, error } = GetStore(`${SERVER_URL}/event`, options, `${user.username}events`);
 /*     const reqEvents = async () => {
         if (events && !isPending2 && !error) {
             setAllEvents(events);

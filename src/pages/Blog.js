@@ -1,11 +1,9 @@
 import "../App.css";
-import { useMemo } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
-import useFetch2 from "../components/useFetch2";
-//import BlogAddForm from "../components/BlogAddForm";
+import GetStore from "../functions/GetStore";
 import BlogForm from "../components/BlogForm";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import blog from '../images/blog.jpg';                // image by freepix
@@ -36,7 +34,7 @@ function Blog() {
         data,
         isPending,
         error,
-    } = useFetch2(`${SERVER_URL}/blog`, options, `${user.username}blogs`);
+    } = GetStore(`${SERVER_URL}/blog`, options, `${user.username}blogs`);
 
     // set the blogs state variable
     useEffect(() => {

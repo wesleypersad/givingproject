@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
-//import useFetch from "../components/useFetch";
 
 const  SkillList= ({skills}) => {
     // from  the data context

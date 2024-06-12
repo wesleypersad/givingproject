@@ -1,7 +1,7 @@
 import "../App.css";
 import { Container, Button } from 'react-bootstrap';
 import { useState, useEffect, useMemo } from "react";
-import useFetch2 from "../components/useFetch2";
+import GetStore from "../functions/GetStore";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -35,8 +35,7 @@ function Donate() {
     const [skillList, setSkillList] = useState([{}]);
     const [itemList, setItemList] = useState([{}]);
 
-    //define the highligted row data
-    // set highlighted row
+    //define the highligted row data, set highlighted row
     // for item
     const [highlightedRowItem, setHighlightedRowItem] = useState(-99);
     const [rowDataItem, setRowDataItem] = useState();
@@ -47,32 +46,55 @@ function Donate() {
     const [highlightedRowPayment, setHighlightedRowPayment] = useState(-99);
     const [rowDataPayment, setRowDataPayment] = useState();
 
-    // request the payment data
-    const { data: payments, isPending4, error4 } = useFetch2(`${SERVER_URL}/payment`, options, `${user.username}payments`);
-    const reqPayment = () => {
-        if (payments.length && !isPending4) {
-            setPaymentList(payments);
-            console.log(payments);
-        };
+    // define state variables to toggle display of tables
+    const [showPayment, setShowPayment] = useState(false);
+    const [showSkill, setShowSkill] = useState(false); 
+    const [showItem, setShowItem] = useState(false);
+
+    // toggle display variables
+    const togglePayment = () => {
+        setShowPayment(!showPayment);
     };
+    const toggleSkill = () => {
+        setShowSkill(!showSkill);
+    };
+    const toggleItem = () => {
+        setShowItem(!showItem);
+    };
+
+    // request the payment data
+    const { data: payments, isPending: isPending4, error: error4 } = GetStore(`${SERVER_URL}/payment`, options, `${user.username}payments`);
+
+    useEffect(() => {
+        if (payments && !isPending4) {
+            setPaymentList(payments);
+            //console.log(payments);
+            setHighlightedRowPayment(-99);
+        };
+    }, [payments, isPending4]);
 
     // request the skill data
-    const { data: skills, isPending5, error5 } = useFetch2(`${SERVER_URL}/skill/all`, options, 'skills');
-    const reqSkill = () => { 
-        if (skills.length && !isPending5) {
+    const { data: skills, isPending: isPending5, error: error5 } = GetStore(`${SERVER_URL}/skill/all`, options, 'skills');
+
+    useEffect(() => {
+        if (skills && !isPending5) {
             setSkillList(skills);
-            console.log(skills);
+            //console.log(skills);
+            setHighlightedRowSkill(-99);
         };
-    };
+    }, [skills, isPending5]);
+
 
     // request the item data
-    const { data: items, isPending6, error6 } = useFetch2(`${SERVER_URL}/item/all`, options, 'items');
-    const reqItem = () => { 
-        if (items.length && !isPending6) {
+    const { data: items, isPending: isPending6, error: error6 } = GetStore(`${SERVER_URL}/item/all`, options, 'items');
+
+    useEffect(() => {
+        if (items && !isPending6) {
             setItemList(items);
-            console.log(items);
+            //console.log(items);
+            setHighlightedRowItem(-99);
         };
-    };
+    }, [items, isPending6]);
 
     // when highlightedRow changes get the data
     // for item list
@@ -83,7 +105,7 @@ function Donate() {
             setRowDataItem();
         }
     }, [itemList, highlightedRowItem, isPending6]);
-    // for skilllist
+    // for skill list
     useEffect(() => {
         if (highlightedRowSkill >= 0) {
             setRowDataSkill(skillList[highlightedRowSkill]);
@@ -104,26 +126,26 @@ function Donate() {
         <div className="donate container square border border-info border-2" style={{backgroundImage:`url(${donate})`}} >
             <h1>Donations Page</h1>
             <Container>
-                {!isPending4 && <Button onClick={reqPayment} variant="primary">Show Payment Data</Button>}
                 {isPending4 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error4 && <div>{error4}</div>}
-                {paymentList && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
+                {!isPending4 && <Button onClick={togglePayment} variant="primary">Show Payment Data</Button>}
+                {showPayment && <Table tbodyData={paymentList} highlightedRow={highlightedRowPayment} setHighlightedRow ={setHighlightedRowPayment}/>}
                 {!rowDataPayment && <PaymentForm setPaymentList={setPaymentList} sesStoreName={`${user.username}payments`}/>}
                 {rowDataPayment && <PaymentActionForm rowData={rowDataPayment} setRowData={setRowDataPayment} />}
             </Container>
             <Container>
-                {!isPending5 && <Button onClick={reqSkill} variant="primary">Show Skill Data</Button>}
                 {isPending5 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error5 && <div>{error5}</div>}              
-                {skillList && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
+                {!isPending5 && <Button onClick={toggleSkill} variant="primary">Show Skill Data</Button>}
+                {showSkill && <Table tbodyData={skillList} highlightedRow={highlightedRowSkill} setHighlightedRow ={setHighlightedRowSkill}/>}
                 {!rowDataSkill && <SkillForm setSkillList={setSkillList} />}
                 {rowDataSkill && <ActionForm rowData={rowDataSkill} isItem={ false } />}
             </Container>
             <Container>
-                {!isPending6 && <Button onClick={reqItem} variant="primary">Show Item Data</Button>}
                 {isPending6 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
                 {error6 && <div>{error6}</div>}
-                {itemList && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}
+                {!isPending6 && <Button onClick={toggleItem} variant="primary">Show Item Data</Button>}
+                {showItem && <Table tbodyData={itemList} highlightedRow={highlightedRowItem} setHighlightedRow ={setHighlightedRowItem} />}           
                 {!rowDataItem && <ItemForm setItemList={setItemList}/>}
                 {rowDataItem && <ActionForm rowData={rowDataItem} isItem={ true } />}
             </Container>

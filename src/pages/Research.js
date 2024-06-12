@@ -1,24 +1,42 @@
 import '../App.css';
 import { Container, Button } from 'react-bootstrap';
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useMemo } from "react";
 import { useContext } from "react";
-import useFetch from "../components/useFetch";
+import GetStore from '../functions/GetStore';
 import DataContext from "../context/DataContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import Table from "../components/Table";
 import research from '../images/research.jpg';                // image by freepix
+import useDebounce from '../customHooks/useDebounce';
 
 function Research () {
     // from  the data context
     const { SERVER_URL } = useContext(DataContext);
+    const { user } = useAuthContext();
+
+    // see if there is an authorized user also put the user in the body 
+    // to ensure we can filter the blog results as authorisation no loger required
+    const options = useMemo(() => {
+        if (user) {
+            return {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            };
+        };
+        return {};
+    }, [user]);
 
     // define the constants and functions to get the JSON data
     const [charityList, setCharityList] = useState();
     const [charityDetails, setCharityDetails] = useState();
     const [charityFinancials, setCharityFinancials] = useState();
     const [charityName, setCharityName] = useState('salvation army');
+    const debouncedCharityName = useDebounce(charityName);
     const [charityNumber, setCharityNumber] = useState('214779');
+    const debouncedCharityNumber = useDebounce(charityNumber);
 
-    // for charity slected from table
+    // for charity selected from table
     const [highlightedRow, setHighlightedRow] = useState(-99);
     const [rowDataCharity, setRowDataCharity] = useState([]);
 
@@ -39,7 +57,7 @@ function Research () {
     };
 
     // request charity list of that name and populate the charity list
-    const { data: charities, isPending, error } = useFetch(`${SERVER_URL}/charity/searchname/${charityName}`);
+    const { data: charities, isPending, error } = GetStore(`${SERVER_URL}/charity/searchname/${debouncedCharityName}`, options, `${debouncedCharityName}`);
 
     useEffect(() => {
         if (charities) {
@@ -47,27 +65,27 @@ function Research () {
             console.log(charities);
             setHighlightedRow(-99);
         };
-    }, [charities]);
+    }, [charities, isPending, error]);
 
     // request charity details and populate the charity details
-    const { data: details, isPending2, error2 } = useFetch(`${SERVER_URL}/charity/details/${charityNumber}`);
+    const { data: details, isPending: isPending2, error: error2 } = GetStore(`${SERVER_URL}/charity/details/${debouncedCharityNumber}`, options, `${debouncedCharityNumber}dets`);
 
     useEffect(() => {
         if (details) {
             setCharityDetails(details);
             console.log(details);
         };
-    }, [details]);
+    }, [details, isPending2, error2]);
 
     // request charity financial details and populate the charity financial details
-    const { data: financials, isPending3, error3 } = useFetch(`${SERVER_URL}/charity/financialhistory/${charityNumber}`);
+    const { data: financials, isPending: isPending3, error: error3 } = GetStore(`${SERVER_URL}/charity/financialhistory/${debouncedCharityNumber}`, options, `${debouncedCharityNumber}finans`);
 
     useEffect(() => {
         if (financials) {
             setCharityFinancials(financials);
             console.log(financials);
         };
-    }, [financials]);
+    }, [financials, isPending3, error3]);
 
     // when highlightedRow changes get the data
     // for charity list
@@ -121,7 +139,7 @@ function Research () {
             </div>
             <Container style={myComponent}>
                 {isPending2 && <div style={{ color: 'white', background: 'red' }}>LOADING ...</div>}
-                {error2 && <div>{error2}</div>}
+                {error2 && <div>{error}</div>}
                 {!isPending2 && <Button onClick={handleDispDetails} variant="primary">Show Charity Details</Button>}
                 {dispDetails && <pre>{JSON.stringify(charityDetails, null, 2)}</pre>}
             </Container>
